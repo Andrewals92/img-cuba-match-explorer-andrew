@@ -581,6 +581,7 @@
       programsApplied: c.programs_applied ?? c.programsApplied ?? null,
       interviewInvites: c.interview_invites ?? c.interviewInvites ?? null,
       notes: c.notes,
+      missingFields: [["Step 2 CK", c.step2_ck ?? c.step2], ["YOG", c.yog], ["USCE", c.usce_months ?? c.usce], ["LoRs", c.us_lors ?? c.lors], ["visa", c.visa_required ?? c.visa], ["total de aplicaciones", c.programs_applied ?? c.programsApplied], ["total de invitaciones", c.interview_invites ?? c.interviewInvites]].filter(([,v]) => v === null || v === undefined || v === "").map(([k]) => k),
     };
   }
   function normalizeReport(r) {
@@ -677,6 +678,7 @@
     }
     // FIX: administrators can read every row through RLS, so without this
     // filter "Mis datos" listed (and let the admin edit) other users' data.
+    myDB = { cycles: [], reports: [] };
     const uid = encodeURIComponent(session.user.id);
     const [c, r] = await Promise.all([
       request(
@@ -866,7 +868,7 @@
       ? tops
           .map(
             (x) =>
-              `<div class="bar-row"><div class="label">${esc(x.program_name)}</div><div class="bar-track"><div class="bar-fill" style="width:${((x.interviews || 0) / max) * 100}%"></div></div><b>${x.interviews || 0}</b></div>`,
+              `<div class="bar-row"><div class="label">${workspace.programLink(x)}</div><div class="bar-track"><div class="bar-fill" style="width:${((x.interviews || 0) / max) * 100}%"></div></div><b>${x.interviews || 0}</b></div>`,
           )
           .join("")
       : '<div class="empty-state">Aún no hay entrevistas agregadas.</div>';
@@ -885,35 +887,12 @@
           .slice(0, 12)
           .map(
             (x) =>
-              `<div class="activity"><div><strong>${esc(x.program_name)}</strong><span>${esc(x.week_start)} • ${x.reports} reportes</span></div>${tag(`${x.verified || 0} verified`, "good")}</div>`,
+              `<div class="activity"><div><strong>${workspace.programLink(x)}</strong><span>${esc(x.week_start)} • ${x.reports} reportes</span></div>${tag(`${x.verified || 0} verified`, "good")}</div>`,
           )
           .join("")
       : '<div class="empty-state">No hay grupos recientes que alcancen el umbral de privacidad.</div>';
   }
-  function renderPrograms() {
-    const term = q("programSearch").value.toLowerCase(),
-      spec = q("programSpecialty").value,
-      out = q("programOutcome").value;
-    let rows = publicDB.programStats.filter(
-      (x) =>
-        (spec === "all" || x.specialty === spec) &&
-        (!term ||
-          `${x.program_name} ${x.state} ${x.specialty}`
-            .toLowerCase()
-            .includes(term)) &&
-        (out === "all" ||
-          (out === "interview" && (x.interviews || 0) > 0) ||
-          (out === "match" && (x.matches || 0) > 0)),
-    );
-    q("programCards").innerHTML = rows.length
-      ? rows
-          .map(
-            (x) =>
-              `<article class="program-card"><h3>${esc(x.program_name)}</h3><div class="meta">${esc(x.specialty || "")} • ${esc(x.state || "")}</div><div class="metric-row"><div class="metric"><strong>${x.applications ? x.applications : x.interviews ? "—" : 0}</strong><span>Applications</span></div><div class="metric"><strong>${x.interviews || 0}</strong><span>Interviews</span></div><div class="metric"><strong>${x.interview_rate === null || x.interview_rate === undefined ? "—" : x.interview_rate + "%"}</strong><span>Interview rate</span></div><div class="metric"><strong>${x.matches || 0}</strong><span>Matches</span></div></div><div class="detail-list"><span>Applicant profiles: <b>${x.applicants || 0}</b></span><span>Median Step 2: <b>${x.median_step2 ?? ((x.applicants || 0) >= 5 ? "Sin datos" : "Protected")}</b></span><span>Median USCE: <b>${x.median_usce ?? ((x.applicants || 0) >= 5 ? "Sin datos" : "Protected")}</b></span><span>Median LoRs: <b>${x.median_lors ?? ((x.applicants || 0) >= 5 ? "Sin datos" : "Protected")}</b></span></div></article>`,
-          )
-          .join("")
-      : '<div class="empty-state span-2">No se encontraron programas con esos filtros.</div>';
-  }
+  function renderPrograms() { workspace.renderPrograms(); }
   function renderInterviews() {
     const term = q("interviewSearch").value.toLowerCase(),
       spec = q("interviewSpecialty").value;
@@ -926,7 +905,7 @@
       ? rows
           .map(
             (x) =>
-              `<div class="timeline-item"><div><strong>${esc(x.program_name)}</strong><span>${esc(x.week_start)} • ${x.reports} reportes protegidos</span></div>${tag(`${x.verified || 0} verified`, "good")}</div>`,
+              `<div class="timeline-item"><div><strong>${workspace.programLink(x)}</strong><span>${esc(x.week_start)} • ${x.reports} reportes protegidos</span></div>${tag(`${x.verified || 0} verified`, "good")}</div>`,
           )
           .join("")
       : '<div class="empty-state">No hay actividad que supere el umbral de privacidad.</div>';
@@ -943,7 +922,7 @@
       : '<div class="empty-state">Aún no hay matches agregados.</div>';
     q("matchTable").innerHTML = table(
       [
-        ["Programa", "program_name"],
+        ["Programa", "program_name", (r) => workspace.programLink(r)],
         ["Estado", "state"],
         ["Matches", "matches"],
       ],
@@ -1079,7 +1058,7 @@
     let res = null;
     if (cloudReady()) {
       try {
-        res = await rpc("similar_cohort", a);
+        res = await rpc("similar_cohort", a, false);
       } catch (e) {
         toast(
           /similar_cohort|Falta una función/i.test(e.message)
@@ -1154,14 +1133,14 @@
           <td>${m.visa_required ? tag("Requiere", "warn") : tag("No")}</td>
           <td>${fmt(m.programs_applied)}</td>
           <td><b>${fmt(m.interviews)}</b></td>
-          <td>${m.matched ? `${tag("Match", "good")}<br><span class="muted">${esc(m.match_program || "")}${m.match_state ? " · " + esc(m.match_state) : ""}</span>` : m.status === "in_progress" ? tag("En curso", "warn") : tag("No match")}</td>
+          <td>${m.matched ? `${tag("Match", "good")}<br><span class="muted">${workspace.programLink({program:m.match_program,state:m.match_state,specialty:m.specialty})}${m.match_state ? " · " + esc(m.match_state) : ""}</span>` : m.status === "in_progress" ? tag("En curso", "warn") : tag("No match")}</td>
           <td><button class="text-btn small-link" data-cohort-toggle="${i}">${m.interview_programs.length ? "Ver programas" : ""}</button></td>
         </tr>
         <tr class="cohort-detail" id="cohortDetail${i}" hidden><td colspan="11">
           <div class="cohort-programs">${m.interview_programs
             .map(
               (p) =>
-                `<span class="chip ${p.matched ? "matched" : ""}">${esc(p.program)}${p.state ? ` <small>${esc(p.state)}</small>` : ""}${p.specialty && p.specialty !== m.specialty ? ` <small>${esc(p.specialty)}</small>` : ""}${p.signal && p.signal !== "None" ? ` <small class="sig">${esc(p.signal)}</small>` : ""}${p.matched ? " ★" : ""}</span>`,
+                `<span class="chip ${p.matched ? "matched" : ""}">${workspace.programLink(p)}${p.state ? ` <small>${esc(p.state)}</small>` : ""}${p.specialty && p.specialty !== m.specialty ? ` <small>${esc(p.specialty)}</small>` : ""}${p.signal && p.signal !== "None" ? ` <small class="sig">${esc(p.signal)}</small>` : ""}${p.matched ? " ★" : ""}</span>`,
             )
             .join("")}${
             (m.applied_programs || []).length
@@ -1174,7 +1153,7 @@
     const showAll = prog.dataset.showAll === "1";
     prog.innerHTML = table(
       [
-        ["Programa", "program", (r) => `<b>${esc(r.program)}</b>`],
+        ["Programa", "program", (r) => workspace.programLink(r)],
         ["Estado", "state"],
         ["Especialidad", "specialty"],
         ["Perfiles de la cohorte con entrevista", "interviews", (r) => `${r.interviews} de ${n}`],
@@ -1189,7 +1168,7 @@
   // Views are addressed as #/name (plain #name would make the browser jump
   // to the section element with that id).
   function hashView() {
-    return location.hash.replace(/^#\/?/, "");
+    return location.hash.replace(/^#\/?/, "").split(/[/?]/)[0];
   }
   function isAdmin() {
     return profile?.role === "admin" || profile?.role === "moderator";
@@ -1295,7 +1274,7 @@
     );
     q("myReports").innerHTML = table(
       [
-        ["Program", "program"],
+        ["Program", "program", (r) => workspace.programLink(r)],
         ["Cycle", "cycle"],
         ["Signal", "signal"],
         [
@@ -1451,7 +1430,7 @@
       q("adminReports").innerHTML = table(
         [
           ["Usuario", "user_id", owner],
-          ["Programa", "program_name_snapshot"],
+          ["Programa", "program_name_snapshot", (r) => workspace.programLink(r)],
           ["Cycle", "match_cycle"],
           [
             "Interview",
@@ -1484,6 +1463,8 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
+      program: ["Program Profile", "Directorio y datos comunitarios protegidos."],
+      compare: ["Program Compare", "Compara datos documentados de 2 a 5 programas."],
       dashboard: ["Dashboard", "Datos comunitarios protegidos y persistentes."],
       programs: ["Program Explorer", "Actividad agregada por programa."],
       intelligence: [
@@ -1518,9 +1499,11 @@
       history.replaceState(null, "", "#/" + currentView);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (skipLoad) return;
+    if (currentView === "program" || currentView === "compare") workspace.loadView();
+    if (currentView === "programs") workspace.renderPrograms();
     if (currentView === "applicants") findSimilar();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") renderAdmin();
+    if (currentView === "admin") { renderAdmin(); workspace.health(); }
   }
   function resetCycleForm() {
     q("cycleForm").reset();
@@ -1941,7 +1924,7 @@
         .replace(/[*,()]/g, " "),
       spec = q("officialSpecialty").value;
     let path =
-      "/rest/v1/programs?select=acgme_program_id,name,specialty,city,state&active=eq.true&order=name.asc&limit=100";
+      "/rest/v1/programs?select=id,acgme_program_id,name,specialty,city,state&active=eq.true&order=name.asc&limit=100";
     if (spec && spec !== "all")
       path += "&specialty=eq." + encodeURIComponent(spec);
     if (term) path += "&name=ilike." + encodeURIComponent("*" + term + "*");
@@ -1975,7 +1958,7 @@
   }
   function renderOfficialPrograms() {
     const cols = [
-      ["Programa", "name", (r) => `<strong>${esc(r.name)}</strong>`],
+      ["Programa", "name", (r) => workspace.programLink(r)],
       ["Especialidad", "specialty"],
       [
         "Ciudad/Estado",
@@ -2014,7 +1997,7 @@
             .slice(0, 25)
             .map(
               (x) =>
-                `<div class="intel-item unread"><div><strong>${esc(x.program_name)}</strong><small>${esc(x.specialty)} · ${esc([x.city, x.state].filter(Boolean).join(", "))}<br>${esc(x.accreditation_status || "Newly detected")} · ${new Date(x.first_seen_at).toLocaleString()}</small></div><div class="intel-actions"><a class="btn ghost small" href="${esc(safeUrl(x.source_url))}" target="_blank" rel="noopener noreferrer">ACGME ↗</a></div></div>`,
+                `<div class="intel-item unread"><div><strong>${workspace.programLink(x)}</strong><small>${esc(x.specialty)} · ${esc([x.city, x.state].filter(Boolean).join(", "))}<br>${esc(x.accreditation_status || "Newly detected")} · ${new Date(x.first_seen_at).toLocaleString()}</small></div><div class="intel-actions"><a class="btn ghost small" href="${esc(safeUrl(x.source_url))}" target="_blank" rel="noopener noreferrer">ACGME ↗</a></div></div>`,
             )
             .join("")
         : '<div class="empty-state">No hay nuevas incorporaciones detectadas desde el inicio del baseline.</div>';
@@ -2099,6 +2082,8 @@
     q("watchArea").style.display = session ? "block" : "none";
   }
 
+  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin });
+
   let refreshRun = 0;
   async function refresh() {
     const run = ++refreshRun;
@@ -2108,6 +2093,7 @@
       loadProfile(),
       loadMyData(),
       loadPublic(),
+      workspace.loadIdentityIndex(),
     ]);
     if (run !== refreshRun) return; // a newer refresh superseded this one
     const errs = [
@@ -2120,13 +2106,15 @@
     renderNavRoles();
     fillSpecialties();
     renderDashboard();
+    workspace.renderPersonal();
     renderPrograms();
     renderInterviews();
     renderMatches();
     renderMyData();
     renderAccount();
+    if (currentView === "program" || currentView === "compare") workspace.loadView();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") renderAdmin();
+    if (currentView === "admin") { renderAdmin(); workspace.health(); }
   }
   q("nav").addEventListener("click", (e) => {
     const b = e.target.closest(".nav-btn");
@@ -2159,7 +2147,7 @@
   });
   window.addEventListener("hashchange", () => {
     const v = hashView();
-    if (v && v !== currentView && q(v)?.classList.contains("view")) {
+    if (v && (v !== currentView || v === "program" || v === "compare") && q(v)?.classList.contains("view")) {
       currentView = v;
       updateNav();
     }

@@ -1,0 +1,10 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const sandbox={window:{}};vm.runInNewContext(fs.readFileSync(require('node:path').join(__dirname,'../workspace.js'),'utf8'),sandbox);
+const summarize=sandbox.window.CMEPersonalSummary;
+const c={id:'mine',programsApplied:100,interviewInvites:8};
+const rows=[{applicantCycleId:'mine',programId:'a',applied:true,interview:true,signal:'Gold',ranked:true},{applicantCycleId:'mine',programId:'a',applied:true,interview:true,signal:'Gold'},{applicantCycleId:'other',programId:'b',interview:true,matched:true}];
+let s=summarize(c,rows);assert.equal(s.applications,100);assert.equal(s.interviews,8);assert.equal(s.rate,8);assert.equal(s.detailedInterviews,1);assert.equal(s.gold,1);assert.equal(s.matches.length,0);
+s=summarize({...c,programsApplied:0,interviewInvites:0},rows);assert.equal(s.applications,0);assert.equal(s.interviews,0);assert.equal(s.rate,null);
+s=summarize({...c,programsApplied:null,interviewInvites:null},rows);assert.equal(s.applications,1);assert.equal(s.interviews,1);assert.equal(s.applicationDeclared,false);
+s=summarize({...c,programsApplied:2,interviewInvites:3},rows);assert.equal(s.inconsistent,true);assert.equal(s.rate,null);
+console.log('PASS: authoritative totals, zero, detail deduplication, cycle isolation, inconsistent totals');
