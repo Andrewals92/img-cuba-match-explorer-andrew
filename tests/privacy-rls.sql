@@ -3,7 +3,7 @@ begin;
 do $$
 declare p uuid; u uuid; c uuid; result jsonb; i integer; uid1 uuid; uid2 uuid;
 begin
- insert into public.programs(name,specialty,state,active,source) values ('V4 transactional QA','Internal Medicine','FL',true,'test:v4') returning id into p;
+ insert into public.programs(name,specialty,state,active,source) values ('V4 transactional QA','V4 QA Specialty','FL',true,'test:v4') returning id into p;
  perform set_config('cme.test_program',p::text,true);
  for i in 1..6 loop
    u:=gen_random_uuid();
@@ -11,9 +11,9 @@ begin
    if i=1 then uid1:=u; end if; if i=2 then uid2:=u; end if;
    perform set_config('request.jwt.claim.sub',u::text,true);
    insert into public.applicant_cycles(user_id,anon_id,match_cycle,specialty,step2_ck,yog,usce_months,us_lors,consent_public,programs_applied,interview_invites)
-     values(u,'QA-'||u::text,2026,'Internal Medicine',240+i,2020,6,3,true,100,8) returning id into c;
+     values(u,'QA-'||u::text,2026,'V4 QA Specialty',240+i,2020,6,3,true,100,8) returning id into c;
    insert into public.program_reports(user_id,applicant_cycle_id,program_id,match_cycle,program_name_snapshot,specialty,applied,interview,matched,signal,interview_date)
-     values(u,c,p,2026,'QA','Internal Medicine',true,i<=3,i<=3,case when i<=3 then 'Gold' else 'Silver' end,case when i<=3 then date '2025-10-01' end);
+     values(u,c,p,2026,'QA','V4 QA Specialty',true,i<=3,i<=3,case when i<=3 then 'Gold' else 'Silver' end,case when i<=3 then date '2025-10-01' end);
    if i=2 then
      result:=public.program_compare_stats(array[p],2026)->0;
      assert result->>'applicant_profiles' is null,'small cohort exposed';
@@ -51,6 +51,7 @@ do $$
 declare denied boolean:=false; n integer;
 begin
  assert not public.is_admin();
+ assert (public.similar_cohort(p_cycle=>2026,p_specialty=>'V4 QA Specialty')->>'cohort_size')::int=4,'own profile or private peer included in cohort';
  select count(*) into n from public.applicant_cycles;
  assert n=1,'normal user sees other profiles';
  select count(*) into n from public.program_reports;
