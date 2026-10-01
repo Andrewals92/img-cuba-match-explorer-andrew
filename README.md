@@ -21,7 +21,7 @@ The 2026 import has 36 profiles, 338 detailed invitations and 14 matches. Its 13
 
 Serve this directory over HTTP, for example `python -m http.server 8000`. Public Supabase configuration lives in `cloud-config.js`; never add a service-role key. Vercel uses Framework Other, root `./`, no build/install/output override, and GitHub `main`.
 
-Migrations 002–012 are historical files preserved from the handoff; do not rerun or renumber them. The supplied baseline did not contain a numbered 007 file. Apply new migrations once, in order: `013_program_workspace.sql`, then `014_program_identity_maintenance.sql`. They are additive and designed to tolerate repeated DDL where practical. Applied migration history in Supabase is authoritative.
+Migrations 002–012 are historical files preserved from the handoff; do not rerun or renumber them. The supplied baseline did not contain a numbered 007 file. Apply new migrations once, in order: `013_program_workspace.sql`, `014_program_identity_maintenance.sql`, then `015_directory_specialty_case.sql`. They are additive and designed to tolerate repeated DDL where practical. Applied migration history in Supabase is authoritative.
 
 `program_compare_stats` serves both profiles and comparisons in one request; no redundant personal dashboard RPC is required because existing own-data queries explicitly filter by authenticated user ID and enforce RLS. Directory search is paginated at 40 entries.
 

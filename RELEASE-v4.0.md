@@ -16,7 +16,7 @@ The existing comparable-cohort RPC now receives the signed-in session so its exi
 
 ## Database and privacy
 
-013 adds a private stable identity registry and narrow aggregate/directory/health RPCs. 014 maintains identities for newly consented manual reports and adds indexes for program/source joins identified by the performance advisor. No existing migration or import identifier is rewritten. No raw applicant API is added.
+013 adds a private stable identity registry and narrow aggregate/directory/health RPCs. 014 maintains identities for newly consented manual reports and adds indexes for program/source joins identified by the performance advisor. 015 normalizes directory specialty filtering across official/community capitalization. No existing migration or import identifier is rewritten. No raw applicant API is added.
 
 Historical reporting labels remain separate from official identities. The import lacks invitation dates and complete application denominators, so timelines and rates can correctly be unavailable. Matching a reporting label to an official program requires future verified curation.
 
