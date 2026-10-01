@@ -1,4 +1,4 @@
-# v4.0 validation — in progress
+# v4.0 validation — deployed; authenticated acceptance pending
 
 - Baseline source verified against GitHub main a71efdc39e618558e585ebd23a44bf8cc6d36f20.
 - Migrations 013, 014 and 015 applied successfully.
@@ -6,7 +6,13 @@
 - Transactional SQL tests passed: n=2 suppression; n=6 counts/medians/rates; consent exclusion; incomplete cycles; own-data read/update; RLS isolation; self-promotion denied; admin RPC denied to normal users; public aggregates available. Synthetic rows rolled back.
 - Personal-summary tests passed: declared totals including zero, detail deduplication, selected-cycle isolation and invalid-rate handling.
 - Five-program aggregate EXPLAIN ANALYZE: approximately 41 ms before the join indexes, no disk spill.
-- Production/browser/auth verification is pending. This document must be finalized after deployment smoke tests.
+- Production source commit: e381430ae4e04d3f6033b0d53cbbe7eaa5087a9a on main.
+- Vercel deployment dpl_7DNXFLgfU9Hy7VaCu1BQjKWrgP8X was verified Ready / Production / Current on 2026-10-01.
+- Production URL: https://cuba-match-explorer.vercel.app/ (unchanged; Auth settings were not rewritten).
+- Production HTTP 200 and byte-for-byte checks passed for index.html, app.js, workspace.js and sw.js against released source. The service-worker source uses the v4.0 cache namespace; a device retaining a previously installed v3.7 worker was not available for an upgrade-path test.
+- Live production Chrome smoke: community dashboard, program profiles and two-program comparison rendered correctly with real privacy-safe aggregates. No application-origin fatal console errors were observed.
+- Community dashboard declared invitation total (362) is distinct from the imported detailed invitation-row invariant (338).
+- Source hashes were compared with every GitHub tree blob before promotion; temporary mobile QA harness is absent from production.
 
 ## Preview verification completed
 
