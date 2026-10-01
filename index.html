@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="author" content="Andrew A Lopez Sanchez, MD, MBA" />
+    <meta
+      name="copyright"
+      content="© 2026 Andrew A Lopez Sanchez, MD, MBA. All rights reserved."
+    />
+    <meta
+      name="description"
+      content="Cuba Match Explorer — plataforma comunitaria de datos de residencia para IMGs cubanos."
+    />
+    <title>Cuba Match Explorer</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=3.7" />
+  </head>
+  <body>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <datalist id="specialtyList"></datalist>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">CM</div>
+          <div class="brand-copy">
+            <strong>Cuba Match Explorer</strong
+            ><span class="brand-owner"
+              >Created by Andrew A Lopez Sanchez, MD, MBA</span
+            >
+          </div>
+        </div>
+        <nav id="nav">
+          <button class="nav-btn active" data-view="dashboard">
+            <span>▦</span>Dashboard
+          </button>
+          <button class="nav-btn" data-view="programs">
+            <span>⌕</span>Program Explorer
+          </button>
+          <button class="nav-btn" data-view="intelligence">
+            <span>◉</span>Program Intelligence
+            <span id="notifBadge" class="nav-badge" style="display: none"
+              >0</span
+            >
+          </button>
+          <button class="nav-btn" data-view="applicants">
+            <span>◎</span>Applicant Explorer
+          </button>
+          <button class="nav-btn" data-view="interviews">
+            <span>✉</span>Interview Tracker
+          </button>
+          <button class="nav-btn" data-view="matches">
+            <span>★</span>Match Map
+          </button>
+          <button class="nav-btn" data-view="data">
+            <span>＋</span>Mis datos
+          </button>
+          <button class="nav-btn" data-view="account">
+            <span>♙</span>Cuenta
+          </button>
+          <button class="nav-btn" data-view="admin" style="display: none">
+            <span>⚙</span>Admin
+          </button>
+        </nav>
+        <div class="privacy-card">
+          <strong>Privacidad por diseño</strong>
+          <p>
+            Las filas individuales son privadas. Los detalles de perfil se
+            muestran solo con <b>n ≥ 5</b>.
+          </p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn mobile-only"
+            id="menuBtn"
+            aria-label="Abrir menú"
+          >
+            ☰
+          </button>
+          <div class="title-wrap">
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">
+              Datos comunitarios protegidos y persistentes.
+            </p>
+          </div>
+          <div class="topbar-actions">
+            <span class="pill status" id="cloudBadge">SETUP</span>
+            <label class="cycle-select"
+              >Ciclo<select id="globalCycle">
+                <option value="all">Todos</option>
+                <option value="2026">2026</option>
+                <option value="2027" selected>2027</option>
+                <option value="2028">2028</option>
+              </select></label
+            >
+          </div>
+        </header>
+
+        <div id="modeBanner" class="demo-banner"></div>
+
+        <section class="view active-view" id="dashboard">
+          <div class="hero">
+            <div>
+              <span class="eyebrow"
+                >Community-powered residency intelligence</span
+              >
+              <h2>Una plataforma construida con datos de nuestra comunidad.</h2>
+              <p>
+                Aplicaciones, entrevistas y Match por ciclo, con cuentas
+                privadas y estadísticas agregadas.
+              </p>
+              <div class="hero-actions">
+                <button class="btn primary" data-go="data">
+                  Agregar mis datos</button
+                ><button class="btn ghost" data-go="programs">
+                  Explorar programas
+                </button>
+              </div>
+            </div>
+            <div class="hero-badge">
+              <span id="heroCycle">2027</span><small>Match cycle</small>
+            </div>
+          </div>
+          <div id="kpiGrid" class="kpi-grid"></div>
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Tendencia</span>
+                  <h3>Entrevistas por programa</h3>
+                </div>
+              </div>
+              <div id="programBars" class="bars"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Perfil agregado</span>
+                  <h3>Step 2 CK de entrevistados</h3>
+                </div>
+              </div>
+              <div id="scoreDistribution" class="distribution"></div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Actividad protegida</span>
+                <h3>Entrevistas recientes</h3>
+              </div>
+              <span class="pill">mín. 3 reportes/semana</span>
+            </div>
+            <div id="recentActivity" class="activity-list"></div>
+          </article>
+        </section>
+
+        <section class="view" id="programs">
+          <article class="panel filters-panel">
+            <div class="filters-row">
+              <input
+                id="programSearch"
+                placeholder="Buscar programa, institución, ciudad o estado..."
+              /><select id="programSpecialty">
+                <option value="all">Todas las especialidades</option></select
+              ><select id="programOutcome">
+                <option value="all">Todos</option>
+                <option value="interview">Con entrevistas</option>
+                <option value="match">Con matches</option>
+              </select>
+            </div>
+          </article>
+          <div id="programCards" class="card-grid"></div>
+        </section>
+
+        <section class="view" id="applicants">
+          <div class="grid-2 align-start">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Tu perfil</span>
+                  <h3>Buscar cohortes similares</h3>
+                </div>
+              </div>
+              <div class="form-grid compact">
+                <label
+                  >Step 2 CK<input
+                    id="simStep2"
+                    type="number"
+                    value="245"
+                    min="180"
+                    max="300"
+                /></label>
+                <label
+                  >Rango Step 2 (±)<select id="simStep2Range">
+                    <option value="5">± 5 puntos</option>
+                    <option value="10" selected>± 10 puntos</option>
+                    <option value="15">± 15 puntos</option>
+                    <option value="20">± 20 puntos</option>
+                  </select></label
+                >
+                <label
+                  >USCE (meses)<input
+                    id="simUsce"
+                    type="number"
+                    placeholder="Opcional"
+                    min="0"
+                    max="60"
+                    step="0.5"
+                /></label>
+                <label
+                  >US LoRs<input
+                    id="simLors"
+                    type="number"
+                    value="3"
+                    min="0"
+                    max="10"
+                /></label>
+                <label
+                  >YOG<input
+                    id="simYog"
+                    type="number"
+                    value="2020"
+                    min="1980"
+                    max="2035"
+                /></label>
+                <label
+                  >Visa<select id="simVisa">
+                    <option value="any">Cualquiera</option>
+                    <option value="no">No requiere</option>
+                    <option value="yes">Requiere</option>
+                  </select></label
+                >
+                <label>Especialidad<select id="simSpecialty"></select></label>
+                <label class="span-2"
+                  >Comparar con<select id="simCycle">
+                    <option value="all" selected>
+                      Todos los ciclos (Match 2026 + aplicantes nuevos)
+                    </option>
+                    <option value="2026">Solo Match 2026</option>
+                    <option value="2027">Solo Match 2027</option>
+                    <option value="2028">Solo Match 2028</option>
+                  </select></label
+                >
+              </div>
+              <div class="form-actions">
+                <button class="btn primary" id="findSimilarBtn">
+                  Buscar perfiles similares</button
+                ><button class="btn ghost" id="useMyProfileBtn" style="display: none">
+                  Usar mi perfil
+                </button>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Resumen</span>
+                  <h3>Resumen de tu rango</h3>
+                </div>
+              </div>
+              <div id="similarSummary" class="empty-state">
+                Ajusta los criterios y presiona “Buscar”.
+              </div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Perfiles anónimos</span>
+                <h3>Cohortes comparables</h3>
+              </div>
+              <span class="pill">mín. 5 perfiles</span>
+            </div>
+            <div id="similarMembers" class="table-wrap"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Dónde entrevistó la cohorte</span>
+                <h3>Programas de la cohorte</h3>
+              </div>
+            </div>
+            <div id="similarPrograms" class="table-wrap"></div>
+          </article>
+        </section>
+
+        <section class="view" id="interviews">
+          <article class="panel filters-panel">
+            <div class="filters-row">
+              <input
+                id="interviewSearch"
+                placeholder="Buscar programa..."
+              /><select id="interviewSpecialty"></select>
+            </div>
+          </article>
+          <div id="interviewTimeline" class="timeline"></div>
+        </section>
+
+        <section class="view" id="matches">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Distribución</span>
+                <h3>Matches reportados por estado</h3>
+              </div>
+            </div>
+            <div id="stateGrid" class="state-grid"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Detalle protegido</span>
+                <h3>Programas con Match</h3>
+              </div>
+              <span class="pill">mín. 3 matches</span>
+            </div>
+            <div id="matchTable" class="table-wrap"></div>
+          </article>
+        </section>
+
+        <section class="view" id="intelligence">
+          <div class="hero">
+            <div>
+              <span class="eyebrow">Official program intelligence</span>
+              <h2>Catálogo ACGME + alertas de nuevos programas.</h2>
+              <p>
+                Consulta programas oficiales por especialidad, abre ACGME,
+                FREIDA y Residency Explorer, y crea alertas para nuevas
+                incorporaciones detectadas por el monitor.
+              </p>
+              <div class="hero-actions">
+                <button class="btn primary" id="refreshIntelligence">
+                  Actualizar catálogo</button
+                ><span class="pill" id="syncProgress">Cargando estado…</span>
+              </div>
+            </div>
+            <div class="hero-badge">
+              <span>10 min</span><small>ACGME monitor</small>
+            </div>
+          </div>
+
+          <article class="panel filters-panel">
+            <div class="filters-row">
+              <input
+                id="officialSearch"
+                placeholder="Buscar programa oficial..."
+              />
+              <select id="officialSpecialty">
+                <option value="all">Todas las especialidades</option>
+              </select>
+              <button class="btn primary" id="officialSearchBtn">Buscar</button>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Directorio oficial</span>
+                <h3>Programas acreditados / listados por ACGME</h3>
+              </div>
+              <span class="pill">máx. 100 resultados</span>
+            </div>
+            <div id="officialProgramsTable" class="table-wrap"></div>
+          </article>
+
+          <div class="grid-2 align-start">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Monitor</span>
+                  <h3>Newly Accredited / Newly Detected</h3>
+                </div>
+              </div>
+              <div id="newPrograms" class="activity-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Alertas</span>
+                  <h3>Seguir una especialidad</h3>
+                </div>
+              </div>
+              <div id="watchLoggedOut" class="empty-state">
+                Inicia sesión para crear alertas personales.
+              </div>
+              <div id="watchArea" style="display: none">
+                <form id="watchForm" class="form-grid compact">
+                  <label
+                    >Especialidad<select
+                      name="specialty"
+                      id="watchSpecialty"
+                    ></select
+                  ></label>
+                  <label
+                    >Estado (opcional)<input
+                      name="state"
+                      maxlength="2"
+                      placeholder="FL"
+                  /></label>
+                  <div class="span-2 form-actions">
+                    <button class="btn primary" type="submit">
+                      Crear alerta</button
+                    ><button class="btn ghost" type="button" id="browserNotify">
+                      Alertas del navegador
+                    </button>
+                  </div>
+                </form>
+                <div id="watchList" class="activity-list"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Personal</span>
+                <h3>Mis notificaciones</h3>
+              </div>
+            </div>
+            <div id="notifications" class="activity-list">
+              <div class="empty-state">
+                Inicia sesión para ver notificaciones.
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="notice">
+              <strong>Fuentes externas</strong>
+              <p>
+                ACGME se usa como fuente pública oficial del catálogo. FREIDA y
+                Residency Explorer se abren mediante sus herramientas oficiales.
+                Cuba Match Explorer no replica masivamente datasets restringidos
+                o licenciados de terceros.
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="data">
+          <div id="authRequired" class="panel callout" style="display: none">
+            <div>
+              <span class="eyebrow">Cuenta requerida</span>
+              <h3>Inicia sesión para guardar tu información</h3>
+              <p>
+                En producción, todo se almacena de forma persistente en Supabase
+                y vuelve a aparecer cuando regreses desde cualquier dispositivo.
+              </p>
+            </div>
+            <button class="btn primary" data-go="account">Ir a Cuenta</button>
+          </div>
+          <div id="dataForms" class="grid-2 align-start">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Perfil por ciclo</span>
+                  <h3>Mi perfil de aplicación</h3>
+                </div>
+                <span class="pill" id="cycleSaveBadge">Nuevo</span>
+              </div>
+              <form id="cycleForm" class="form-grid">
+                <input name="id" type="hidden" />
+                <label
+                  >ID anónimo<input
+                    name="anonId"
+                    required
+                    placeholder="Ej. CUBA-0001"
+                /></label>
+                <label
+                  >Match cycle<select name="cycle" required>
+                    <option>2026</option>
+                    <option selected>2027</option>
+                    <option>2028</option>
+                  </select></label
+                >
+                <label
+                  >Especialidad<input
+                    name="specialty"
+                    required
+                    list="specialtyList"
+                    autocomplete="off"
+                    value="Internal Medicine"
+                /></label>
+                <label
+                  >YOG<input
+                    name="yog"
+                    type="number"
+                    required
+                    min="1980"
+                    max="2035"
+                /></label>
+                <label
+                  >Step 1<select name="step1">
+                    <option>Pass</option>
+                    <option>Fail</option>
+                    <option>Not taken</option>
+                  </select></label
+                >
+                <label
+                  >Step 1 intentos<input
+                    name="step1Attempts"
+                    type="number"
+                    value="1"
+                    min="0"
+                    max="10"
+                /></label>
+                <label
+                  >Step 2 CK<input
+                    name="step2"
+                    type="number"
+                    min="180"
+                    max="300"
+                /></label>
+                <label
+                  >Step 3<input name="step3" type="number" min="180" max="300"
+                /></label>
+                <label
+                  >ECFMG<select name="ecfmg">
+                    <option value="yes">Certified</option>
+                    <option value="no">Not yet</option>
+                  </select></label
+                >
+                <label
+                  >USCE meses<input
+                    name="usce"
+                    type="number"
+                    min="0"
+                    max="60"
+                    step="0.5"
+                    value="0"
+                /></label>
+                <label
+                  >Programas aplicados (total)<input
+                    name="programsApplied"
+                    type="number"
+                    min="0"
+                    max="2000"
+                    placeholder="Ej. 80"
+                /></label>
+                <label
+                  >Invitaciones a entrevista (total)<input
+                    name="interviewInvites"
+                    type="number"
+                    min="0"
+                    max="2000"
+                    placeholder="Ej. 12"
+                /></label>
+                <label class="span-2"
+                  >Tipo de USCE<input
+                    name="usceType"
+                    placeholder="Hands-on, observership, mixed..."
+                /></label>
+                <label
+                  >US LoRs<input
+                    name="lors"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value="0"
+                /></label>
+                <label
+                  >US physician LoRs<input
+                    name="usPhysicianLors"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value="0"
+                /></label>
+                <label
+                  >PD/Chair LoR<select name="pdChairLor">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Publicaciones<input
+                    name="pubs"
+                    type="number"
+                    min="0"
+                    max="500"
+                    value="0"
+                /></label>
+                <label
+                  >Proyectos de investigación<input
+                    name="research"
+                    type="number"
+                    min="0"
+                    max="500"
+                    value="0"
+                /></label>
+                <label
+                  >Voluntariado significativo<select name="volunteer">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Visa requerida<select name="visa">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Estatus migratorio / visa (opcional)<input
+                    name="immigrationStatus"
+                    placeholder="Ej. Green card, J-1 required, etc."
+                /></label>
+                <label
+                  >Residency previa fuera de EE.UU.<select
+                    name="previousResidency"
+                  >
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Preferencia geográfica<input
+                    name="geoPreference"
+                    placeholder="Ej. Florida / South Atlantic"
+                /></label>
+                <label
+                  >Compartir en agregados<select name="consentPublic">
+                    <option value="yes">Sí</option>
+                    <option value="no">No</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Notas privadas<textarea
+                    name="notes"
+                    rows="3"
+                    placeholder="Solo visibles para ti y administradores autorizados"
+                  ></textarea>
+                </label>
+                <div class="span-2 form-actions">
+                  <button class="btn primary" type="submit">
+                    Guardar perfil</button
+                  ><button class="btn ghost" type="button" id="resetCycleForm">
+                    Nuevo perfil
+                  </button>
+                </div>
+              </form>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Actividad por programa</span>
+                  <h3>Aplicación / Interview / Match</h3>
+                </div>
+                <span class="pill" id="reportSaveBadge">Nuevo</span>
+              </div>
+              <form id="applicationForm" class="form-grid">
+                <input name="id" type="hidden" />
+                <label
+                  >Applicant cycle<select
+                    name="applicantCycleId"
+                    id="applicationApplicant"
+                    required
+                  ></select
+                ></label>
+                <label
+                  >Programa<select name="programId" id="applicationProgram">
+                    <option value="">Selecciona un programa</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Programa manual (si no aparece)<input
+                    name="programManual"
+                    placeholder="Nombre oficial del programa"
+                /></label>
+                <label
+                  >Estado<input name="state" placeholder="FL" maxlength="2"
+                /></label>
+                <label
+                  >Especialidad (del perfil)<input
+                    name="specialty"
+                    readonly
+                    value="Internal Medicine"
+                /></label>
+                <label
+                  >Aplicó<select name="applied">
+                    <option value="yes">Sí</option>
+                    <option value="no">No</option>
+                  </select></label
+                >
+                <label
+                  >Signal<select name="signal">
+                    <option>None</option>
+                    <option>Silver</option>
+                    <option>Gold</option>
+                    <option value="Signal">Signal (nivel único)</option>
+                  </select></label
+                >
+                <label
+                  >Geo preference aplicada<select name="geoPreferenceUsed">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Interview<select name="interview">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Fecha invitación<input name="interviewDate" type="date"
+                /></label>
+                <label
+                  >Interview atendida<select name="interviewAttended">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Ranked<select name="ranked">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Matched<select name="matched">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Track<select name="track">
+                    <option>Categorical</option>
+                    <option>Preliminary</option>
+                    <option>Primary Care</option>
+                    <option>Other</option>
+                  </select></label
+                >
+                <label
+                  >Reporte retrospectivo<select name="retrospective">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Solicitar verificación<select name="verificationRequested">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Nota para verificación<textarea
+                    name="verificationNote"
+                    rows="2"
+                    placeholder="No incluyas datos innecesarios o sensibles"
+                  ></textarea>
+                </label>
+                <div class="span-2 form-actions">
+                  <button class="btn primary" type="submit">
+                    Guardar reporte</button
+                  ><button class="btn ghost" type="button" id="resetReportForm">
+                    Nuevo reporte
+                  </button>
+                </div>
+              </form>
+            </article>
+          </div>
+
+          <article class="panel my-data-panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Persistente</span>
+                <h3>Mis perfiles</h3>
+              </div>
+              <button class="btn ghost small" id="exportJsonBtn">
+                Exportar JSON
+              </button>
+            </div>
+            <div id="myCycles" class="table-wrap"></div>
+          </article>
+          <article class="panel my-data-panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Persistente</span>
+                <h3>Mis reportes por programa</h3>
+              </div>
+              <button class="btn ghost small" id="exportCsvBtn">
+                Exportar CSV
+              </button>
+            </div>
+            <div id="myReports" class="table-wrap"></div>
+          </article>
+        </section>
+
+        <section class="view" id="account">
+          <div class="grid-2 align-start">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Cuenta</span>
+                  <h3 id="accountTitle">Registro / Login</h3>
+                </div>
+              </div>
+              <div id="accountLoggedOut">
+                <form id="authForm" class="stack-form">
+                  <label
+                    >Email<input
+                      type="email"
+                      name="email"
+                      required
+                      autocomplete="email"
+                  /></label>
+                  <label
+                    >Contraseña<input
+                      type="password"
+                      name="password"
+                      required
+                      minlength="8"
+                      autocomplete="current-password"
+                  /></label>
+                  <div class="form-actions">
+                    <button
+                      class="btn primary"
+                      data-action="signin"
+                      type="submit"
+                    >
+                      Iniciar sesión</button
+                    ><button
+                      class="btn ghost"
+                      data-action="signup"
+                      type="submit"
+                    >
+                      Crear cuenta
+                    </button>
+                  </div>
+                </form>
+                <button class="text-btn" id="forgotPasswordBtn">
+                  ¿Olvidaste tu contraseña?
+                </button>
+              </div>
+              <div id="accountLoggedIn" style="display: none">
+                <div class="account-card">
+                  <div class="avatar">CM</div>
+                  <div>
+                    <strong id="sessionEmail"></strong
+                    ><span id="sessionRole">user</span>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button class="btn ghost" id="signOutBtn">
+                    Cerrar sesión</button
+                  ><button class="btn danger" id="deleteAccountBtn">
+                    Eliminar mis datos
+                  </button>
+                </div>
+              </div>
+              <div id="authStatus" class="status-box"></div>
+              <div id="passwordPanel" class="password-panel" style="display: none">
+                <span class="eyebrow">Seguridad</span>
+                <h4>Cambiar contraseña</h4>
+                <form id="passwordForm" class="stack-form">
+                  <label
+                    >Nueva contraseña<input
+                      type="password"
+                      name="password"
+                      required
+                      minlength="8"
+                      autocomplete="new-password"
+                  /></label>
+                  <label
+                    >Repetir contraseña<input
+                      type="password"
+                      name="password2"
+                      required
+                      minlength="8"
+                      autocomplete="new-password"
+                  /></label>
+                  <div class="form-actions">
+                    <button class="btn primary" type="submit">
+                      Guardar contraseña
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Estado del sistema</span>
+                  <h3>Base de datos</h3>
+                </div>
+              </div>
+              <div id="backendStatus" class="backend-status"></div>
+              <div class="notice">
+                <strong>Producción</strong>
+                <p>
+                  La configuración de Supabase se realiza una sola vez en
+                  <code>cloud-config.js</code>. Los usuarios finales no
+                  necesitan pegar claves.
+                </p>
+              </div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Transparencia</span>
+                <h3>Cómo usamos tus datos</h3>
+              </div>
+            </div>
+            <div class="prose">
+              <p>
+                Tu perfil y tus reportes individuales permanecen privados. La
+                comunidad recibe estadísticas agregadas sujetas a umbrales
+                mínimos. Puedes retirar el consentimiento para agregados por
+                ciclo, exportar tus datos y solicitar su eliminación.
+              </p>
+              <p>
+                La plataforma es comunitaria e independiente. No está afiliada
+                con ACGME, AMA/FREIDA, AAMC/Residency Explorer ni NRMP.
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="admin">
+          <div id="adminDenied" class="panel empty-state">
+            Esta sección requiere rol de administrador.
+          </div>
+          <div id="adminArea" style="display: none">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Administrator Control Center</span>
+                  <h3>Control del sitio</h3>
+                </div>
+                <button class="btn ghost small" id="adminRefresh">
+                  Actualizar
+                </button>
+              </div>
+              <div id="adminSummary"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Usuarios</span>
+                  <h3>Cuentas y roles</h3>
+                </div>
+              </div>
+              <div id="adminUsers" class="table-wrap"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Perfiles</span>
+                  <h3>Perfiles por ciclo</h3>
+                </div>
+              </div>
+              <div id="adminCycles" class="table-wrap"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Actividad</span>
+                  <h3>Aplicaciones / Interviews / Match</h3>
+                </div>
+              </div>
+              <div id="adminReports" class="table-wrap"></div>
+            </article>
+            <div id="verificationQueue" style="display: none"></div>
+          </div>
+        </section>
+
+        <footer class="ownership-footer">
+          <div>
+            <strong>Cuba Match Explorer</strong
+            ><span>Created and owned by Andrew A Lopez Sanchez, MD, MBA</span>
+          </div>
+          <div>
+            <span
+              >© 2026 Andrew A Lopez Sanchez, MD, MBA. All rights
+              reserved.</span
+            ><span
+              >Community-sourced • Privacy protected • Not a match prediction
+              service</span
+            >
+          </div>
+        </footer>
+      </main>
+    </div>
+    <script src="cloud-config.js?v=3.7"></script>
+    <script src="app.js?v=3.7"></script>
+  </body>
+</html>
