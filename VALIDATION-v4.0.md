@@ -8,8 +8,8 @@
 - Five-program aggregate EXPLAIN ANALYZE: approximately 41 ms before the join indexes, no disk spill.
 - Production source commit: e381430ae4e04d3f6033b0d53cbbe7eaa5087a9a on main.
 - Vercel deployment dpl_7DNXFLgfU9Hy7VaCu1BQjKWrgP8X was verified Ready / Production / Current on 2026-10-01.
-- Production URL: https://cuba-match-explorer.vercel.app/ (unchanged; Auth settings were not rewritten).
-- Production HTTP 200 and byte-for-byte checks passed for index.html, app.js, workspace.js and sw.js against released source. The service-worker source uses the v4.0 cache namespace; a device retaining a previously installed v3.7 worker was not available for an upgrade-path test.
+- Production URL: https://cuba-match-explorer.vercel.app/ (production domain unchanged).
+- Production HTTP 200 and byte-for-byte checks passed for index.html, app.js, workspace.js and service-worker.js against released source. The service-worker source uses the v4.0 cache namespace; a device retaining a previously installed v3.7 worker was not available for an upgrade-path test.
 - Live production Chrome smoke: community dashboard, program profiles and two-program comparison rendered correctly with real privacy-safe aggregates. No application-origin fatal console errors were observed.
 - Community dashboard declared invitation total (362) is distinct from the imported detailed invitation-row invariant (338).
 - Source hashes were compared with every GitHub tree blob before promotion; temporary mobile QA harness is absent from production.
@@ -28,7 +28,9 @@
 
 ## Checks requiring authenticated access
 
-- Supabase URL Configuration currently redirects this browser to sign-in. Site URL / redirect allowlist and delivered confirmation/recovery email links have not been verified in this run. Auth configuration has not been changed.
+- Supabase dashboard login succeeded on 2026-10-01. URL Configuration was found to contain the baseline default http://localhost:3000 and an empty redirect allowlist. After production health was verified, Site URL was corrected to https://cuba-match-explorer.vercel.app and the exact redirect https://cuba-match-explorer.vercel.app/ was added. Both values were verified after reload. No wildcard preview domains were added.
+- Supabase Emails shows default templates and no custom SMTP configuration. Delivered confirmation/recovery links remain unverified.
+- A production app sign-in attempt through secure browser authentication returned “Failed to fetch”; it did not establish a session. Public community data still loaded afterward. This is not evidence of incorrect credentials; the authenticated browser acceptance tests remain pending.
 - Public Auth settings confirm signup is enabled and email autoconfirm is disabled.
 - End-to-end normal-user login, form submission in a real session, Admin browser controls and delivered-email recovery/confirmation remain unverified. Database RLS, own-data update, self-promotion denial and admin-RPC denial have been verified separately; these do not substitute for the missing end-to-end tests.
 - v4.0 must not be described as fully satisfying the Definition of Done until these authenticated checks are completed.
