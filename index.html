@@ -443,7 +443,330 @@
               </p>
             </div>
           </article>
-        </sec…3283 tokens truncated…              </form>
+        </section>
+
+        <section class="view" id="data">
+          <div id="authRequired" class="panel callout" style="display: none">
+            <div>
+              <span class="eyebrow">Cuenta requerida</span>
+              <h3>Inicia sesión para guardar tu información</h3>
+              <p>
+                En producción, todo se almacena de forma persistente en Supabase
+                y vuelve a aparecer cuando regreses desde cualquier dispositivo.
+              </p>
+            </div>
+            <button class="btn primary" data-go="account">Ir a Cuenta</button>
+          </div>
+          <div id="dataForms" class="grid-2 align-start">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Perfil por ciclo</span>
+                  <h3>Mi perfil de aplicación</h3>
+                </div>
+                <span class="pill" id="cycleSaveBadge">Nuevo</span>
+              </div>
+              <form id="cycleForm" class="form-grid">
+                <input name="id" type="hidden" />
+                <label
+                  >ID anónimo<input
+                    name="anonId"
+                    required
+                    placeholder="Ej. CUBA-0001"
+                /></label>
+                <label
+                  >Match cycle<select name="cycle" required>
+                    <option>2026</option>
+                    <option selected>2027</option>
+                    <option>2028</option>
+                  </select></label
+                >
+                <label
+                  >Especialidad<input
+                    name="specialty"
+                    required
+                    list="specialtyList"
+                    autocomplete="off"
+                    value="Internal Medicine"
+                /></label>
+                <label
+                  >YOG<input
+                    name="yog"
+                    type="number"
+                    required
+                    min="1980"
+                    max="2035"
+                /></label>
+                <label
+                  >Step 1<select name="step1">
+                    <option>Pass</option>
+                    <option>Fail</option>
+                    <option>Not taken</option>
+                  </select></label
+                >
+                <label
+                  >Step 1 intentos<input
+                    name="step1Attempts"
+                    type="number"
+                    value="1"
+                    min="0"
+                    max="10"
+                /></label>
+                <label
+                  >Step 2 CK<input
+                    name="step2"
+                    type="number"
+                    min="180"
+                    max="300"
+                /></label>
+                <label
+                  >Step 3<input name="step3" type="number" min="180" max="300"
+                /></label>
+                <label
+                  >ECFMG<select name="ecfmg">
+                    <option value="yes">Certified</option>
+                    <option value="no">Not yet</option>
+                  </select></label
+                >
+                <label
+                  >USCE meses<input
+                    name="usce"
+                    type="number"
+                    min="0"
+                    max="60"
+                    step="0.5"
+                    value="0"
+                /></label>
+                <label
+                  >Programas aplicados (total)<input
+                    name="programsApplied"
+                    type="number"
+                    min="0"
+                    max="2000"
+                    placeholder="Ej. 80"
+                /></label>
+                <label
+                  >Invitaciones a entrevista (total)<input
+                    name="interviewInvites"
+                    type="number"
+                    min="0"
+                    max="2000"
+                    placeholder="Ej. 12"
+                /></label>
+                <label class="span-2"
+                  >Tipo de USCE<input
+                    name="usceType"
+                    placeholder="Hands-on, observership, mixed..."
+                /></label>
+                <label
+                  >US LoRs<input
+                    name="lors"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value="0"
+                /></label>
+                <label
+                  >US physician LoRs<input
+                    name="usPhysicianLors"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value="0"
+                /></label>
+                <label
+                  >PD/Chair LoR<select name="pdChairLor">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Publicaciones<input
+                    name="pubs"
+                    type="number"
+                    min="0"
+                    max="500"
+                    value="0"
+                /></label>
+                <label
+                  >Proyectos de investigación<input
+                    name="research"
+                    type="number"
+                    min="0"
+                    max="500"
+                    value="0"
+                /></label>
+                <label
+                  >Voluntariado significativo<select name="volunteer">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Visa requerida<select name="visa">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Estatus migratorio / visa (opcional)<input
+                    name="immigrationStatus"
+                    placeholder="Ej. Green card, J-1 required, etc."
+                /></label>
+                <label
+                  >Residency previa fuera de EE.UU.<select
+                    name="previousResidency"
+                  >
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Preferencia geográfica<input
+                    name="geoPreference"
+                    placeholder="Ej. Florida / South Atlantic"
+                /></label>
+                <label
+                  >Compartir en agregados<select name="consentPublic">
+                    <option value="yes">Sí</option>
+                    <option value="no">No</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Notas privadas<textarea
+                    name="notes"
+                    rows="3"
+                    placeholder="Solo visibles para ti y administradores autorizados"
+                  ></textarea>
+                </label>
+                <div class="span-2 form-actions">
+                  <button class="btn primary" type="submit">
+                    Guardar perfil</button
+                  ><button class="btn ghost" type="button" id="resetCycleForm">
+                    Nuevo perfil
+                  </button>
+                </div>
+              </form>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Actividad por programa</span>
+                  <h3>Aplicación / Interview / Match</h3>
+                </div>
+                <span class="pill" id="reportSaveBadge">Nuevo</span>
+              </div>
+              <form id="applicationForm" class="form-grid">
+                <input name="id" type="hidden" />
+                <label
+                  >Applicant cycle<select
+                    name="applicantCycleId"
+                    id="applicationApplicant"
+                    required
+                  ></select
+                ></label>
+                <label
+                  >Programa<select name="programId" id="applicationProgram">
+                    <option value="">Selecciona un programa</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Programa manual (si no aparece)<input
+                    name="programManual"
+                    placeholder="Nombre oficial del programa"
+                /></label>
+                <label
+                  >Estado<input name="state" placeholder="FL" maxlength="2"
+                /></label>
+                <label
+                  >Especialidad (del perfil)<input
+                    name="specialty"
+                    readonly
+                    value="Internal Medicine"
+                /></label>
+                <label
+                  >Aplicó<select name="applied">
+                    <option value="yes">Sí</option>
+                    <option value="no">No</option>
+                  </select></label
+                >
+                <label
+                  >Signal<select name="signal">
+                    <option>None</option>
+                    <option>Silver</option>
+                    <option>Gold</option>
+                    <option value="Signal">Signal (nivel único)</option>
+                  </select></label
+                >
+                <label
+                  >Geo preference aplicada<select name="geoPreferenceUsed">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Interview<select name="interview">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Fecha invitación<input name="interviewDate" type="date"
+                /></label>
+                <label
+                  >Interview atendida<select name="interviewAttended">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Ranked<select name="ranked">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Matched<select name="matched">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Track<select name="track">
+                    <option>Categorical</option>
+                    <option>Preliminary</option>
+                    <option>Primary Care</option>
+                    <option>Other</option>
+                  </select></label
+                >
+                <label
+                  >Reporte retrospectivo<select name="retrospective">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label
+                  >Solicitar verificación<select name="verificationRequested">
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                  </select></label
+                >
+                <label class="span-2"
+                  >Nota para verificación<textarea
+                    name="verificationNote"
+                    rows="2"
+                    placeholder="No incluyas datos innecesarios o sensibles"
+                  ></textarea>
+                </label>
+                <div class="span-2 form-actions">
+                  <button class="btn primary" type="submit">
+                    Guardar reporte</button
+                  ><button class="btn ghost" type="button" id="resetReportForm">
+                    Nuevo reporte
+                  </button>
+                </div>
+              </form>
             </article>
           </div>
 
