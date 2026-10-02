@@ -33,3 +33,12 @@
 - Historical integrity reconfirmed after publication: 36 | 338 | 14.
 
 - Follow-up source commit `08969d023f0b3d376e20eea64d9304978df2844d` displayed Ready/Production/main in Vercel. Deployment `dpl_8KfiLC2G4cPAdVhw6YNCN8usS1fN`. Eight assets passed HTTP-200/source-byte checks after this fix. Documentation-only acceptance evidence is recorded in the subsequent commit.
+
+
+## Custom domains — 2026-10-02
+
+- Owner registered cubamatchexplorer.org and cubamatchexplorer.com. Vercel project cuba-match-explorer shows Valid Configuration for both. The .org domain serves Production; .com redirects to .org with HTTP 308. The prior Vercel alias remains Production.
+- Both HTTPS entry points returned HTTP 200 after following redirects, with the same 40,163-byte HTML. A real browser rendered the v4.2 dashboard at https://cubamatchexplorer.org/#/dashboard. No application-origin fatal console errors were observed; an extension metadata error is external to the application.
+- Resend confirms cubamatchexplorer.org verified, with all supplied DKIM/SPF/MX/CNAME records verified. DMARC TXT is v=DMARC1; p=none. Open/click tracking disabled, receiving disabled. This is domain verification, not email delivery acceptance.
+- Dispatcher canonical notification links now use https://cubamatchexplorer.org. Sending credential, authenticated dispatcher email test, actual receipt, and Supabase SMTP are pending.
+- Supabase dashboard session currently exposes a different project (geqdpybsidzrfxjcquex), not production xqjjiveuvnioachgxqez. Site URL/redirect allowlist have therefore not been changed in this session. Production Auth confirmation and recovery on the new canonical domain remain pending correct-account access. No changes were made to the unrelated project.

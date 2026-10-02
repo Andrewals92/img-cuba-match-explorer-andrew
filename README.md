@@ -3,7 +3,7 @@
 Created and owned by Andrew A Lopez Sanchez, MD, MBA  
 © 2026 Andrew A Lopez Sanchez, MD, MBA. All rights reserved.
 
-Production: https://cuba-match-explorer.vercel.app/  
+Production: https://cubamatchexplorer.org/ (https://cubamatchexplorer.com/ redirects with HTTP 308). The previous Vercel alias remains available.  
 Repository: Andrewals92/img-cuba-match-explorer-andrew · production branch `main`.
 
 Static HTML, CSS and vanilla JavaScript; Supabase supplies Auth, RLS-protected storage and aggregate RPCs. No frontend build or framework migration is required.
@@ -43,6 +43,6 @@ Existing notifications are extended, not replaced. ACGME change events and expli
 
 Backend source: `supabase/functions/notification-dispatcher`, `supabase/functions/acgme-program-monitor`. New migrations 020–029. Dispatcher requires its internally generated cron token; no frontend invocation or provider secrets. Built-in Supabase server credentials stay in Edge runtime. VAPID initialization uses private storage and serialization. Web Push supports FCM Chrome/Android, Mozilla and Apple endpoints; unsupported endpoint hosts are rejected. Maximum ten stored devices per account. Other services can be deliberately added after validation.
 
-Email provider setup (not yet configured): connect Resend, verify an owned sender domain with provider-specified SPF/DKIM and a suitable DMARC record, then set `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate; do not alter working Site URL/redirect allowlist. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
+Email provider setup: Resend has verified cubamatchexplorer.org with DKIM and SPF; DMARC is configured in monitoring mode (p=none). Opens and clicks tracking are disabled. Server sending credentials remain pending; set `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate; do not alter working Site URL/redirect allowlist. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
 
 Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test.cjs`, calendar/personal/season tests; transactional SQL in `tests/notifications-rls.sql`. Local notification DOM test currently expects the `v42/` source directory, as does the production smoke script. No fixture is imported into production permanently.

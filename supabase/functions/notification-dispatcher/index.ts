@@ -1,5 +1,5 @@
 import webpush from 'npm:web-push@3.6.7';
-const origin='https://cuba-match-explorer.vercel.app';
+const origin='https://cubamatchexplorer.org';
 const base=Deno.env.get('SUPABASE_URL')!;
 const key=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')||JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS')||'{}').default;
 const resend=Deno.env.get('RESEND_API_KEY');
