@@ -4,7 +4,7 @@ Baseline inspected: main ee173de7b4f1a9d951ab5add270f149320f7ed48, live v4.2 at 
 
 ## Applied and tested
 
-- Migrations 030–032 applied successfully; no historical migration rerun.
+- Migrations 030–033 applied successfully; no historical migration rerun.
 - Program import: RE 702 entries, 683 linked; MAR 119 entries, all linked. Source keys prevent duplicate imports. Unresolved RE entries remain unattributed.
 - intelligence-privacy.sql PASS: wave 2 suppressed/3 disclosed; Gold 4 suppressed/5 valid; complement suppression; duplicate observation dedup; active/historical cycles; no pooled signal rates; cross-filter behavior; private schema/tracker ACLs; admin diagnostic ACL.
 - wave-alerts.sql PASS: explicit opt-in; sufficient period; cycle/week dedupe; muted saved programs; no unintended email/push. All synthetic users/reports/notifications rolled back.
@@ -18,13 +18,17 @@ Baseline inspected: main ee173de7b4f1a9d951ab5add270f149320f7ed48, live v4.2 at 
 
 ## Advisor review
 
-Security/performance advisors reviewed after DDL. The new private source table deliberately has RLS with no user policies and revoked schema/table privileges. Public SECURITY DEFINER aggregate endpoints have explicit empty search_path, bounded arguments and safe output; the admin endpoint checks is_admin. These are expected advisory warnings, not unrestricted raw access. No new missing foreign-key index was reported; the source catalog FK has an index. Its initially unused index is retained for joins and future imports. Preexisting Auth leaked-password protection, RLS initplan and moderation-FK warnings were not introduced by v4.3.
+Security/performance advisors reviewed after DDL and again after migration 033 on October 2, 2026. The new private source table deliberately has RLS with no user policies and revoked schema/table privileges. Public SECURITY DEFINER aggregate endpoints have explicit empty search_path, bounded arguments and safe output; the admin endpoint checks is_admin. These are expected advisory warnings, not unrestricted raw access. No new missing foreign-key index was reported; the source catalog FK has an index. Its initially unused index is retained for joins and future imports. Preexisting Auth leaked-password protection, RLS initplan and moderation-FK warnings were not introduced by v4.3.
 
 Advisor references: https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable and https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy .
 
 ## Production acceptance
 
-Deployment, HTTP, browser, layout and final data-regression results will be appended after the v4.3 main commit becomes Ready/Production. The local browser could not access the workspace's localhost server; DOM tests ran in the workspace, and visual acceptance uses the actual production site.
+On October 2, 2026, source commit 3c90fcc3006f1e4054119a2a00f312ae3102ed81 deployed to the existing Vercel project and was observed Ready / Production / Current (deployment dpl_7R3FLbhEBsRAWBESnYkDNRKZDtHf). Browser acceptance used the actual production site, not fixtures. Interview Waves loaded; program profiles opened by stable UUID; Compare retained two selections after reload and successfully displayed five programs; cycle context and suppressed values were visible. The production source catalog retains program-only metadata and provenance. No application-origin fatal JavaScript error was observed; browser-extension metadata errors were excluded.
+
+Actual production views rendered inside 390 px and 360 px Chrome iframe viewports on a preview-only QA branch. Document widths matched scroll widths (375/375 and 345/345 after scrollbar space). This verifies responsive layout, not a physical Android device. A small source-search touch target found during this check is enlarged to at least 44 px in the final patch. The final patch also prioritizes supplied individual Residency Explorer links, adds migration 033 to source control, and advances the service-worker cache to v4.3-r2.
+
+Final production database regression after migrations 030–033: **36 imported profiles | 338 detailed interview invitation rows | 14 matches | 0 duplicate imported report payloads**. Synthetic tests were rolled back. No historical import was rewritten.
 
 ## Known limits
 

@@ -76,7 +76,7 @@
     function officialLinks(p) {
       const defaults={acgme:['ACGME','https://apps.acgme.org/ads/Public/Programs/Search'],freida:['FREIDA','https://freida.ama-assn.org/'],residency_explorer:['Residency Explorer','https://www.residencyexplorer.org/']};
       return `<div class="source-links">${Object.entries(defaults).map(([source,[name,url]])=>{
-        const candidate=(p.links||[]).find(l=>l.source===source)?.url || (source==='residency_explorer'?(p.resources||[]).find(l=>l.source==='Residency Explorer')?.program_url:null);
+        const candidate=(source==='residency_explorer'?(p.resources||[]).find(l=>l.source==='Residency Explorer')?.program_url:null) || (p.links||[]).find(l=>l.source===source)?.url;
         if(candidate && /^https:\/\//i.test(candidate))url=candidate;
         return `<a class="source-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${name} ↗</a>`;
       }).join('')}</div>`;

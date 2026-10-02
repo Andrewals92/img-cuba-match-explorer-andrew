@@ -50,4 +50,4 @@ Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test
 
 ## v4.3 Interview Wave Tracker and Signal Intelligence
 
-The static frontend adds intelligence.js and batched privacy-safe RPCs, with source provenance for owner-supplied IM program lists. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–032 extend the existing production schema.
+The static frontend adds intelligence.js and batched privacy-safe RPCs, with source provenance for owner-supplied IM program lists. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–033 extend the existing production schema.

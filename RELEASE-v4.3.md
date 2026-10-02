@@ -23,6 +23,7 @@ Every supplied RE entry retains its individual source URL. The four MAR programs
 
 - 030_wave_signal_intelligence: private canonical observations; program_season_intelligence_v43; specialty_wave_overview_v43.
 - 031_program_source_catalog: private program-only source catalog; program_resources_v43; program_source_directory_v43.
+- 033_cycle_context: clarifies that all available cycles may include ongoing cycles; timelines remain separate.
 - 032_wave_alerts: wave_activity preference; private deduplicated generator; existing notification tick and claim integration; admin-only intelligence_health_v43.
 
 All three migrations applied successfully. Existing migrations were not rerun or renumbered. Import JSON batches and the location enrichment statement are versioned under supabase/imports.
