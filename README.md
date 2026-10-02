@@ -34,3 +34,15 @@ See `RELEASE-v4.0.md`, `SECURITY.md`, `PRIVACY.md` and `VALIDATION-v4.0.md` for 
 ## v4.1 Interview season
 
 See RELEASE-v4.1.md and VALIDATION-v4.1.md. Additive migrations are 016, 017, 018 and 019; run only new migrations on an existing v4.0 installation. calendar-utils.js converts IANA wall time to fixed UTC instants and exports calendars; season.js manages owner-only private interviews and global watchlists. No frontend dependencies or framework migration were added. Unit checks: `node tests/calendar.test.cjs` (run from the repository root; the test resolves source relative to itself) and `node tests/personal-summary.test.cjs`. SQL acceptance fixtures require a database transaction and always roll back; they must never be converted into persistent seed data.
+
+## v4.2 communication layer
+
+See RELEASE-v4.2.md and VALIDATION-v4.2.md for implementation and readiness. Public Radar is `#/radar`; signed-in Notification Center is `#/notification-center`, preferences `#/notification-settings`.
+
+Existing notifications are extended, not replaced. ACGME change events and explicit Radar/watchlist matching produce canonical private notification records. `cme_private.notification_tick()` runs every five minutes, generates current reminders/digests and dispatches at most five claimed channel jobs. Owner RLS and column-level read-state grants protect user data. Quiet hours defer delivery in the chosen IANA timezone. Daily digest is 09:00 local; weekly is Monday 09:00. Interview reminders keep their separate timing and expire at event start.
+
+Backend source: `supabase/functions/notification-dispatcher`, `supabase/functions/acgme-program-monitor`. New migrations 020–029. Dispatcher requires its internally generated cron token; no frontend invocation or provider secrets. Built-in Supabase server credentials stay in Edge runtime. VAPID initialization uses private storage and serialization. Web Push supports FCM Chrome/Android, Mozilla and Apple endpoints; unsupported endpoint hosts are rejected. Maximum ten stored devices per account. Other services can be deliberately added after validation.
+
+Email provider setup (not yet configured): connect Resend, verify an owned sender domain with provider-specified SPF/DKIM and a suitable DMARC record, then set `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate; do not alter working Site URL/redirect allowlist. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
+
+Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test.cjs`, calendar/personal/season tests; transactional SQL in `tests/notifications-rls.sql`. Local notification DOM test currently expects the `v42/` source directory, as does the production smoke script. No fixture is imported into production permanently.

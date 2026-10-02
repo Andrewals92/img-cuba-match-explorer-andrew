@@ -1,10 +1,10 @@
-// Cuba Match Explorer service worker (v4.1)
+// Cuba Match Explorer service worker (v4.2)
 // FIX: the previous worker intercepted every GET, including Supabase API
 // calls, and its cache name never changed, so users could keep running an
 // old app.js after a deploy. It now only handles same-origin static files,
 // always tries the network first, and the cache name is versioned.
-const CACHE = 'cuba-match-explorer-v4.1';
-const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg'];
+const CACHE = 'cuba-match-explorer-v4.2';
+const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -35,3 +35,7 @@ self.addEventListener('fetch', (e) => {
       .catch(() => caches.match(req).then((r) => r || (req.mode === 'navigate' ? caches.match('./index.html') : Response.error())))
   );
 });
+
+const pushPath=p=>/^#\/(program\/[a-f0-9-]{36}|radar|interviews|notification-settings|notification-center)$/.test(p)?p:'#/notification-center';
+self.addEventListener('push',e=>{let d={};try{d=e.data?.json()||{};}catch{}e.waitUntil(self.registration.showNotification('Cuba Match Explorer',{body:'Tienes una nueva alerta. Abre la app para ver los detalles.',icon:'app-icon.svg',tag:d.id||'cme-alert',data:{path:pushPath(d.path)}}));});
+self.addEventListener('notificationclick',e=>{e.notification.close();const url=new URL('/'+pushPath(e.notification.data?.path),self.location.origin).href;e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(async cs=>{for(const c of cs){if(new URL(c.url).origin===self.location.origin){await c.navigate(url);return c.focus();}}return self.clients.openWindow(url);}));});

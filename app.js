@@ -1463,6 +1463,9 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
+      radar:["New Program Radar","Programas detectados y cambios materiales."],
+      "notification-center":["Notificaciones","Alertas privadas y estado de lectura."],
+      "notification-settings":["Preferencias","Canales, filtros y horarios de tus alertas."],
       program: ["Program Profile", "Directorio y datos comunitarios protegidos."],
       compare: ["Program Compare", "Compara datos documentados de 2 a 5 programas."],
       dashboard: ["Dashboard", "Datos comunitarios protegidos y persistentes."],
@@ -1500,12 +1503,14 @@
       history.replaceState(null, "", "#/" + currentView);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (skipLoad) return;
+    if(currentView==="radar") notifications.radar();
+    if(currentView==="notification-center"||currentView==="notification-settings")notifications.view();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
     if (currentView === "programs") workspace.renderPrograms();
     if (currentView === "interviews" || currentView === "watchlist") season.render();
     if (currentView === "applicants") findSimilar();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") { renderAdmin(); workspace.health(); }
+    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); }
   }
   function resetCycleForm() {
     q("cycleForm").reset();
@@ -2040,17 +2045,6 @@
         "/rest/v1/notifications?select=*&order=created_at.desc&limit=50",
       )) || [];
     const unread = intelDB.notifications.filter((x) => !x.read_at);
-    // FIX: "Alertas del navegador" asked for permission but never showed a
-    // notification. New unread items now raise a browser notification.
-    if (seenNotifications && "Notification" in window && Notification.permission === "granted")
-      unread
-        .filter((x) => !seenNotifications.has(x.id))
-        .slice(0, 3)
-        .forEach((x) => {
-          try {
-            new Notification(x.title, { body: x.body, icon: "app-icon.svg" });
-          } catch {}
-        });
     seenNotifications = new Set(intelDB.notifications.map((x) => x.id));
     q("notifBadge").textContent = unread.length;
     q("notifBadge").style.display = unread.length ? "inline-grid" : "none";
@@ -2089,6 +2083,8 @@
   const season = window.CMESeason({q,esc,api:(path,opts={})=>request(path,{...opts,body:opts.body?JSON.parse(opts.body):null}),rpc,getUserId:()=>session?.user?.id,getMyData:()=>myDB,toast,programLink:r=>workspace.programLink(r)});
   document.addEventListener('cme-season-loaded',()=>{if(currentView==='program'||currentView==='compare')workspace.loadView();else if(currentView==='programs')workspace.loadDirectory();});
 
+  const notifications=window.CMENotifications({q,esc,api:request,rpc,getUserId:()=>session?.user?.id,isAdmin,toast,getSeason:()=>season});
+
   let refreshRun = 0;
   async function refresh() {
     const run = ++refreshRun;
@@ -2113,6 +2109,7 @@
     renderDashboard();
     workspace.renderPersonal();
     season.load();
+    notifications.load();
     renderPrograms();
     renderInterviews();
     renderMatches();
@@ -2120,7 +2117,7 @@
     renderAccount();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") { renderAdmin(); workspace.health(); }
+    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); }
   }
   q("nav").addEventListener("click", (e) => {
     const b = e.target.closest(".nav-btn");
@@ -2533,17 +2530,7 @@
       toast(err.message, "bad");
     }
   });
-  q("browserNotify").addEventListener("click", async () => {
-    if (!("Notification" in window))
-      return toast("Este navegador no soporta notificaciones.", "bad");
-    const p = await Notification.requestPermission();
-    toast(
-      p === "granted"
-        ? "Alertas del navegador activadas."
-        : "Permiso no concedido.",
-      p === "granted" ? "good" : "bad",
-    );
-  });
+  q("browserNotify").addEventListener("click", () => { currentView="notification-settings"; updateNav(); });
 
   if ("serviceWorker" in navigator && location.protocol.startsWith("http"))
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
@@ -2578,6 +2565,6 @@
     if (session) loadNotifications().catch(() => {});
   })();
   setInterval(() => {
-    if (session && !document.hidden) loadNotifications().catch(() => {});
+    if (session && !document.hidden) { loadNotifications().catch(() => {}); if(!["notification-settings"].includes(currentView))notifications.load(); }
   }, 30000);
 })();
