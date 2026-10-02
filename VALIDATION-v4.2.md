@@ -44,3 +44,11 @@
 - Production dashboard access was recovered with Continue with ChatGPT using the owner account. Site URL is now https://cubamatchexplorer.org. Exact redirects https://cubamatchexplorer.org/ and https://cuba-match-explorer.vercel.app/ were verified after reload. No wildcard redirects or changes to the unrelated project were introduced. Delivered confirmation/recovery acceptance remains pending.
 - Server settings NOTIFICATION_EMAIL_FROM and NOTIFICATION_EMAIL_DOMAIN_VERIFIED were saved through production Edge Function Secrets. A new Resend sending-only/domain-restricted key is prepared but awaits owner creation and direct private storage as RESEND_API_KEY. Email delivery remains disabled until that key is stored; actual receipt is not claimed.
 - Domain source commit 62b55ec9752fda81beca911b48e8907f194b040c was observed Ready / Production / Current / main in Vercel deployment dpl_3z3hcwbH7PgMP6LY4RUfnqjK1trT. Dispatcher v8 is ACTIVE and authenticated invocation returned HTTP 200 (push_ready=true, email_ready=false). Historical counts were reconfirmed 36 | 338 | 14. The DOM regression rerun was unavailable because jsdom is absent from the current runtime; no frontend behavior changed in this domain update.
+
+
+## Email configuration follow-up — 2026-10-02
+
+- Owner created the Resend domain-restricted Sending access credential and entered it directly into Supabase. RESEND_API_KEY is listed among custom Edge secrets; its value was never read or copied into source, logs, chat, or screenshots.
+- Auth custom SMTP was reload-verified enabled, with auth@cubamatchexplorer.org, sender name Cuba Match Explorer, smtp.resend.com and port 465. Credentials remain private.
+- Authenticated dispatcher request 382 returned HTTP 200, ok=true, push_ready=true, email_ready=true, sent=0 and failed=0. This proves configuration readiness, not delivery.
+- A recovery email test to the owner's existing account was blocked by automatic approval review because explicit authorization for that destination was required. No workaround was attempted. Recent Resend metadata contains only the prior onboarding Hello World message; actual new-domain delivery, recovery link consumption and signup confirmation remain pending owner-approved acceptance.
