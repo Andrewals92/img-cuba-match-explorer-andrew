@@ -20,6 +20,14 @@ const CAUTIONS={
  no_actions:'Este asistente solo consulta y explica. Guarda programas o modifica tus datos mediante los controles explícitos de la aplicación.'
 };
 class SafeError extends Error {constructor(category,status=503){super(category);this.category=category;this.status=status;}}
+// Convert provider errors to fixed operational codes; never return/log the raw body.
+function providerIssue(status,body){
+ const message=JSON.stringify(body||{}).slice(0,12000).toLowerCase();
+ if(/billing.address|payment.method/.test(message))return 'billing_setup';
+ if(/free.tier|free.credit|paid.tier|purchase.*credit/.test(message))return 'free_tier_access';
+ if(/insufficient.*credit|credit.*exhaust|balance|budget/.test(message))return 'credit_limit';
+ return ({400:'request_configuration',401:'provider_authentication',402:'credit_limit',403:'provider_access_denied',404:'model_unavailable',429:'provider_rate_limit'})[status]||'provider_unavailable';
+}
 function plain(value,max=300){return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').slice(0,max):'';}
 function exactKeys(obj,keys){return obj&&typeof obj==='object'&&!Array.isArray(obj)&&Object.keys(obj).every(k=>keys.includes(k));}
 function validateInput(x){
@@ -118,14 +126,16 @@ function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME
   const read=(table,query)=>jsonRequest(URL_ROOT+'/rest/v1/'+table+'?'+query,{headers});
   const reservation=await rpc('ai_begin_request_v50',{p_mode:x.mode});
   if(!reservation.allowed)return {status:429,body:{error:'rate_limit',reason:reservation.reason,retry_after:reservation.retry_after}};
-  const b=builder();let plan,status='success',errorCategory=null,selection,provider='';
+  const b=builder();let plan,status='success',errorCategory=null,selection,provider='',providerDiagnostic=null;
   async function generate(messages,extra,maxTokens){
    if(!['openai/gpt-5.4-mini','openai/gpt-5-mini','openai/gpt-6-luna'].includes(model))throw new SafeError('configuration');
    if(Buffer.byteLength(JSON.stringify(messages),'utf8')>22000)throw new SafeError('grounding');
    const key=await getProviderToken?.();if(!key)throw new SafeError('configuration');
-   let data;try {data=await jsonRequest('https://ai-gateway.vercel.sh/v1/chat/completions',{
+   let data;try {const res=await fetchImpl('https://ai-gateway.vercel.sh/v1/chat/completions',{
     method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({model,messages,max_completion_tokens:maxTokens,reasoning_effort:'low',stream:false,store:false,
-    providerOptions:{gateway:{only:['openai'],tags:['cme-v5'],cacheControl:'max-age=0'}},...extra})},14000);}catch(e){throw new SafeError(e.category==='provider_limit'?'provider_limit':e.name==='TimeoutError'?'timeout':'provider_unavailable');}
+    providerOptions:{gateway:{only:['openai'],tags:['cme-v5'],cacheControl:'max-age=0'}},...extra}),signal:AbortSignal.timeout(14000)});
+    if(!res.ok){let body;try{body=await res.json();}catch{}providerDiagnostic=providerIssue(res.status,body);throw new SafeError([402,429].includes(res.status)?'provider_limit':'provider_unavailable');}data=await res.json();
+   }catch(e){throw new SafeError(e.category==='provider_limit'?'provider_limit':e.name==='TimeoutError'?'timeout':'provider_unavailable');}
    inputTokens+=data.usage?.prompt_tokens||0;outputTokens+=data.usage?.completion_tokens||0;provider=model;return data.choices?.[0]?.message;
   }
   async function gatherProgram(ids){
@@ -223,8 +233,8 @@ function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME
   }
   // Model output is never rendered: only exact, server-constructed evidence sentences and known cautions.
   try{await rpc('ai_finish_request_v50',{p_answer_id:reservation.answer_id,p_status:status,p_error:errorCategory,p_latency:Math.min(120000,now()-start),p_tools:Math.min(8,toolCalls),p_input_tokens:Math.min(60000,inputTokens),p_output_tokens:Math.min(6000,outputTokens),p_source_types:[...new Set(b.sources.map(s=>s.type))].slice(0,8),p_program_ids:b.actions.map(a=>a.id).slice(0,5)});}catch{/* metadata failure must not expose errors or content */}
-  return {status:200,body:{answer_id:reservation.answer_id,status,provider:provider||null,mode:x.mode,facts:selection,sources:b.sources,cautions:[...b.cautions].map(id=>({id,text:CAUTIONS[id]})),actions:b.actions,generated_at:new Date(now()).toISOString(),history_stored:false,error_category:errorCategory}};
+  return {status:200,body:{answer_id:reservation.answer_id,status,provider:provider||null,provider_issue:providerDiagnostic,mode:x.mode,facts:selection,sources:b.sources,cautions:[...b.cautions].map(id=>({id,text:CAUTIONS[id]})),actions:b.actions,generated_at:new Date(now()).toISOString(),history_stored:false,error_category:errorCategory}};
  }
  return {run,authenticate};
 }
-module.exports={createAssistant,validateInput,validatePlan,validateSelection,policy,builder,addCohort,addProgram,SafeError,CAUTIONS,completed};
+module.exports={createAssistant,validateInput,validatePlan,validateSelection,policy,builder,addCohort,addProgram,SafeError,CAUTIONS,completed,providerIssue};

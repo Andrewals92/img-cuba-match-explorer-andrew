@@ -53,6 +53,7 @@
     const r=await assistantRequest({question,mode:context.mode,profile_id:profileId||null,program_ids:context.program_ids,cycle:Object.hasOwn(context,'cycle')?context.cycle:(profile()?.cycle||null),filters,consent:true,...(context.cohort_filters?{cohort_filters:context.cohort_filters}:{})});
     if(n!==requestRun||uid!==getUserId())return;
     answers.unshift({question,response:r});answers=answers.slice(0,6);renderAnswers();q('aiQuestion').value='';q('aiState').textContent=r.status==='fallback'?'La IA no está disponible; se muestran los datos obtenidos sin generación.':'Respuesta lista. Revisa sus fuentes y límites.';
+    if(r.status==='fallback'&&isAdmin()&&r.provider_issue)q('aiState').textContent+=' Diagnóstico del proveedor: '+r.provider_issue+'.';
    }catch(e){if(n===requestRun)q('aiState').textContent=e.message||'No se pudo completar la consulta. Tus otras herramientas siguen disponibles.';}
    finally{if(n===requestRun){q('aiAsk').disabled=false;q('aiState').setAttribute('aria-busy','false');}}
   }
