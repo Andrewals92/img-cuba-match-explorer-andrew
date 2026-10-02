@@ -52,3 +52,11 @@
 - Auth custom SMTP was reload-verified enabled, with auth@cubamatchexplorer.org, sender name Cuba Match Explorer, smtp.resend.com and port 465. Credentials remain private.
 - Authenticated dispatcher request 382 returned HTTP 200, ok=true, push_ready=true, email_ready=true, sent=0 and failed=0. This proves configuration readiness, not delivery.
 - A recovery email test to the owner's existing account was blocked by automatic approval review because explicit authorization for that destination was required. No workaround was attempted. Recent Resend metadata contains only the prior onboarding Hello World message; actual new-domain delivery, recovery link consumption and signup confirmation remain pending owner-approved acceptance.
+
+
+## Authorized recovery delivery — 2026-10-02
+
+- After explicit owner authorization, production Auth /recover was called for the owner's existing account with redirect_to=https://cubamatchexplorer.org/. Request returned HTTP 200.
+- Resend listed the new Reset your password message as delivered at 2026-10-02T12:40:36.932Z. Provider email ID: 01a0fca1-7cab-7c21-8b75-1f42a7c0d857. This verifies the Auth-to-SMTP-to-provider delivery path; actual inbox inspection, link consumption and password-change acceptance were not performed. No recovery token or private email body was read or copied.
+- Signup confirmation acceptance and real new-domain background push/device tests remain pending.
+
