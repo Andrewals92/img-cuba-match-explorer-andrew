@@ -74,3 +74,6 @@ The assistant runs at `/api/match-assistant` in a Vercel Node function. `server/
 Migrations 038 and 039 were applied after the existing 037 migration. They replace `similar_cohort` individual rows with privacy-safe aggregates, add an owner-scoped discovery RPC, and add minimal operational metadata/feedback with atomic limits. All 002–037 files and historical imported rows remain untouched. Do not rerun old imports.
 
 `npm ci` installs the pinned server dependency; plain HTTP hosting still supports static tools but cannot run the assistant endpoint. Test with `node tests/ai-gateway.test.cjs`; DOM tests use a separate QA installation of jsdom 30.1.1. SQL suites roll back synthetic fixtures. See `RELEASE-v5.0.md`, `AI-DATA-AND-GROUNDING.md`, `AI-EVALUATION.md`, and `ADMIN-AI-OPS.md` for scope and validation limits.
+
+
+Migration 040 additionally protects the community overview and Step 2 histogram with distinct-person thresholds and safe adjacent-bin grouping. No historical row is changed. Tests in `tests/community-summary-privacy.sql` pass; protected totals are displayed as unavailable, never zero, and current cycles do not produce a completed Match outcome.

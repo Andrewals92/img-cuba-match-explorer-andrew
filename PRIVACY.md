@@ -41,3 +41,6 @@ Cohort comparison now exposes aggregate summaries only; individual historical/cu
 AI is opt-in per tab/send consent. A question and its minimum necessary context are sent to Vercel AI Gateway/OpenAI. We do not store chat history, print chat content in logs or send notes, meeting URLs, rank positions or verification documents. Do not type sensitive content into questions. Provider processing follows applicable provider terms; the application does not promise provider zero retention.
 
 Feedback stores only a predefined label and operational metadata associated with an answer ID, not free-text conversation. Metadata expires after 40 days; admins see aggregates only. Clear removes in-memory answers; logout, account change and reload clear them too. Each new question is independent. See AI-DATA-AND-GROUNDING.md for exact scope and limitations.
+
+
+Migration 040 additionally protects the community overview and Step 2 histogram with distinct-person thresholds and safe adjacent-bin grouping. No historical row is changed. Tests in `tests/community-summary-privacy.sql` pass; protected totals are displayed as unavailable, never zero, and current cycles do not produce a completed Match outcome.

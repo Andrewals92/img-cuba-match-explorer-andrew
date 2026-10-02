@@ -849,11 +849,11 @@
   function renderDashboard() {
     const o = publicDB.overview || {};
     const items = [
-      ["Applicants", o.applicants || 0],
-      ["Applications", o.applications || 0],
-      ["Programs", o.programs || 0],
-      ["Interviews", o.interviews || 0],
-      ["Matches", o.matches || 0],
+      ["Applicants", o.applicants ?? "—"],
+      ["Applications", o.applications ?? "—"],
+      ["Programs", o.programs ?? "—"],
+      ["Interviews", o.interviews ?? "—"],
+      ["Matches · ciclos completos", o.matches ?? "—"],
     ];
     q("kpiGrid").innerHTML = items
       .map(
@@ -882,7 +882,7 @@
               `<div class="dist-col"><div class="dist-bar" style="height:${Math.max(5, ((x.count || 0) / mb) * 120)}px"></div><small>${esc(x.label)}<br>${x.count || 0}</small></div>`,
           )
           .join("")
-      : '<div class="empty-state">Se mostrará cuando haya datos suficientes.</div>';
+      : '<div class="empty-state">Datos insuficientes para mostrar grupos protegidos de al menos 5 personas.</div>';
     q("recentActivity").innerHTML = publicDB.recent.length
       ? publicDB.recent
           .slice(0, 12)
@@ -2194,7 +2194,7 @@
           "good",
         );
     } catch (err) {
-      setAuthStatus(err.message, "bad");
+      setAuthStatus(translateError(err.message), "bad");
     } finally {
       btns.forEach((b) => (b.disabled = false));
     }

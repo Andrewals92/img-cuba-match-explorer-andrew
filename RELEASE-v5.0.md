@@ -15,7 +15,7 @@ Release candidate; production inference and authenticated browser acceptance are
 - Evidence selection uses AI; final sentences are constructed from verified tool results. Provider failures show a clearly labeled direct-data fallback. Official websites are linked, not silently treated as freshly read pages.
 - Feedback and aggregate AI Operations. No persistent chat; no notes, meeting URLs, rank positions or verification evidence in AI context.
 - Cohort RPC no longer returns individual imported or current applicant records. Counts under five and small/complementary results are protected internally. Current cycles never imply No Match.
-- Cache version `cuba-match-explorer-v5.0-r1`; private API responses bypass the PWA cache.
+- Cache version `cuba-match-explorer-v5.0-r2`; private API responses bypass the PWA cache.
 
 ## Database and regression checks
 
@@ -29,3 +29,12 @@ Release candidate; production inference and authenticated browser acceptance are
 - Authenticated owner/admin interaction and production 200/Ready status.
 - Actual Android-device acceptance and signup-confirmation inbox receipt are not represented by desktop mobile-width testing. Existing owner-confirmed recovery is preserved, not newly exercised by sending unsolicited email.
 - Provider data processing is explained at first use; no claim of provider zero retention. No paid credits or automatic reload were purchased/enabled.
+
+
+## Candidate r2 — community summary review
+
+Migration 040 applied on 2026-10-02. The existing community histogram showed cells of one and two people. The summary now combines adjacent Step 2 ranges only when every resulting nonempty cell has at least five distinct contributors; otherwise the histogram is suppressed. Small community totals are protected, matches use completed cycles, and the v5 frontend shows an em dash for protected values. The chart title now correctly says community profiles, not interviewed applicants.
+
+The additional transactional `community-summary-privacy.sql` suite passed, including small totals, coarse-bin sum preservation, future-cycle outcome suppression and unchanged 36/338/14. Security/performance advisor counts did not change after 040.
+
+Preview `d72bb693ef085ecd62966db49d3caafb28886e65` reached Ready. Browser checks passed: actual program profile and guide rates, Compare with five programs and cross-specialty warning, persistent selection, anonymous assistant gate, 360/390px layouts with no body overflow. Application login displayed Failed to fetch; Supabase project reports ACTIVE_HEALTHY and its public Auth settings endpoint returns HTTP 200 with email access enabled. No successful application session or live inference is claimed. Native credential protection prevents inspecting credential-bearing browser logs. Owner login, live inference and production acceptance remain pending.

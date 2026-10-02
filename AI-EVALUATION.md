@@ -31,3 +31,6 @@
 Pending: run representative research, free cohort/discovery, signals/waves and comparison questions in the deployed app with a signed-in test user; inspect citations, fallback labels, provider metadata and safe operation metrics. Test authenticated owner profile editing and account switching. Confirm production Ready, URL, PWA update and browser console. Do not substitute mock tests for this gate.
 
 Acceptance requires every numeric assertion to match a tool result; every fact to carry a source; sparse data and incomplete cycles to remain explicit; no other user's records or hidden protected counts; no personal probability, invented requirement, causal signal claim or overall program winner. Record any provider/configuration block as a limitation, not a pass.
+
+
+Migration 040 additionally protects the community overview and Step 2 histogram with distinct-person thresholds and safe adjacent-bin grouping. No historical row is changed. Tests in `tests/community-summary-privacy.sql` pass; protected totals are displayed as unavailable, never zero, and current cycles do not produce a completed Match outcome.
