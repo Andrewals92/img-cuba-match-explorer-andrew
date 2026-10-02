@@ -41,5 +41,7 @@ do $$begin begin perform 1 from public.interview_events;raise exception 'anon re
 reset role;set local role authenticated;
 select set_config('request.jwt.claim.sub',current_setting('v41.a'),true);
 do $$declare n integer;begin delete from public.interview_events where id=current_setting('v41.e')::uuid;get diagnostics n=row_count;assert n=1,'Own delete failed';delete from public.user_program_watchlist where user_id=current_setting('v41.a')::uuid;get diagnostics n=row_count;assert n=1,'Own watch delete failed';end $$;
+select public.delete_my_data();
+do $$begin assert (select count(*)=0 from public.interview_events where user_id=current_setting('v41.a')::uuid); assert (select count(*)=0 from public.user_program_watchlist where user_id=current_setting('v41.a')::uuid);assert (select count(*)=0 from public.applicant_cycles where user_id=current_setting('v41.a')::uuid);end $$;
 rollback;
 select 'PASS: CRUD, duplicate protection, social coexistence, foreign-cycle denial, A/B/admin/anon isolation; all fixtures rolled back' as result;
