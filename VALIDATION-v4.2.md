@@ -25,3 +25,9 @@
 - https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable
 - https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable
 - https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys
+
+## Production publication evidence
+
+- Initial v4.2 source commit `c513c706d229f6b06cca9d6f455dc95c87e0968f`; Vercel project overview displayed Production Deployment, Ready, main and matching source. Deployment `dpl_9umy9EMoyNBw851hmsq1La6Sdpvb`. Production alias unchanged: https://cuba-match-explorer.vercel.app/ .
+- Eight principal assets returned HTTP 200 and byte-equal to v4.2 source. Browser displayed v4.2 and authenticated navigation, including Notifications and preferences. The first private-center attempt failed because private RPCs inherited anonymous mode; the follow-up fix explicitly passes authenticated mode and a DOM regression asserts it. Native credential protection prevented technical console inspection; real post-fix center/push acceptance remains pending.
+- Historical integrity reconfirmed after publication: 36 | 338 | 14.
