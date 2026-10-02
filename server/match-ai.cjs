@@ -115,7 +115,7 @@ function validateSelection(x,b){
  return [...new Set(x.fact_ids)].map(id=>b.facts.find(f=>f.id===id));
 }
 const SELECT_SCHEMA={name:'grounded_evidence',strict:true,schema:{type:'object',additionalProperties:false,properties:{fact_ids:{type:'array',items:{type:'string'}},caution_ids:{type:'array',items:{type:'string',enum:Object.keys(CAUTIONS)}}},required:['fact_ids','caution_ids']}};
-function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME_AI_MODEL||'openai/gpt-5.4-mini',now=()=>Date.now()}={}){
+function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME_AI_MODEL||'openai/gpt-5-mini',now=()=>Date.now()}={}){
  async function jsonRequest(url,options,timeout=10000){const res=await fetchImpl(url,{...options,signal:AbortSignal.timeout(timeout)});if(!res.ok)throw new SafeError(res.status===401?'authentication':res.status===403?'authorization':res.status===429||res.status===402?'provider_limit':'tool_failure',res.status===401?401:res.status===403?403:503);return res.json();}
  async function authenticate(token){if(typeof token!=='string'||token.length>6000||!token)throw new SafeError('authentication',401);const user=await jsonRequest(URL_ROOT+'/auth/v1/user',{headers:{apikey:PUBLIC_KEY,Authorization:'Bearer '+token}});if(!UUID.test(user?.id||'')||user.is_anonymous)throw new SafeError('authentication',401);return user.id;}
  async function run(input,token){
@@ -132,7 +132,7 @@ function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME
    if(Buffer.byteLength(JSON.stringify(messages),'utf8')>22000)throw new SafeError('grounding');
    const key=await getProviderToken?.();if(!key)throw new SafeError('configuration');
    let data;try {const res=await fetchImpl('https://ai-gateway.vercel.sh/v1/chat/completions',{
-    method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({model,messages,max_completion_tokens:maxTokens,reasoning_effort:'low',stream:false,store:false,
+    method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({model,messages,max_completion_tokens:maxTokens,reasoning_effort:model==='openai/gpt-5-mini'?'minimal':'low',stream:false,store:false,
     providerOptions:{gateway:{only:['openai'],tags:['cme-v5'],cacheControl:'max-age=0'}},...extra}),signal:AbortSignal.timeout(14000)});
     if(!res.ok){let body;try{body=await res.json();}catch{}providerDiagnostic=providerIssue(res.status,body);throw new SafeError([402,429].includes(res.status)?'provider_limit':'provider_unavailable');}data=await res.json();
    }catch(e){throw new SafeError(e.category==='provider_limit'?'provider_limit':e.name==='TimeoutError'?'timeout':'provider_unavailable');}

@@ -29,7 +29,7 @@ function harness({badAuth=false,providerDown=false,maliciousPlan=false,malicious
   if(url.includes('/rest/v1/interview_events?'))return response([{program_id:pid,program_name_snapshot:program.name,start_at:'2027-01-01T12:00:00Z',timezone:'America/New_York',event_type:'interview'}]);
   throw new Error('Unexpected outbound request '+url);
  };
- return {calls,assistant:createAssistant({fetchImpl,getProviderToken:async()=>'SERVER_SECRET_SENT_ONLY_TO_PROVIDER',model:'openai/gpt-5.4-mini'})};
+ return {calls,assistant:createAssistant({fetchImpl,getProviderToken:async()=>'SERVER_SECRET_SENT_ONLY_TO_PROVIDER',model:'openai/gpt-5-mini'})};
 }
 const input=(extra={})=>({question:'Resume el programa y sus datos.',mode:'research',program_ids:[pid],cycle:2026,consent:true,...extra});
 test('validation rejects arbitrary keys, oversized input, foreign tool parameters and missing consent',()=>{
