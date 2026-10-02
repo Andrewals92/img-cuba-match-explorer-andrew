@@ -46,3 +46,8 @@ Backend source: `supabase/functions/notification-dispatcher`, `supabase/function
 Email provider setup: Resend has verified cubamatchexplorer.org with DKIM and SPF; DMARC is configured in monitoring mode (p=none). Opens and clicks tracking are disabled. Server sending credentials have been stored privately; the dispatcher now advertises email readiness. Auth custom SMTP is configured through Resend on port 465. Actual end-to-end delivery acceptance remains pending. Required server settings are `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate. Site URL is https://cubamatchexplorer.org; exact returns for .org and the previous Vercel alias are preserved. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
 
 Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test.cjs`, calendar/personal/season tests; transactional SQL in `tests/notifications-rls.sql`. Local notification DOM test currently expects the `v42/` source directory, as does the production smoke script. No fixture is imported into production permanently.
+
+
+## v4.3 Interview Wave Tracker and Signal Intelligence
+
+The static frontend adds intelligence.js and batched privacy-safe RPCs, with source provenance for owner-supplied IM program lists. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–032 extend the existing production schema.

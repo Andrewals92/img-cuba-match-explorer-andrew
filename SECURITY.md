@@ -37,3 +37,8 @@ Push endpoints allow only established HTTPS push-service hosts; device count is 
 Readiness configuration is not domain verification by itself. Review Resend DNS/provider status and perform receipt testing before setting the server verified flag. No email provider webhook was added; any future webhook must verify its signature before state updates.
 
 Web Push endpoints have one global owner. When the browser has a subscription absent from the signed-in user's own RLS-visible devices, explicit activation unsubscribes it and creates a fresh endpoint; it does not reveal or transfer the previous owner. Send-time eligibility rechecks Radar filters, removed/muted saved programs, follow-up and digest opt-outs.
+
+
+## v4.3
+
+Private canonical view and program source catalog have no anonymous/authenticated raw access. The catalog uses RLS deny-by-default. New public aggregate/resource RPCs set search_path to empty and expose only program metadata or internally suppressed aggregates. Admin diagnostics require is_admin. Wave alerts default off and reuse existing channels, mute, digest, dedupe, delivery limits and send-time opt-out protection. No new credentials, Auth redirect changes or raw private tracker aggregation.

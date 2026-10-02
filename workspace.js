@@ -16,7 +16,7 @@
       matches: rows.filter(r => r.matched), inconsistent: interviews > applications };
   }
   window.CMEPersonalSummary = personalSummary;
-  window.CMEWorkspace = ({q,esc,rpc,cloudReady,getMyData,getUserId,toast,isAdmin,getSeason}) => {
+  window.CMEWorkspace = ({q,esc,rpc,cloudReady,getMyData,getUserId,toast,isAdmin,getSeason,getIntelligence}) => {
     const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     const key = 'cme_compare_v4';
     const read = (k, fallback) => { try { return JSON.parse(localStorage.getItem(k)) ?? fallback; } catch { return fallback; } };
@@ -76,7 +76,7 @@
     function officialLinks(p) {
       const defaults={acgme:['ACGME','https://apps.acgme.org/ads/Public/Programs/Search'],freida:['FREIDA','https://freida.ama-assn.org/'],residency_explorer:['Residency Explorer','https://www.residencyexplorer.org/']};
       return `<div class="source-links">${Object.entries(defaults).map(([source,[name,url]])=>{
-        const candidate=(p.links||[]).find(l=>l.source===source)?.url;
+        const candidate=(p.links||[]).find(l=>l.source===source)?.url || (source==='residency_explorer'?(p.resources||[]).find(l=>l.source==='Residency Explorer')?.program_url:null);
         if(candidate && /^https:\/\//i.test(candidate))url=candidate;
         return `<a class="source-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${name} ↗</a>`;
       }).join('')}</div>`;
@@ -104,15 +104,16 @@
       if(isCompare && ids.length<2) { target.innerHTML=toolbar('compare',r.cycle)+empty('Selecciona de 2 a 5 programas en Program Explorer para comparar.') + '<a class="btn primary" href="#/programs">Elegir programas</a>';return; }
       if(!ids.length) {target.innerHTML=toolbar('program',r.cycle)+empty('Enlace de programa inválido. Abre un programa desde el directorio.');return;}
       try {
-        const rows=await rpc('program_compare_stats',{p_ids:ids,p_cycle:r.cycle});
+        const [rows,intel,resources]=await Promise.all([rpc('program_compare_stats',{p_ids:ids,p_cycle:r.cycle}),rpc('program_season_intelligence_v43',{p_ids:ids,p_cycle:r.cycle}),rpc('program_resources_v43',{p_ids:ids})]);
+        rows.forEach(p=>{p.v43=intel.find(x=>x.id===p.id);p.resources=resources.filter(x=>x.program_id===p.id);});
         if(run!==viewRun)return;
         if(rows.length!==ids.length)throw new Error('Uno de los programas ya no está disponible. Vuelve al directorio para seleccionarlo.');
         if(!isCompare) {
           const p=rows[0],c=p.characteristics||{};
-          target.innerHTML=toolbar('program',r.cycle)+`<article class="panel"><span class="eyebrow">${esc(sourceLabel(p))}</span><h2 class="workspace-title" tabindex="-1">${esc(p.name)}</h2>${metadata(p)}<div class="row-actions">${compareButton(p)}${getSeason().tools(p)}<a class="btn ghost small" href="#/compare">Abrir Compare</a></div></article>${getSeason().own(p)}<article class="panel"><h3>Datos comunitarios</h3>${p.data_state==='no_reports'?empty('No hay reportes comunitarios para este período.'):p.data_state==='insufficient'?empty('Datos comunitarios insuficientes.'):''}${statGrid(p)}${privacyNote()}</article><div class="grid-2"><article class="panel"><h3>Señales reportadas</h3>${signals(p)}</article><article class="panel"><h3>Características del grupo</h3><dl class="workspace-details">${[['Step 2 CK · mediana',c.step2],['YOG · mediana',c.yog],['USCE meses · mediana',c.usce],['LoRs · mediana',c.lors],['Visa requerida (%)',c.visa_percent]].map(([k,v])=>`<div><dt>${k}</dt><dd>${metric(v)}</dd></div>`).join('')}</dl></article></div><article class="panel"><h3>Invitaciones por mes</h3>${timeline(p)}<p class="workspace-note">Última actividad visible: ${esc(p.last_activity_month||'No disponible')} · Directorio actualizado: ${esc(p.directory_updated_at?.slice(0,10)||'No disponible')}</p></article>`;
+          target.innerHTML=toolbar('program',r.cycle)+`<article class="panel"><span class="eyebrow">${esc(sourceLabel(p))}</span><h2 class="workspace-title" tabindex="-1">${esc(p.name)}</h2>${metadata(p)}<div class="row-actions">${compareButton(p)}${getSeason().tools(p)}<a class="btn ghost small" href="#/compare">Abrir Compare</a></div></article>${getSeason().own(p)}${getIntelligence().sections(p.v43)}${getIntelligence().resources(p.resources)}<article class="panel"><h3>Datos comunitarios</h3>${p.data_state==='no_reports'?empty('No hay reportes comunitarios para este período.'):p.data_state==='insufficient'?empty('Datos comunitarios insuficientes.'):''}${statGrid(p)}${privacyNote()}</article><div class="grid-2"><article class="panel"><h3>Señales reportadas</h3>${signals(p)}</article><article class="panel"><h3>Características del grupo</h3><dl class="workspace-details">${[['Step 2 CK · mediana',c.step2],['YOG · mediana',c.yog],['USCE meses · mediana',c.usce],['LoRs · mediana',c.lors],['Visa requerida (%)',c.visa_percent]].map(([k,v])=>`<div><dt>${k}</dt><dd>${metric(v)}</dd></div>`).join('')}</dl></article></div><article class="panel"><h3>Invitaciones por mes</h3>${timeline(p)}<p class="workspace-note">Última actividad visible: ${esc(p.last_activity_month||'No disponible')} · Directorio actualizado: ${esc(p.directory_updated_at?.slice(0,10)||'No disponible')}</p></article>`;
         } else {
           const cross=new Set(rows.map(p=>String(p.specialty).toLowerCase())).size>1;
-          const compareRows=[['Especialidad',p=>esc(p.specialty)],['Ciudad / estado',p=>esc([p.city,p.state].filter(Boolean).join(', ')||'No disponible')],['ACGME ID',p=>esc(p.acgme_program_id||'Sin verificar')],['Fuentes oficiales',officialLinks],...statsRows.map(([name,k,suffix])=>[name,p=>metric(p[k],suffix||'')]),['Señales',signals],['Invitaciones por mes',timeline],['Última actividad visible',p=>esc(p.last_activity_month||'No disponible')],['Actualización del directorio',p=>esc(p.directory_updated_at?.slice(0,10)||'No disponible')]];
+          const compareRows=[['Especialidad',p=>esc(p.specialty)],['Ciudad / estado',p=>esc([p.city,p.state].filter(Boolean).join(', ')||'No disponible')],['ACGME ID',p=>esc(p.acgme_program_id||'Sin verificar')],['Fuentes oficiales',officialLinks],...statsRows.map(([name,k,suffix])=>[name,p=>metric(p[k],suffix||'')]),...getIntelligence().compareRows,['Señales',signals],['Invitaciones por mes',timeline],['Última actividad visible',p=>esc(p.last_activity_month||'No disponible')],['Actualización del directorio',p=>esc(p.directory_updated_at?.slice(0,10)||'No disponible')]];
           target.innerHTML=toolbar('compare',r.cycle)+`<article class="panel"><h2>Program Compare</h2><p>Datos documentados para tu decisión. Sin puntuación global, ganadores ni rankings.</p>${cross?'<p class="workspace-warning" role="status">Comparación entre especialidades: los procesos, cupos y uso de señales difieren. Sus tasas no son directamente comparables.</p>':''}<p class="workspace-note">En móvil, desliza la tabla horizontalmente para ver todos los programas.</p><div class="compare-scroll" tabindex="0" role="region" aria-label="Comparación de programas"><table class="compare-table"><caption class="sr-only">Comparación de ${rows.length} programas</caption><thead><tr><th scope="col">Datos</th>${rows.map(p=>`<th scope="col"><a class="program-link" href="${href(p.id)}?cycle=${r.cycle??'all'}">${esc(p.name)}</a><small>${esc(sourceLabel(p))}</small>${getSeason().tools(p)}<button class="btn ghost small" data-remove-compare="${esc(p.id)}" aria-label="Quitar ${esc(p.name)}">Quitar</button></th>`).join('')}</tr></thead><tbody>${compareRows.map(([name,fn])=>`<tr><th scope="row">${name}</th>${rows.map(p=>`<td>${fn(p)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${privacyNote()}</article>`;
         }
       } catch(e) { if(run===viewRun)target.innerHTML=toolbar(isCompare?'compare':'program',r.cycle)+empty('No se pudieron cargar los datos. '+e.message)+'<button class="btn ghost" data-workspace-retry="view">Reintentar</button>'; }
@@ -129,7 +130,7 @@
     }
     async function health() {
       if(!isAdmin())return;
-      try {const h=await rpc('program_workspace_health_v4',{},false);q('workspaceHealth').textContent=`v${h.version} · Agregación disponible · ${h.official_programs} programas oficiales · ${h.community_labels} identidades comunitarias · ${h.programs_with_reports} programas con reportes · Actualización: ${h.last_report_update?.slice(0,10)||'—'}`;}
+      try {const h=await rpc('program_workspace_health_v4',{},false),v43=await rpc('intelligence_health_v43',{},false);q('workspaceHealth').textContent=`v${v43.version} · ${v43.program_source_records} fuentes / ${v43.linked_source_records} vinculadas · ${v43.qualifying_program_weeks} semanas protegidas · Agregación disponible · ${h.official_programs} programas oficiales · ${h.community_labels} identidades comunitarias · ${h.programs_with_reports} programas con reportes · Actualización: ${h.last_report_update?.slice(0,10)||'—'}`;}
       catch {q('workspaceHealth').textContent='No se pudo verificar la salud de los agregados v4.0.';}
     }
     document.addEventListener('change',e=>{

@@ -1463,6 +1463,8 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
+      waves:["Interview Waves","Actividad reportada y signals con privacidad."],
+      "program-sources":["IM Program Sources","Información de programas aportada por el propietario."],
       radar:["New Program Radar","Programas detectados y cambios materiales."],
       "notification-center":["Notificaciones","Alertas privadas y estado de lectura."],
       "notification-settings":["Preferencias","Canales, filtros y horarios de tus alertas."],
@@ -1503,6 +1505,8 @@
       history.replaceState(null, "", "#/" + currentView);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (skipLoad) return;
+    if(currentView==="waves") intelligence.load();
+    if(currentView==="program-sources") intelligence.loadSources();
     if(currentView==="radar") notifications.radar();
     if(currentView==="notification-center"||currentView==="notification-settings")notifications.view();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
@@ -2078,10 +2082,11 @@
     q("watchArea").style.display = session ? "block" : "none";
   }
 
-  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin, getSeason: () => season });
+  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin, getSeason: () => season, getIntelligence: () => intelligence });
 
   const season = window.CMESeason({q,esc,api:(path,opts={})=>request(path,{...opts,body:opts.body?JSON.parse(opts.body):null}),rpc,getUserId:()=>session?.user?.id,getMyData:()=>myDB,toast,programLink:r=>workspace.programLink(r)});
-  document.addEventListener('cme-season-loaded',()=>{if(currentView==='program'||currentView==='compare')workspace.loadView();else if(currentView==='programs')workspace.loadDirectory();});
+  const intelligence=window.CMEIntelligence({q,esc,rpc,getSeason:()=>season,getMyData:()=>myDB,getUserId:()=>session?.user?.id});
+  document.addEventListener('cme-season-loaded',()=>{intelligence.saved();if(currentView==='program'||currentView==='compare')workspace.loadView();else if(currentView==='programs')workspace.loadDirectory();});
 
   const notifications=window.CMENotifications({q,esc,api:request,rpc,getUserId:()=>session?.user?.id,isAdmin,toast,getSeason:()=>season});
 
@@ -2110,12 +2115,15 @@
     workspace.renderPersonal();
     season.load();
     notifications.load();
+    intelligence.saved();
     renderPrograms();
     renderInterviews();
     renderMatches();
     renderMyData();
     renderAccount();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
+    if(currentView==="waves") intelligence.load();
+    if(currentView==="program-sources") intelligence.loadSources();
     if (currentView === "intelligence") loadIntelligence();
     if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); }
   }

@@ -1,10 +1,10 @@
-// Cuba Match Explorer service worker (v4.2)
+// Cuba Match Explorer service worker (v4.3)
 // FIX: the previous worker intercepted every GET, including Supabase API
 // calls, and its cache name never changed, so users could keep running an
 // old app.js after a deploy. It now only handles same-origin static files,
 // always tries the network first, and the cache name is versioned.
-const CACHE = 'cuba-match-explorer-v4.2';
-const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg'];
+const CACHE = 'cuba-match-explorer-v4.3';
+const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './intelligence.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));

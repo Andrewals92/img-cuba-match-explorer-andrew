@@ -1167,3 +1167,14 @@ input[readonly] {
 
 /* v4.2 private communication controls */
 .notification-check{display:flex;align-items:center;gap:10px;min-height:44px}.notification-check input{width:auto}.notification-unread{border-left:4px solid var(--accent,#4eb7ee)}.nav-btn[hidden],.nav-badge[hidden]{display:none!important}#notificationPreferences form{margin-block:16px}#notificationPreferences button,#notificationCenter button{min-height:44px}#radarContent article{overflow-wrap:anywhere}
+/* v4.3 wave tables remain textual and touch accessible. */
+.wave-timeline{list-style:none;padding:0;display:grid;gap:.6rem;max-height:24rem;overflow:auto}
+.wave-timeline li{display:grid;grid-template-columns:minmax(0,1fr) auto 1rem;gap:.65rem;align-items:center;padding:.75rem;border:1px solid var(--border,#334155);border-radius:.6rem}
+.wave-marker{width:.7rem;height:.7rem;background:#58d8c6;border-radius:50%}
+.signal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:1rem}
+.signal-card{padding:1rem;border:1px solid var(--border,#334155);border-radius:.8rem;min-width:0}
+.signal-card strong{font-size:1.7rem}.signal-card p{overflow-wrap:anywhere}
+#sourceResults .workspace-details dd{white-space:pre-line;overflow-wrap:anywhere}
+#sourceResults details,#programProfileContent details{padding:.7rem 0}
+#wavePager,#sourcePager{padding:1rem 0}
+@media(max-width:480px){.wave-timeline li{grid-template-columns:minmax(0,1fr) auto;font-size:.85rem}.wave-marker{display:none}}

@@ -25,3 +25,8 @@ The app stores your alert preferences, explicit specialty/state Radar filters, d
 Notifications contain concise public-program metadata or generic private reminder text. No private notes, rank positions, applicant rows or meeting URLs are sent to email/push. Lock-screen content stays generic. Community alerts reuse privacy-suppressed program statistics, never individual reports. Imports remain historical and do not generate personal reminders.
 
 Notification records and their dependent queued jobs are retained 180 days. Attempt logs are pruned after 30 days. Push endpoint/key material remains until removed with account data, or a device is disabled after terminal failure; disabled records remain visible only to their owner/server. Use preferences to disable a device or all optional alerts. Existing Delete my data also erases new preferences, filters, subscriptions and notifications/outbox/delivery records. Keys/notes are not placed in localStorage; private screen state clears between sessions.
+
+
+## v4.3
+
+Only consented community contribution reports enter wave/signal analytics. Private tracker, watchlist notes and rank information do not. Weekly/monthly invitation buckets require 3 distinct people; signal cohorts require 5 plus zero-or-at-least-3 outcome complements. Canonical observations deduplicate person/program/cycle. Signals are never pooled across cycles. Personal fields from supplied external program lists are excluded by allowlist; source data and community samples stay separate.
