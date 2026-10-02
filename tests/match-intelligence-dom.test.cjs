@@ -1,0 +1,20 @@
+const {JSDOM}=require('jsdom'),fs=require('fs'),assert=require('node:assert/strict'),path=require('path');
+(async()=>{
+ const d=new JSDOM(fs.readFileSync(path.join(__dirname,'../index.html'),'utf8'),{url:'https://cubamatchexplorer.org/#/match-intelligence',runScripts:'outside-only'}),w=d.window,q=id=>w.document.getElementById(id);
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let uid=null,payload,calls=[],resolveRequest,delayed=false;
+ const own={id:'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',cycle:2027,specialty:'Internal Medicine'};
+ const result={profile:{...own,cycle:2027,step2:250},cohort:{protected:true,uncertainty:'Insufficient data',members:[],by_cycle:{},filter_impact:[],data_types:{}},programs:[],has_more:false,activity_cycle:2027};
+ const response={answer_id:'answer-a',status:'success',facts:[{text:'Safe <script>facts</script>',source_id:'s1'}],sources:[{id:'s1',type:'community',label:'Cohorte',cohort_size:null,cycles:[2026]}],cautions:[],actions:[],generated_at:'2026-10-02'};
+ w.eval(fs.readFileSync(path.join(__dirname,'../match-intelligence.js'),'utf8'));
+ const mi=w.CMEMatchIntelligence({q,esc,rpc:async(n,a)=>{calls.push({n,a});return n==='ai_feedback_v50'?true:result;},getUserId:()=>uid,getMyData:()=>({cycles:[own]}),getSeason:()=>({tools:()=>''}),assistantRequest:async x=>{payload=x;if(delayed)return new Promise(r=>resolveRequest=r);return response;},isAdmin:()=>false,cohortArgs:()=>({p_cycle:2026,p_step2:250})});
+ await mi.load();assert(q('aiPanel').hidden);assert(q('miWorkspace').textContent.includes('Inicia sesión'));assert.equal(calls.length,0);
+ uid='user-a';await mi.load();assert(!q('aiPanel').hidden);assert(q('miCohort').textContent.includes('Datos insuficientes'));assert(!q('miCohort').textContent.includes('null'));assert(q('miDiscovery').textContent.includes('No hay programas'));
+ mi.open('research',['bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'],'Investiga este programa',{cycle:null});q('aiConsent').checked=true;
+ q('aiComposer').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await new Promise(r=>setTimeout(r,0));assert.equal(payload.cycle,null);assert.equal(payload.profile_id,own.id);assert(!q('aiAnswers').querySelector('script'));assert(q('aiAnswers').textContent.includes('Safe <script>facts</script>'));assert.equal(w.localStorage.length,0);
+ q('aiAnswers').querySelector('[data-ai-feedback="helpful"]').click();await new Promise(r=>setTimeout(r,0));assert.equal(calls.at(-1).a.p_feedback,'helpful');assert.equal(q('aiAnswers').querySelector('[data-ai-feedback="helpful"]').getAttribute('aria-pressed'),'true');
+ mi.open('cohort',[],'Explica mi cohorte',{applicants:true});q('miFilters').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await new Promise(r=>setTimeout(r,0));q('aiComposer').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await new Promise(r=>setTimeout(r,0));assert(!payload.cohort_filters);assert.equal(payload.cycle,2027);
+ delayed=true;q('aiQuestion').value='Resume mi ciclo';q('aiComposer').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));assert(q('aiAsk').disabled);uid='user-b';mi.reset();resolveRequest(response);await new Promise(r=>setTimeout(r,0));assert.equal(q('aiAnswers').textContent,'');assert.equal(q('aiQuestion').value,'');assert(!q('aiConsent').checked);assert(!q('aiAsk').disabled);
+ uid=null;await mi.load();assert(q('aiPanel').hidden);assert(!q('miWorkspace').textContent.includes('250'));
+ d.window.close();console.log('PASS Match Intelligence DOM: anonymous gate, sparse UI, explicit all-cycle context, independent filters, escaped evidence, feedback, no storage and account-change cancellation');
+})();

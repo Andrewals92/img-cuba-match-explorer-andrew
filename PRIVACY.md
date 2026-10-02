@@ -32,3 +32,12 @@ Notification records and their dependent queued jobs are retained 180 days. Atte
 Only consented community contribution reports enter wave/signal analytics. Private tracker, watchlist notes and rank information do not. Weekly/monthly invitation buckets require 3 distinct people; signal cohorts require 5 plus zero-or-at-least-3 outcome complements. Canonical observations deduplicate person/program/cycle. Signals are never pooled across cycles. Personal fields from supplied external program lists are excluded by allowlist; source data and community samples stay separate.
 
 The v4.3-r3 program guide does not change community thresholds or imported-applicant RLS. Program-level rates and ranges remain separate from user-contributed metrics. Personal likelihood, individual scores, compatibility, connections and free-text applicant comments are excluded. The two public metadata RPCs no longer expose provider provenance; provenance is retained in the private catalog for data maintenance. Program website links send no applicant parameters.
+
+
+## v5.0 assistant
+
+Cohort comparison now exposes aggregate summaries only; individual historical/current applicant profiles do not leave the cohort API. Protected/unknown values never mean zero. Own profiles are excluded.
+
+AI is opt-in per tab/send consent. A question and its minimum necessary context are sent to Vercel AI Gateway/OpenAI. We do not store chat history, print chat content in logs or send notes, meeting URLs, rank positions or verification documents. Do not type sensitive content into questions. Provider processing follows applicable provider terms; the application does not promise provider zero retention.
+
+Feedback stores only a predefined label and operational metadata associated with an answer ID, not free-text conversation. Metadata expires after 40 days; admins see aggregates only. Clear removes in-memory answers; logout, account change and reload clear them too. Each new question is independent. See AI-DATA-AND-GROUNDING.md for exact scope and limitations.

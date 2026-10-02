@@ -46,3 +46,12 @@ Private canonical view and program source catalog have no anonymous/authenticate
 ### v4.3-r3 guide review
 
 Migration 034 keeps the private catalog RLS enabled with no user access. The existing public metadata functions retain empty search_path, explicit grants and bounded pagination/ID arrays; they disclose only program metadata. Institutional anchors accept only HTTP(S), reject embedded credentials and `.local` hosts, escape text and use noopener/noreferrer. Advisors reviewed after 034: existing private deny-all table and intentionally anonymous-safe SECURITY DEFINER notices remain expected. No new actionable security/performance issue was introduced. Tests cover anonymous metadata access, private ACLs, personal-field exclusion and unchanged 36/338/14 historical counts.
+
+
+## v5.0 gateway and aggregate privacy
+
+The prior similar_cohort RPC returned anonymous individual profile records. Migration 038 replaces that output with aggregate-only summaries and empty members, enforces distinct-person thresholds and complementary suppression, excludes all owned profiles, and does not silently widen ranges. Imported row payloads and historical identifiers remain unchanged.
+
+The gateway authenticates every request with Supabase Auth, uses only the same user's token for data reads, and validates origin/body/program IDs. No service-role or provider secret enters the browser. Models select from fixed tools/evidence IDs and cannot create SQL, fetch URLs, mutate records or render unverified prose. Personal values never enter shared caches or logs. See AI-DATA-AND-GROUNDING.md.
+
+Post-DDL security/performance advisors were reviewed: one new private deny-all metadata table (expected RLS/no-policy notice), five authenticated DEFINER APIs (expected execution notices; auth/owner/admin checks tested), no new performance finding. Existing leaked-password protection and historical policy/index advice are not falsely reported as resolved. Guidance: https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy and https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable .
