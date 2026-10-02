@@ -1,0 +1,804 @@
+[
+  {
+    "acgme_program_id": "1400300541",
+    "previous_website": "https://www.abrazohealth.com/",
+    "website": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400300541",
+      "requested_url": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program",
+      "status": 403,
+      "final_url": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program"
+    }
+  },
+  {
+    "acgme_program_id": "1403531248",
+    "previous_website": "https://www.amc.edu",
+    "website": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/",
+    "scope": "program",
+    "evidence_url": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403531248",
+      "requested_url": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/",
+      "status": 403,
+      "final_url": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/"
+    }
+  },
+  {
+    "acgme_program_id": "1401611122",
+    "previous_website": "https://healthcare.ascension.org/",
+    "website": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
+    "scope": "program",
+    "evidence_url": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401611122",
+      "requested_url": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
+      "status": 200,
+      "final_url": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
+      "title": "Internal Medicine Residency Program | Ascension Saint Joseph - Chicago",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1401711135",
+    "previous_website": "https://healthcare.ascension.org/",
+    "website": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
+    "scope": "program",
+    "evidence_url": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401711135",
+      "requested_url": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
+      "status": 200,
+      "final_url": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
+      "title": "Home",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1405621446",
+    "previous_website": "https://www.aurorahealthcare.org",
+    "website": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
+    "scope": "program",
+    "evidence_url": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1405621446",
+      "requested_url": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
+      "status": 200,
+      "final_url": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
+      "title": "Internal Medicine Residency | Aurora Health Care",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1402500923",
+    "previous_website": "https://authorityhealth.org/",
+    "website": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/",
+    "scope": "program",
+    "evidence_url": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402500923",
+      "requested_url": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/",
+      "status": 403,
+      "final_url": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/"
+    }
+  },
+  {
+    "acgme_program_id": "1403511253",
+    "previous_website": "https://www.bassett.org",
+    "website": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403511253",
+      "requested_url": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
+      "status": 200,
+      "final_url": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
+      "title": "Internal Medicine Residency Program | Bassett Healthcare Network",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403511272",
+    "previous_website": "https://flushinghospital.org/",
+    "website": "https://flushinghospital.org/education/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://flushinghospital.org/education/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403511272",
+      "requested_url": "https://flushinghospital.org/education/internal-medicine/",
+      "status": 403,
+      "final_url": "https://flushinghospital.org/education/internal-medicine/"
+    }
+  },
+  {
+    "acgme_program_id": "1401100928",
+    "previous_website": "https://www.oakhillhospital.com",
+    "website": "https://hcahealthcaregme.com/locations/hca-florida-oak-hill-hospital/internal-medicine-residency/",
+    "scope": "program",
+    "evidence_url": "https://hcahealthcaregme.com/locations/hca-florida-oak-hill-hospital/internal-medicine-residency/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401100928",
+      "requested_url": "https://hcahealthcaregme.com/locations/hca-florida-oak-hill-hospital/internal-medicine-residency/",
+      "status": 200,
+      "final_url": "https://geo-blocked-site.azurewebsites.net/",
+      "title": "Page is not available to your current location.",
+      "program_text": false
+    }
+  },
+  {
+    "acgme_program_id": "1400100002",
+    "previous_website": "https://www.flowershospital.com",
+    "website": "https://www.flowershospitalgme.com/internal-medicine-residency/",
+    "scope": "program",
+    "evidence_url": "https://www.flowershospitalgme.com/internal-medicine-residency/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400100002",
+      "requested_url": "https://www.flowershospitalgme.com/internal-medicine-residency/",
+      "status": 403,
+      "final_url": "https://www.flowershospitalgme.com/internal-medicine-residency/"
+    }
+  },
+  {
+    "acgme_program_id": "1403400248",
+    "previous_website": "https://www.mountainviewregional.com/",
+    "website": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403400248",
+      "requested_url": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
+      "status": 200,
+      "final_url": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
+      "title": "Internal Medicine | MountainView Regional Medical Center | Las Cruces, NM",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403300541",
+    "previous_website": "https://www.inspirahealthnetwork.org/",
+    "website": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403300541",
+      "requested_url": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
+      "status": 200,
+      "final_url": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
+      "title": "Internal Medicine Residency Mullica Hill | Inspira Health",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403600002",
+    "previous_website": "https://www.iredellhealth.org",
+    "website": "https://www.iredellgme.org/overview/",
+    "scope": "program",
+    "evidence_url": "https://www.iredellgme.org/overview/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403600002",
+      "requested_url": "https://www.iredellgme.org/overview/",
+      "status": 403,
+      "final_url": "https://www.iredellgme.org/overview/"
+    }
+  },
+  {
+    "acgme_program_id": "1400531031",
+    "previous_website": "http://www.kernmedical.com/",
+    "website": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400531031",
+      "requested_url": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/",
+      "status": 403,
+      "final_url": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/"
+    }
+  },
+  {
+    "acgme_program_id": "1404800008",
+    "previous_website": "https://www.sahealth.com/",
+    "website": "https://www.methodistsaim.com/",
+    "scope": "program",
+    "evidence_url": "https://www.methodistsaim.com/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404800008",
+      "requested_url": "https://www.methodistsaim.com/",
+      "status": 200,
+      "final_url": "https://www.methodistsaim.com/",
+      "title": "Welcome | Methodist San Antonio Internal Medicine",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403511258",
+    "previous_website": "https://www.montefiorehealthsystem.org/",
+    "website": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
+    "scope": "program",
+    "evidence_url": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403511258",
+      "requested_url": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
+      "status": 200,
+      "final_url": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
+      "title": "Academics & Training | New Rochelle",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1402411176",
+    "previous_website": "https://mountauburnhospital.org/",
+    "website": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402411176",
+      "requested_url": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
+      "status": 200,
+      "final_url": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
+      "title": "Internal Medicine Residency | Mount Auburn Hospital",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1402700213",
+    "previous_website": "https://www.nmhs.net/",
+    "website": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402700213",
+      "requested_url": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
+      "status": 200,
+      "final_url": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
+      "title": "Internal Medicine Residency",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1400521047",
+    "previous_website": "https://www.uclaoliveview.org",
+    "website": "https://www.uclaoliveview.org/",
+    "scope": "program",
+    "evidence_url": "https://www.uclaoliveview.org/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400521047",
+      "requested_url": "https://www.uclaoliveview.org/",
+      "status": 406,
+      "final_url": "https://www.uclaoliveview.org/"
+    }
+  },
+  {
+    "acgme_program_id": "1401131102",
+    "previous_website": "https://www.orlandohealth.com",
+    "website": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
+    "scope": "program",
+    "evidence_url": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401131102",
+      "requested_url": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
+      "status": 200,
+      "final_url": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
+      "title": "Internal Medicine Residency",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1400700074",
+    "previous_website": "https://www.uchealth.org/",
+    "website": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/",
+    "scope": "program",
+    "evidence_url": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400700074",
+      "requested_url": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/",
+      "status": 403,
+      "final_url": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/"
+    }
+  },
+  {
+    "acgme_program_id": "1404031355",
+    "previous_website": "https://www.providence.org/",
+    "website": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/",
+    "scope": "program",
+    "evidence_url": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404031355",
+      "requested_url": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/",
+      "status": 403,
+      "final_url": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/"
+    }
+  },
+  {
+    "acgme_program_id": "1401600545",
+    "previous_website": "https://www.riversidehealthcare.org",
+    "website": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401600545",
+      "requested_url": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
+      "status": 200,
+      "final_url": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
+      "title": "Internal Medicine Residency (GME) | Riverside Medical Center, IL",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403500926",
+    "previous_website": "https://samaritanhealth.com/",
+    "website": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403500926",
+      "requested_url": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/",
+      "status": 403,
+      "final_url": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/"
+    }
+  },
+  {
+    "acgme_program_id": "1401200001",
+    "previous_website": "https://www.sgmc.org/",
+    "website": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
+    "scope": "program",
+    "evidence_url": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401200001",
+      "requested_url": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
+      "status": 200,
+      "final_url": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
+      "title": "Internal Medicine Residency - SGMC Health",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1405431436",
+    "previous_website": "https://spokaneteachinghealth.org/",
+    "website": "https://spokaneteachinghealth.org/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://spokaneteachinghealth.org/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1405431436",
+      "requested_url": "https://spokaneteachinghealth.org/internal-medicine/",
+      "status": 200,
+      "final_url": "https://spokaneteachinghealth.org/internal-medicine/",
+      "title": "Internal Medicine At Spokane Teaching Health Center",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1402100002",
+    "previous_website": "https://stfran.com/",
+    "website": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402100002",
+      "requested_url": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program",
+      "status": 502,
+      "final_url": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program"
+    }
+  },
+  {
+    "acgme_program_id": "1403321522",
+    "previous_website": "https://stjosephshealth.org/",
+    "website": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/",
+    "scope": "program",
+    "evidence_url": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403321522",
+      "requested_url": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/",
+      "status": 403,
+      "final_url": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/"
+    }
+  },
+  {
+    "acgme_program_id": "1404131360",
+    "previous_website": "http://www.slhn.org",
+    "website": "https://www.slhn.org/gme/residencies/internal-medicine-residency-bethlehem",
+    "scope": "program",
+    "evidence_url": "https://programdirectory.nrmp.org/st-lukes-hosp-bethlehem-pa-1605140c1/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404131360",
+      "requested_url": "https://www.slhn.org/gme/residencies/internal-medicine-residency-bethlehem",
+      "status": 403,
+      "final_url": "https://www.slhn.org/gme/residencies/internal-medicine-residency-bethlehem"
+    }
+  },
+  {
+    "acgme_program_id": "1403321531",
+    "previous_website": "https://www.saintpetersuh.com",
+    "website": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403321531",
+      "requested_url": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program",
+      "status": 403,
+      "final_url": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program"
+    }
+  },
+  {
+    "acgme_program_id": "1401600544",
+    "previous_website": "https://www.endeavorhealth.org:443/",
+    "website": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
+    "scope": "program",
+    "evidence_url": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401600544",
+      "requested_url": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
+      "status": 200,
+      "final_url": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
+      "title": "Swedish Hospital Internal Medicine Residency Program | Endeavor Health",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1404821519",
+    "previous_website": "https://www.ttuhsc.edu",
+    "website": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
+    "scope": "program",
+    "evidence_url": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404821519",
+      "requested_url": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
+      "status": 200,
+      "final_url": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
+      "title": "Internal Medicine Residency Permian Basin | Texas Tech University Health Sciences Center",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1401512544",
+    "previous_website": "https://uwboisemedres.uw.edu/",
+    "website": "https://uwboisemedres.uw.edu/",
+    "scope": "program",
+    "evidence_url": "https://uwboisemedres.uw.edu/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401512544",
+      "requested_url": "https://uwboisemedres.uw.edu/",
+      "status": 200,
+      "final_url": "https://uwboisemedres.uw.edu/",
+      "title": "Home | UW Boise Internal Medicine Residency",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1400200001",
+    "previous_website": "https://akmedres.uw.edu/",
+    "website": "https://akmedres.uw.edu/",
+    "scope": "program",
+    "evidence_url": "https://akmedres.uw.edu/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400200001",
+      "requested_url": "https://akmedres.uw.edu/",
+      "status": 200,
+      "final_url": "https://akmedres.uw.edu/",
+      "title": "Home | UW Alaska Internal Medicine Residency",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403511317",
+    "previous_website": "https://www.wmchealth.org/",
+    "website": "https://www.wmcimresidency.org/",
+    "scope": "program",
+    "evidence_url": "https://www.wmcimresidency.org/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403511317",
+      "requested_url": "https://www.wmcimresidency.org/",
+      "status": 200,
+      "final_url": "https://www.wmcimresidency.org/",
+      "title": "Westchester Medical Center Internal Medicine Residency Program",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1400811076",
+    "previous_website": "https://www.northwell.edu/",
+    "website": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
+    "scope": "program",
+    "evidence_url": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400811076",
+      "requested_url": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
+      "status": 200,
+      "final_url": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
+      "title": "Internal Medicine Residency Program - Danbury Hospital",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1400500921",
+    "previous_website": "https://collegemedicalcenter.com/",
+    "website": "https://collegemedicalcenter.com/internal-medicine-home/",
+    "scope": "program",
+    "evidence_url": "https://collegemedicalcenter.com/internal-medicine-home/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400500921",
+      "requested_url": "https://collegemedicalcenter.com/internal-medicine-home/",
+      "status": 403,
+      "final_url": "https://collegemedicalcenter.com/internal-medicine-home/"
+    }
+  },
+  {
+    "acgme_program_id": "1401112101",
+    "previous_website": "https://www.msmc.com",
+    "website": "https://www.msmc.com/education/residency-programs/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://www.msmc.com/education/residency-programs/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401112101",
+      "requested_url": "https://www.msmc.com/education/residency-programs/internal-medicine/",
+      "status": 200,
+      "final_url": "https://www.msmc.com/education/residency-programs/internal-medicine/",
+      "title": "",
+      "program_text": false
+    }
+  },
+  {
+    "acgme_program_id": "1402521194",
+    "previous_website": "https://www.wsumed.com/",
+    "website": "https://www.wsumed.com/",
+    "scope": "program",
+    "evidence_url": "https://www.wsumed.com/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402521194",
+      "requested_url": "https://www.wsumed.com/",
+      "status": 403,
+      "final_url": "https://www.wsumed.com/"
+    }
+  },
+  {
+    "acgme_program_id": "1402511200",
+    "previous_website": "https://www.trinityhealthmichigan.org/",
+    "website": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402511200",
+      "requested_url": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
+      "status": 200,
+      "final_url": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
+      "title": "Internal Medicine | Trinity Health Oakland Graduate Medical Education",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403521485",
+    "previous_website": "https://www.sbhny.org/",
+    "website": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/",
+    "scope": "program",
+    "evidence_url": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403521485",
+      "requested_url": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/",
+      "status": 403,
+      "final_url": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/"
+    }
+  },
+  {
+    "acgme_program_id": "1403512265",
+    "previous_website": "https://www.tbh.org",
+    "website": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403512265",
+      "requested_url": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
+      "status": 200,
+      "final_url": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
+      "title": "Internal Medicine Residency Program | The Brooklyn Hospital Center",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1404711413",
+    "previous_website": "https://meharry.edu/",
+    "website": "https://meharry.edu/residency-program/internal-medicine/",
+    "scope": "program",
+    "evidence_url": "https://meharry.edu/residency-program/internal-medicine/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404711413",
+      "requested_url": "https://meharry.edu/residency-program/internal-medicine/",
+      "status": 403,
+      "final_url": "https://meharry.edu/residency-program/internal-medicine/"
+    }
+  },
+  {
+    "acgme_program_id": "1404231525",
+    "previous_website": "https://mayaguezmedical.com/",
+    "website": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
+    "scope": "program",
+    "evidence_url": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404231525",
+      "requested_url": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
+      "status": 200,
+      "final_url": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
+      "title": ".::\n\t\tMayag\u00fcez Medical Center\t\tInternal Medicine Residency Program - Mayag\u00fcez Medical Center::.",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1404221397",
+    "previous_website": "https://rcm1.rcm.upr.edu/",
+    "website": "https://md.rcm.upr.edu/medicine/program-overview/",
+    "scope": "program",
+    "evidence_url": "https://md.rcm.upr.edu/medicine/program-overview/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404221397",
+      "requested_url": "https://md.rcm.upr.edu/medicine/program-overview/",
+      "status": 200,
+      "final_url": "https://md.rcm.upr.edu/medicine/program-overview/",
+      "title": "Program Overview \u2013 Department of Medicine",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1404100906",
+    "previous_website": "https://jeffneinternal.com/",
+    "website": "https://jeffneinternal.com/",
+    "scope": "program",
+    "evidence_url": "https://jeffneinternal.com/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404100906",
+      "requested_url": "https://jeffneinternal.com/",
+      "status": 403,
+      "final_url": "https://jeffneinternal.com/"
+    }
+  },
+  {
+    "acgme_program_id": "1402411175",
+    "previous_website": "http://www.challiance.org",
+    "website": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
+    "scope": "program",
+    "evidence_url": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1402411175",
+      "requested_url": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
+      "status": 200,
+      "final_url": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
+      "title": "CHA Internal Medicine Residency | CHA",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403800002",
+    "previous_website": "https://www.wrhe-edu.org",
+    "website": "https://www.wrhe-edu.org/internal-medicine",
+    "scope": "program",
+    "evidence_url": "https://www.wrhe-edu.org/internal-medicine",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403800002",
+      "requested_url": "https://www.wrhe-edu.org/internal-medicine",
+      "status": 200,
+      "final_url": "https://www.wrhe-edu.org/internal-medicine",
+      "title": "Internal Medicine | Western Reserve Heal",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1403511264",
+    "previous_website": "https://onebrooklynhealth.org/",
+    "website": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
+    "scope": "program",
+    "evidence_url": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403511264",
+      "requested_url": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
+      "status": 200,
+      "final_url": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
+      "title": "Internal Medicine Residency (Brookdale) | One Brooklyn Health",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1401611123",
+    "previous_website": "https://imr.bsd.uchicago.edu",
+    "website": "https://imr.bsd.uchicago.edu",
+    "scope": "program",
+    "evidence_url": "https://medicine.uchicago.edu/training",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1401611123",
+      "requested_url": "https://imr.bsd.uchicago.edu",
+      "status": 502,
+      "final_url": "https://imr.bsd.uchicago.edu"
+    }
+  },
+  {
+    "acgme_program_id": "1400500017",
+    "previous_website": "https://www.opti-west.com/",
+    "website": "https://www.sarh.org/sarh-residency-program",
+    "scope": "program",
+    "evidence_url": "https://www.sarh.org/sarh-residency-program",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1400500017",
+      "requested_url": "https://www.sarh.org/sarh-residency-program",
+      "status": 403,
+      "final_url": "https://www.sarh.org/sarh-residency-program"
+    }
+  },
+  {
+    "acgme_program_id": "1403521285",
+    "previous_website": "https://montefioreeinstein.org/",
+    "website": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
+    "scope": "program",
+    "evidence_url": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1403521285",
+      "requested_url": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
+      "status": 200,
+      "final_url": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
+      "title": "Overview | Wakefield Internal Medicine Residency Program | Montefiore Einstein Department of Medicine | Albert Einstein College of Medicine | Montefiore Einstein",
+      "program_text": true
+    }
+  },
+  {
+    "acgme_program_id": "1404800010",
+    "previous_website": "https://dhrhealth.com/",
+    "website": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/",
+    "scope": "program",
+    "evidence_url": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/",
+    "reviewed_at": "2026-10-02",
+    "http_check": {
+      "acgme_program_id": "1404800010",
+      "requested_url": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/",
+      "status": 403,
+      "final_url": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/"
+    }
+  }
+]

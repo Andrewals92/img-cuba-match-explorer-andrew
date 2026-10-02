@@ -26,7 +26,7 @@ Every supplied source URL is retained privately. The public guide groups records
 - 033_cycle_context: clarifies that all available cycles may include ongoing cycles; timelines remain separate.
 - 032_wave_alerts: wave_activity preference; private deduplicated generator; existing notification tick and claim integration; admin-only intelligence_health_v43.
 
-Migrations 030–036 applied successfully. Existing migrations were not rerun or renumbered. Import JSON batches and the location enrichment statement are versioned under supabase/imports.
+Migrations 030–037 applied successfully. Existing migrations were not rerun or renumbered. Import JSON batches and the location enrichment statement are versioned under supabase/imports.
 
 See ANALYTICS-v4.3.md and VALIDATION-v4.3.md for formulas, tests and acceptance limits. Production acceptance is recorded after deployment; a commit alone is not deployment verification.
 
@@ -45,3 +45,7 @@ MAR enrichment preserves 1,676 program-only core competency, supplemental and hi
 Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.
 
 Migration 036 fills missing directory states for all 702 guide programs using their resolved ACGME-linked locations. Guide, direct profile reload and five-program Compare were verified on production; the 360 px layout has no horizontal overflow. The final commit/deployment identifiers are recorded in the accompanying validation receipt.
+
+## Residency website maintenance · migration 037
+
+Verified 53 program-specific destinations, including six existing program homepages previously labeled as broader institutions. The guide now has 688 program-specific and 14 institutional links. URLs were matched to existing ACGME identities, with campus/name checks where needed. Regional restrictions, 403/406 responses and transient gateway failures are recorded separately from evidence establishing a page’s program identity. No access-control bypass or site-content copying was performed. Only URL, website scope and review date changed in the database; rates and applicant data are unchanged. Frontend assets and the v4.3-r3 service-worker cache remain unchanged because this is live metadata maintenance.

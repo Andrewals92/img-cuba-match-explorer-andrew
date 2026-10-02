@@ -57,3 +57,9 @@ Migration 035 repairs two program links that redirect to sign-in, one soft-404 r
 - Actual production guide rendered in a 360 px Chrome viewport: client width 345 px and scroll width 345 px after scrollbar space, with readable stacked rate cards. This is a responsive layout check, not a physical Android test.
 - The refreshed service worker uses `cuba-match-explorer-v4.3-r3`. No application-origin fatal console error was observed; extension-origin metadata errors were excluded.
 - Original 33 sanitized source batches are unchanged from the baseline commit. The new program-only enrichment is versioned separately and applied by migrations; raw applicant lists and personal predictions are absent from the release delta.
+
+### Residency link refinement · migration 037
+
+Rollback-only migration test PASS: 53 program-page corrections; 688 specific pages and 14 institution-level pages; all other catalog fields have an identical checksum. HTTP checks and primary-site evidence are stored in `supabase/imports/program-guide-v43/residency-links-037.json`. HTTP failure or region-specific redirects were never substituted for canonical institution URLs. No DDL, RPC, RLS, Auth or frontend changes were needed, so advisor results from the last DDL remain applicable. The final release receipt records post-migration regression and production acceptance.
+
+Post-migration `program-guide.sql` PASS: pagination covers all 702 programs once, anonymous/authenticated metadata responses remain neutral, private catalog ACLs unchanged, and historical 36/338/14 counts and zero duplicate payloads confirmed. Live catalog: 821 records, 702 identities, 688 program-specific websites, 14 institutional websites, 0 missing links.

@@ -1,4 +1,4 @@
-# Cuba Match Explorer v4.1
+# Cuba Match Explorer v4.3
 
 Created and owned by Andrew A Lopez Sanchez, MD, MBA  
 © 2026 Andrew A Lopez Sanchez, MD, MBA. All rights reserved.
@@ -43,14 +43,14 @@ Existing notifications are extended, not replaced. ACGME change events and expli
 
 Backend source: `supabase/functions/notification-dispatcher`, `supabase/functions/acgme-program-monitor`. New migrations 020–029. Dispatcher requires its internally generated cron token; no frontend invocation or provider secrets. Built-in Supabase server credentials stay in Edge runtime. VAPID initialization uses private storage and serialization. Web Push supports FCM Chrome/Android, Mozilla and Apple endpoints; unsupported endpoint hosts are rejected. Maximum ten stored devices per account. Other services can be deliberately added after validation.
 
-Email provider setup: Resend has verified cubamatchexplorer.org with DKIM and SPF; DMARC is configured in monitoring mode (p=none). Opens and clicks tracking are disabled. Server sending credentials have been stored privately; the dispatcher now advertises email readiness. Auth custom SMTP is configured through Resend on port 465. Actual end-to-end delivery acceptance remains pending. Required server settings are `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate. Site URL is https://cubamatchexplorer.org; exact returns for .org and the previous Vercel alias are preserved. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
+Email provider setup: Resend has verified cubamatchexplorer.org with DKIM and SPF; DMARC is configured in monitoring mode (p=none). Opens and clicks tracking are disabled. Server sending credentials have been stored privately; the dispatcher now advertises email readiness. Auth custom SMTP is configured through Resend on port 465. The owner confirmed the recovery email link worked; signup-confirmation inbox acceptance has not been automated. Required server settings are `RESEND_API_KEY`, `NOTIFICATION_EMAIL_FROM` and `NOTIFICATION_EMAIL_DOMAIN_VERIFIED=true` in Supabase Edge secrets. Never put values in frontend, README, GitHub or chat. Branded alerts and Supabase Auth emails are separate. Site URL is https://cubamatchexplorer.org; exact returns for .org and the previous Vercel alias are preserved. The dispatcher advertises email readiness only after server configuration; queues remain unsent while unavailable. Verify provider/domain separately before setting the verified flag. No webhook is deployed or trusted.
 
 Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test.cjs`, calendar/personal/season tests; transactional SQL in `tests/notifications-rls.sql`. Local notification DOM test currently expects the `v42/` source directory, as does the production smoke script. No fixture is imported into production permanently.
 
 
 ## v4.3 Interview Wave Tracker and Signal Intelligence
 
-The static frontend adds intelligence.js and batched privacy-safe RPCs, with an integrated IM program guide. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–036 extend the existing production schema.
+The static frontend adds intelligence.js and batched privacy-safe RPCs, with an integrated IM program guide. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–037 extend the existing production schema.
 
 ### Complete program guide (v4.3-r3)
 
@@ -61,3 +61,5 @@ Migration 034 adds institutional metadata, resolves the 19 source aliases by ACG
 Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.
 
 Migration 036 fills missing program-directory states from unambiguous, ACGME-linked program locations. All 702 guide programs now have a state and institutional URL; applicant records remain untouched.
+
+Migration 037 refines 53 program website destinations/labels using official residency pages. Coverage is 688 program-specific pages plus 14 clearly labeled institutional pages (702 total). It changes only website metadata; supplied rates, program identities and private applicant data are unchanged. See `supabase/imports/program-guide-v43/residency-links-037.json` for review evidence and HTTP limitations.

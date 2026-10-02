@@ -51,13 +51,13 @@
   },
   {
     "acgme_program_id": "1400300541",
-    "website": "https://www.abrazohealth.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/abrazo-health-network-az-2002140c0/",
+    "website": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program",
+    "evidence_url": "https://www.abrazohealth.com/health-professionals/abrazo-health-residency-programs/abrazo-internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2002140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 403,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -194,13 +194,13 @@
   },
   {
     "acgme_program_id": "1403531248",
-    "website": "https://www.amc.edu",
-    "evidence_url": "https://programdirectory.nrmp.org/albany-med-ctr-ny-1414140c0/",
+    "website": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/",
+    "evidence_url": "https://www.amc.edu/education/residencies-fellowships/internal-medicine-residency/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1414140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1404111381",
@@ -285,22 +285,22 @@
   },
   {
     "acgme_program_id": "1401611122",
-    "website": "https://healthcare.ascension.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/ascension-st-joseph-il-1405140c0/",
+    "website": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
+    "evidence_url": "https://medicaleducation.ascension.org/illinois-internal-medicine-saint-joseph-chicago",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1405140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
     "acgme_program_id": "1401711135",
-    "website": "https://healthcare.ascension.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/ascension-st-vincent-hosp-in-1189140c0/",
+    "website": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
+    "evidence_url": "https://medicaleducation.ascension.org/indiana/st-vincent-internal-medicine-residency",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1189140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -346,23 +346,23 @@
   },
   {
     "acgme_program_id": "1405621446",
-    "website": "https://www.aurorahealthcare.org",
-    "evidence_url": "https://programdirectory.nrmp.org/aurora-health-care-asmc-wi-1787140c0/",
+    "website": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
+    "evidence_url": "https://www.aurorahealthcare.org/education/gme/internal-medicine-residency",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1787140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
     "acgme_program_id": "1402500923",
-    "website": "https://authorityhealth.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/authority-health-gme-mi-1920140c0/",
+    "website": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/",
+    "evidence_url": "https://authorityhealth.org/graduate-medical-education/internal-medicine-residency-program/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1920140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1400400928",
@@ -427,12 +427,12 @@
   },
   {
     "acgme_program_id": "1403511253",
-    "website": "https://www.bassett.org",
-    "evidence_url": "https://programdirectory.nrmp.org/bassett-med-ctr-ny-1442140c0/",
+    "website": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
+    "evidence_url": "https://www.bassett.org/medical-education/residency-fellowship-programs/internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1442140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -652,12 +652,12 @@
   },
   {
     "acgme_program_id": "1402411175",
-    "website": "http://www.challiance.org",
-    "evidence_url": "https://programdirectory.nrmp.org/cambridge-health-alliance-ma-1268140m0/",
+    "website": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
+    "evidence_url": "https://www.challiance.org/academics/medicine/internal-medicine-residency",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1268140M0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -1071,13 +1071,13 @@
   },
   {
     "acgme_program_id": "1404800010",
-    "website": "https://dhrhealth.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/doctors-hospital-at-renaissance-tx-2353140c0/",
+    "website": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/",
+    "evidence_url": "https://www.dhrhealth.com/education/graduate-medical-education/internal-medicine-residency-program/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2353140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1403621320",
@@ -1244,13 +1244,13 @@
   },
   {
     "acgme_program_id": "1403511272",
-    "website": "https://flushinghospital.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/flushing-hospital-med-ctr-ny-1445140c0/",
+    "website": "https://flushinghospital.org/education/internal-medicine/",
+    "evidence_url": "https://flushinghospital.org/education/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1445140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1402500915",
@@ -1521,13 +1521,13 @@
   },
   {
     "acgme_program_id": "1401100928",
-    "website": "https://www.oakhillhospital.com",
-    "evidence_url": "https://programdirectory.nrmp.org/hca-healthcare-usf-morsani-gme-oak-hill-fl-1662140c0/",
+    "website": "https://hcahealthcaregme.com/locations/hca-florida-oak-hill-hospital/internal-medicine-residency/",
+    "evidence_url": "https://hcahealthcaregme.com/locations/hca-florida-oak-hill-hospital/internal-medicine-residency/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1662140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 200,
     "validation_note": "Institution redirects this environment to a geographic access notice; retain the published program URL."
   },
   {
@@ -1710,22 +1710,22 @@
   },
   {
     "acgme_program_id": "1400100002",
-    "website": "https://www.flowershospital.com",
-    "evidence_url": "https://programdirectory.nrmp.org/health-education-services-tn-2335140c7/",
+    "website": "https://www.flowershospitalgme.com/internal-medicine-residency/",
+    "evidence_url": "https://www.flowershospitalgme.com/internal-medicine-residency/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2335140C7",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1403400248",
-    "website": "https://www.mountainviewregional.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/health-education-services-tn-2335140c3/",
+    "website": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
+    "evidence_url": "https://www.mountainviewregional.com/graduate-medical-education-internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2335140C3",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -2015,12 +2015,12 @@
   },
   {
     "acgme_program_id": "1403300541",
-    "website": "https://www.inspirahealthnetwork.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/inspira-health-network-nj-2086140c1/",
+    "website": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
+    "evidence_url": "https://www.inspirahealthnetwork.org/services-treatments/graduate-medical-education/medical-residency/mullica-hill-medical-residency/internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2086140C1",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -2035,13 +2035,13 @@
   },
   {
     "acgme_program_id": "1403600002",
-    "website": "https://www.iredellhealth.org",
-    "evidence_url": "https://programdirectory.nrmp.org/iredell-health-system-nc-2425140c0/",
+    "website": "https://www.iredellgme.org/overview/",
+    "evidence_url": "https://www.iredellgme.org/overview/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2425140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 403,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -2107,12 +2107,12 @@
   {
     "acgme_program_id": "1404100906",
     "website": "https://jeffneinternal.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/jefferson-health-northeast-pa-2103140c0/",
+    "evidence_url": "https://jeffneinternal.com/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2103140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1403811333",
@@ -2240,13 +2240,13 @@
   },
   {
     "acgme_program_id": "1400531031",
-    "website": "http://www.kernmedical.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/kern-med-ctr-ca-1921140c0/",
+    "website": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/",
+    "evidence_url": "https://www.kernmedical.com/academics/residency-fellowship-programs/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1921140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 403,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -2863,12 +2863,12 @@
   },
   {
     "acgme_program_id": "1404800008",
-    "website": "https://www.sahealth.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/methodist-healthcare-sys-san-antonio-tx-1535140c0/",
+    "website": "https://www.methodistsaim.com/",
+    "evidence_url": "https://www.methodistsaim.com/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1535140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -2924,12 +2924,12 @@
   },
   {
     "acgme_program_id": "1403521285",
-    "website": "https://montefioreeinstein.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/montefiore-med-ctr-einstein-com-ny-3153140c3/",
+    "website": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
+    "evidence_url": "https://einsteinmed.edu/departments/medicine/education/residency/wakefield-internal-medicine/virtual-recruitment",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "3153140C3",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -2955,12 +2955,12 @@
   },
   {
     "acgme_program_id": "1403511258",
-    "website": "https://www.montefiorehealthsystem.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/montefiore-new-rochelle-einstein-ny-1459140c0/",
+    "website": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
+    "evidence_url": "https://www.montefiorenewrochelle.org/for-health-professionals/academics-and-training",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1459140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3005,12 +3005,12 @@
   },
   {
     "acgme_program_id": "1402411176",
-    "website": "https://mountauburnhospital.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/mt-auburn-hospital-ma-1269140c0/",
+    "website": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
+    "evidence_url": "https://mountauburnhospital.org/research-education/medical-education/residency/internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1269140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3209,12 +3209,12 @@
   },
   {
     "acgme_program_id": "1402700213",
-    "website": "https://www.nmhs.net/",
-    "evidence_url": "https://programdirectory.nrmp.org/north-mississippi-med-ctr-ms-1218140c0/",
+    "website": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
+    "evidence_url": "https://www.nmhs.net/for-medical-professionals/training-programs/graduate-medical-education/internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1218140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3323,13 +3323,13 @@
   },
   {
     "acgme_program_id": "1400521047",
-    "website": "https://www.uclaoliveview.org",
-    "evidence_url": "https://programdirectory.nrmp.org/olive-view-ucla-med-ctr-ca-2950140c0/",
+    "website": "https://www.uclaoliveview.org/",
+    "evidence_url": "https://www.uclaoliveview.org/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2950140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 406
   },
   {
     "acgme_program_id": "1404031357",
@@ -3353,12 +3353,12 @@
   },
   {
     "acgme_program_id": "1401131102",
-    "website": "https://www.orlandohealth.com",
-    "evidence_url": "https://programdirectory.nrmp.org/orlando-health-fl-1107140c0/",
+    "website": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
+    "evidence_url": "https://www.orlandohealth.com/medical-professionals/graduate-medical-education/residency-programs/internal-medicine-residency",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1107140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3394,13 +3394,13 @@
   },
   {
     "acgme_program_id": "1400700074",
-    "website": "https://www.uchealth.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/parkview-med-ctr-co-2050140c0/",
+    "website": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/",
+    "evidence_url": "https://www.uchealth.org/professionals/residencies/uchealth-parkview-internal-medicine-residency-program/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2050140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1404111366",
@@ -3527,13 +3527,13 @@
   },
   {
     "acgme_program_id": "1404031355",
-    "website": "https://www.providence.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/providence-health-or-1827140c0/",
+    "website": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/",
+    "evidence_url": "https://gme.providence.org/oregon/providence-portland-internal-medicine-residency/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1827140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1400500012",
@@ -3578,12 +3578,12 @@
   },
   {
     "acgme_program_id": "1401600545",
-    "website": "https://www.riversidehealthcare.org",
-    "evidence_url": "https://programdirectory.nrmp.org/riverside-medical-ctr-il-2177140c0/",
+    "website": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
+    "evidence_url": "https://www.riversidehealthcare.org/professional-education/gme/internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2177140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3797,23 +3797,23 @@
   },
   {
     "acgme_program_id": "1403500926",
-    "website": "https://samaritanhealth.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/samaritan-med-ctr-ny-2024140c0/",
+    "website": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/",
+    "evidence_url": "https://samaritanhealth.com/careers/careers-education/graduate-medical-education/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2024140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1400500017",
-    "website": "https://www.opti-west.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/san-antonio-regional-hosp-ca-2445140c0/",
+    "website": "https://www.sarh.org/sarh-residency-program",
+    "evidence_url": "https://www.sarh.org/sarh-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2445140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1400512069",
@@ -3920,12 +3920,12 @@
   },
   {
     "acgme_program_id": "1401200001",
-    "website": "https://www.sgmc.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/south-georgia-med-ctr-ga-2292140c0/",
+    "website": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
+    "evidence_url": "https://www.sgmc.org/graduate-medical-education/internal-medicine-residency/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2292140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -3971,12 +3971,12 @@
   },
   {
     "acgme_program_id": "1405431436",
-    "website": "https://spokaneteachinghealth.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/spokane-teaching-health-ctr-wa-2435140c0/",
+    "website": "https://spokaneteachinghealth.org/internal-medicine/",
+    "evidence_url": "https://spokaneteachinghealth.org/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2435140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -4044,13 +4044,13 @@
   },
   {
     "acgme_program_id": "1402100002",
-    "website": "https://stfran.com/",
-    "evidence_url": "https://programdirectory.nrmp.org/st-francis-med-ctr-la-2352140c0/",
+    "website": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program",
+    "evidence_url": "https://www.fmolhs.org/research-education/graduate-medical-education/st-francis-internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2352140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 502,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -4075,13 +4075,13 @@
   },
   {
     "acgme_program_id": "1403321522",
-    "website": "https://stjosephshealth.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/st-josephs-univ-med-ctr-nj-1406140c1/",
+    "website": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/",
+    "evidence_url": "https://stjosephshealth.org/education/graduate-medical-education/residency-programs/internal-medicine/im-overview/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1406140C1",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1404100910",
@@ -4096,13 +4096,13 @@
   },
   {
     "acgme_program_id": "1404131360",
-    "website": "http://www.slhn.org",
-    "evidence_url": "https://programdirectory.nrmp.org/st-lukes-hosp-bethlehem-pa-1605140c0/",
+    "website": "https://www.slhn.org/gme/residencies/internal-medicine-residency-bethlehem",
+    "evidence_url": "https://programdirectory.nrmp.org/st-lukes-hosp-bethlehem-pa-1605140c1/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1605140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 403,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -4137,13 +4137,13 @@
   },
   {
     "acgme_program_id": "1403321531",
-    "website": "https://www.saintpetersuh.com",
-    "evidence_url": "https://programdirectory.nrmp.org/st-peters-university-hosp-nj-3211140c0/",
+    "website": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program",
+    "evidence_url": "https://www.saintpetershcs.com/graduate-medical-education/internal-medicine-residency-program",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "3211140C0",
-    "scope": "institution",
-    "http_status": null,
+    "scope": "program",
+    "http_status": 403,
     "validation_note": "Official association verified; live automated response may be blocked, unavailable or not rechecked after repair."
   },
   {
@@ -4251,12 +4251,12 @@
   },
   {
     "acgme_program_id": "1401600544",
-    "website": "https://www.endeavorhealth.org:443/",
-    "evidence_url": "https://programdirectory.nrmp.org/swedish-hospital-il-1159140c0/",
+    "website": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
+    "evidence_url": "https://www.endeavorhealth.org/academics-medical-education/residency-programs/swedish-hospital-internal-medicine-residency-swedish-hospital",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1159140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -4373,12 +4373,12 @@
   },
   {
     "acgme_program_id": "1404821519",
-    "website": "https://www.ttuhsc.edu",
-    "evidence_url": "https://programdirectory.nrmp.org/texas-tech-u-affil-permian-basin-tx-3124140c0/",
+    "website": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
+    "evidence_url": "https://www.ttuhsc.edu/programs/internal-medicine-residency-permian-basin",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "3124140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -4765,21 +4765,21 @@
   {
     "acgme_program_id": "1401512544",
     "website": "https://uwboisemedres.uw.edu/",
-    "evidence_url": "https://programdirectory.nrmp.org/u-washington-boise-id-1172140c0/",
+    "evidence_url": "https://uwboisemedres.uw.edu/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1172140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
     "acgme_program_id": "1400200001",
     "website": "https://akmedres.uw.edu/",
-    "evidence_url": "https://programdirectory.nrmp.org/u-washington-soldotna-ak-2397140m0/",
+    "evidence_url": "https://akmedres.uw.edu/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2397140M0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -5062,12 +5062,12 @@
   {
     "acgme_program_id": "1401611123",
     "website": "https://imr.bsd.uchicago.edu",
-    "evidence_url": "https://programdirectory.nrmp.org/univ-of-chicago-med-ctr-il-1160140c0/",
+    "evidence_url": "https://medicine.uchicago.edu/training",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1160140C0",
-    "scope": "institution",
-    "http_status": 200
+    "scope": "program",
+    "http_status": 502
   },
   {
     "acgme_program_id": "1401631125",
@@ -5648,12 +5648,12 @@
   },
   {
     "acgme_program_id": "1403511317",
-    "website": "https://www.wmchealth.org/",
-    "evidence_url": "https://programdirectory.nrmp.org/westchester-medical-ctr-ny-2157140c0/",
+    "website": "https://www.wmcimresidency.org/",
+    "evidence_url": "https://www.wmcimresidency.org/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2157140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -5668,12 +5668,12 @@
   },
   {
     "acgme_program_id": "1403800002",
-    "website": "https://www.wrhe-edu.org",
-    "evidence_url": "https://programdirectory.nrmp.org/western-reserve-health-ed-neomed-oh-1585140c1/",
+    "website": "https://www.wrhe-edu.org/internal-medicine",
+    "evidence_url": "https://www.wrhe-edu.org/internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "1585140C1",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -5770,12 +5770,12 @@
   },
   {
     "acgme_program_id": "1400811076",
-    "website": "https://www.northwell.edu/",
-    "evidence_url": "https://programdirectory.nrmp.org/zucker-som-northwell-danbury-hosp-ct-2492140c0/",
+    "website": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
+    "evidence_url": "https://learning.nuvancehealth.org/residency-programs/internal-medicine-residency-program-at-danbury-hospital/",
     "verified_at": "2026-10-02",
-    "method": "NRMP official program directory",
+    "method": "official_program_page_review",
     "nrmp_code": "2492140C0",
-    "scope": "institution",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -5915,12 +5915,12 @@
   },
   {
     "acgme_program_id": "1400500921",
-    "website": "https://collegemedicalcenter.com/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://collegemedicalcenter.com/internal-medicine-home/",
+    "evidence_url": "https://collegemedicalcenter.com/internal-medicine-home/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
-    "http_status": 200
+    "method": "official_program_page_review",
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1400500020",
@@ -6051,11 +6051,11 @@
   },
   {
     "acgme_program_id": "1401112101",
-    "website": "https://www.msmc.com",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://www.msmc.com/education/residency-programs/internal-medicine/",
+    "evidence_url": "https://www.msmc.com/education/residency-programs/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -6153,11 +6153,11 @@
   {
     "acgme_program_id": "1402521194",
     "website": "https://www.wsumed.com/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "evidence_url": "https://www.wsumed.com/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
-    "http_status": 200
+    "method": "official_program_page_review",
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1402500913",
@@ -6170,11 +6170,11 @@
   },
   {
     "acgme_program_id": "1402511200",
-    "website": "https://www.trinityhealthmichigan.org/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
+    "evidence_url": "https://www.trinityhealthmichigan.org/graduate-medical-education/oakland/internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -6235,29 +6235,29 @@
   },
   {
     "acgme_program_id": "1403521485",
-    "website": "https://www.sbhny.org/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/",
+    "evidence_url": "https://www.sbhny.org/healthcare-professionals/residency-programs/internal-medicine-residency-program/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
-    "http_status": 200
+    "method": "official_program_page_review",
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1403512265",
-    "website": "https://www.tbh.org",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
+    "evidence_url": "https://www.tbh.org/professional-medical-education/graduate-medical-education/internal-medicine",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
     "acgme_program_id": "1403511264",
-    "website": "https://onebrooklynhealth.org/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
+    "evidence_url": "https://onebrooklynhealth.org/healthcare-professionals/internal-medicine-residency-brookdale",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -6439,20 +6439,20 @@
   },
   {
     "acgme_program_id": "1404231525",
-    "website": "https://mayaguezmedical.com/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
+    "evidence_url": "https://mayaguezmedical.com/educacion-medica-graduada/programa-de-residencia-de-medicina-interna/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
     "acgme_program_id": "1404221397",
-    "website": "https://rcm1.rcm.upr.edu/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://md.rcm.upr.edu/medicine/program-overview/",
+    "evidence_url": "https://md.rcm.upr.edu/medicine/program-overview/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
+    "method": "official_program_page_review",
+    "scope": "program",
     "http_status": 200
   },
   {
@@ -6485,12 +6485,12 @@
   },
   {
     "acgme_program_id": "1404711413",
-    "website": "https://meharry.edu/",
-    "evidence_url": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "website": "https://meharry.edu/residency-program/internal-medicine/",
+    "evidence_url": "https://meharry.edu/residency-program/internal-medicine/",
     "verified_at": "2026-10-02",
-    "method": "AAMC ERAS official program directory",
-    "scope": "institution",
-    "http_status": 200
+    "method": "official_program_page_review",
+    "scope": "program",
+    "http_status": 403
   },
   {
     "acgme_program_id": "1404700003",
