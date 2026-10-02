@@ -50,7 +50,7 @@ Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test
 
 ## v4.3 Interview Wave Tracker and Signal Intelligence
 
-The static frontend adds intelligence.js and batched privacy-safe RPCs, with an integrated IM program guide. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–035 extend the existing production schema.
+The static frontend adds intelligence.js and batched privacy-safe RPCs, with an integrated IM program guide. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–036 extend the existing production schema.
 
 ### Complete program guide (v4.3-r3)
 
@@ -59,3 +59,5 @@ The 702 IM programs are grouped by verified ACGME identity, with 119 expanded re
 Migration 034 adds institutional metadata, resolves the 19 source aliases by ACGME code, adds program-only trend/video fields, and replaces the two existing metadata RPCs with grouped, bounded responses. It is idempotent and does not change Auth, RLS, applicant cycles or program reports. Source extraction remains allowlisted. Regression: `tests/program-guide.sql` and `tests/intelligence-dom.test.cjs`.
 
 Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.
+
+Migration 036 fills missing program-directory states from unambiguous, ACGME-linked program locations. All 702 guide programs now have a state and institutional URL; applicant records remain untouched.

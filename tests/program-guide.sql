@@ -18,6 +18,7 @@ begin
    assert not (item->>'program_id')::uuid=any(seen),'Duplicate card';
    seen:=array_append(seen,(item->>'program_id')::uuid);
    assert item->>'acgme_program_id' is not null;
+   assert item->>'state' ~ '^[A-Z]{2}$','Missing state in program card';
    for resource in select * from jsonb_array_elements(item->'resources') loop
     assert not resource ? 'source' and not resource ? 'source_key' and not resource ? 'program_url','Provider provenance in public response';
     assert resource->>'website_url' ~ '^https?://';

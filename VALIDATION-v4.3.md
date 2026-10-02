@@ -46,3 +46,14 @@ Security/performance advisors reviewed after 034; no new actionable finding. Exi
 The release receipt accompanying the ZIP records the final main commit and production/browser verification. Historical v4.3-r2 source-link wording above describes the prior release and is superseded by this integrated guide. Real Android hardware and new email signup inbox acceptance remain outside this incremental program-data update.
 
 Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.
+
+
+### Final enriched-guide production verification · October 2, 2026
+
+- Migration 036 applied and `program-guide.sql` rerun PASS, including the new state assertion. All 821 records are linked; 702 programs have institutional URLs and two-letter states; unresolved identities = 0. Historical regression remains **36 | 338 | 14**, with zero duplicate imported payloads.
+- Runtime source commit `4627bc56f8aa54742cb6ebfb5e1a9154e3086c34` was observed **Ready / Production / Current** in deployment `dpl_6Cn4ayakHcQzRAF2ZYUJqWHwQyZr`. The final documentation/state-migration source commit is identified in the external validation receipt to avoid a self-referential commit hash.
+- Production returned HTTP 200. `index.html`, `app.js`, `workspace.js`, `intelligence.js`, `styles.css` and `service-worker.js` matched the local release byte-for-byte. The .com domain redirected to the .org production URL.
+- Actual production browser: grouped guide and institutional links; positive and negative Gold/Silver/no-signal differences; resolved Desert Regional profile with direct hash reload; persistent five-program Compare with all three program-rate rows. Zero is correctly shown as 0.0%, not unavailable. No provider-extraction labels appeared in the new guide panels.
+- Actual production guide rendered in a 360 px Chrome viewport: client width 345 px and scroll width 345 px after scrollbar space, with readable stacked rate cards. This is a responsive layout check, not a physical Android test.
+- The refreshed service worker uses `cuba-match-explorer-v4.3-r3`. No application-origin fatal console error was observed; extension-origin metadata errors were excluded.
+- Original 33 sanitized source batches are unchanged from the baseline commit. The new program-only enrichment is versioned separately and applied by migrations; raw applicant lists and personal predictions are absent from the release delta.
