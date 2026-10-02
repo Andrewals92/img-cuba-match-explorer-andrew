@@ -50,4 +50,12 @@ Tests: `NODE_PATH=<directory containing jsdom> node tests/notifications-dom.test
 
 ## v4.3 Interview Wave Tracker and Signal Intelligence
 
-The static frontend adds intelligence.js and batched privacy-safe RPCs, with source provenance for owner-supplied IM program lists. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–033 extend the existing production schema.
+The static frontend adds intelligence.js and batched privacy-safe RPCs, with an integrated IM program guide. See RELEASE-v4.3.md, ANALYTICS-v4.3.md and VALIDATION-v4.3.md. Production remains https://cubamatchexplorer.org; .com redirects to .org. Migrations 030–035 extend the existing production schema.
+
+### Complete program guide (v4.3-r3)
+
+The 702 IM programs are grouped by verified ACGME identity, with 119 expanded records attached to the same profiles. All 19 previously unresolved names are linked; no applicant report identity was rewritten. Each program has a program/institution link. Gold, Silver and no-signal interview rates, documented requirements, reference-sample application trends and program videos are visible in the guide and profiles; Compare includes the three rates and descriptive percentage-point differences. Missing values stay unavailable, and observed rates are never personal predictions. The UI uses neutral section names; technical provenance remains auditable in private storage and `supabase/imports/program-guide-v43/`.
+
+Migration 034 adds institutional metadata, resolves the 19 source aliases by ACGME code, adds program-only trend/video fields, and replaces the two existing metadata RPCs with grouped, bounded responses. It is idempotent and does not change Auth, RLS, applicant cycles or program reports. Source extraction remains allowlisted. Regression: `tests/program-guide.sql` and `tests/intelligence-dom.test.cjs`.
+
+Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.

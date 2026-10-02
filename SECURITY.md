@@ -42,3 +42,7 @@ Web Push endpoints have one global owner. When the browser has a subscription ab
 ## v4.3
 
 Private canonical view and program source catalog have no anonymous/authenticated raw access. The catalog uses RLS deny-by-default. New public aggregate/resource RPCs set search_path to empty and expose only program metadata or internally suppressed aggregates. Admin diagnostics require is_admin. Wave alerts default off and reuse existing channels, mute, digest, dedupe, delivery limits and send-time opt-out protection. No new credentials, Auth redirect changes or raw private tracker aggregation.
+
+### v4.3-r3 guide review
+
+Migration 034 keeps the private catalog RLS enabled with no user access. The existing public metadata functions retain empty search_path, explicit grants and bounded pagination/ID arrays; they disclose only program metadata. Institutional anchors accept only HTTP(S), reject embedded credentials and `.local` hosts, escape text and use noopener/noreferrer. Advisors reviewed after 034: existing private deny-all table and intentionally anonymous-safe SECURITY DEFINER notices remain expected. No new actionable security/performance issue was introduced. Tests cover anonymous metadata access, private ACLs, personal-field exclusion and unchanged 36/338/14 historical counts.

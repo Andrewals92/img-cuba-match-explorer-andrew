@@ -30,3 +30,5 @@ Notification records and their dependent queued jobs are retained 180 days. Atte
 ## v4.3
 
 Only consented community contribution reports enter wave/signal analytics. Private tracker, watchlist notes and rank information do not. Weekly/monthly invitation buckets require 3 distinct people; signal cohorts require 5 plus zero-or-at-least-3 outcome complements. Canonical observations deduplicate person/program/cycle. Signals are never pooled across cycles. Personal fields from supplied external program lists are excluded by allowlist; source data and community samples stay separate.
+
+The v4.3-r3 program guide does not change community thresholds or imported-applicant RLS. Program-level rates and ranges remain separate from user-contributed metrics. Personal likelihood, individual scores, compatibility, connections and free-text applicant comments are excluded. The two public metadata RPCs no longer expose provider provenance; provenance is retained in the private catalog for data maintenance. Program website links send no applicant parameters.

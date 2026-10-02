@@ -1,0 +1,211 @@
+[
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/3affa924-85df-9305-c1e7-393d5be7c4a4",
+    "name": "Desert Regional Medical Center Program",
+    "city": "Palm Springs",
+    "state": "CA",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/3affa924-85df-9305-c1e7-393d5be7c4a4",
+    "acgme_program_id": "1400500016",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/f1a2db63-ec0d-48e4-012f-e60490e1daf7",
+    "name": "HCA Healthcare Kansas City/Overland Park Regional Medical Center Program",
+    "city": "Overland Park",
+    "state": "KS",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/f1a2db63-ec0d-48e4-012f-e60490e1daf7",
+    "acgme_program_id": "1402800917",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Current participating identity verified against NRMP and program website; legacy nonparticipating code 1401900141 retained separately."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/c94cd5d0-87d5-65fa-524e-0abcdf6f5a80",
+    "name": "HCA Healthcare/Mercer University School of Medicine/Grand Strand Medical Center Program",
+    "city": "Myrtle Beach",
+    "state": "SC",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/c94cd5d0-87d5-65fa-524e-0abcdf6f5a80",
+    "acgme_program_id": "1404500406",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/1b3f3808-b3ff-9461-7c49-e6cff039a58f",
+    "name": "HCA Healthcare/Mercer University School of Medicine/Trident Program",
+    "city": "North Charleston",
+    "state": "SC",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/1b3f3808-b3ff-9461-7c49-e6cff039a58f",
+    "acgme_program_id": "1404500407",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/b1d25170-1e5b-e2b6-01ee-9c06a046fa45",
+    "name": "Kent Hospital/Brown University Program",
+    "city": "Warwick",
+    "state": "RI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/b1d25170-1e5b-e2b6-01ee-9c06a046fa45",
+    "acgme_program_id": "1404300474",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/839ddce0-8f0c-7987-0544-2addfe5da136",
+    "name": "McLaren Health Care Corporation (Bay City) Program",
+    "city": "Bay City",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/839ddce0-8f0c-7987-0544-2addfe5da136",
+    "acgme_program_id": "1402500002",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/b339b33c-5aab-7d2e-4e8e-b30af5e4f033",
+    "name": "McLaren Health Care Corporation (Port Huron) Program",
+    "city": "Port Huron",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/b339b33c-5aab-7d2e-4e8e-b30af5e4f033",
+    "acgme_program_id": "1402500001",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/108097f8-a4c1-3414-5df4-d9e4a7596071",
+    "name": "McLaren Health Care/Flint/MSU Program",
+    "city": "Flint",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/108097f8-a4c1-3414-5df4-d9e4a7596071",
+    "acgme_program_id": "1402521471",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/977d230a-daa9-26bb-89ef-1180ccfc90cc",
+    "name": "McLaren Health Care/Greater Lansing/MSU Program",
+    "city": "Lansing",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/977d230a-daa9-26bb-89ef-1180ccfc90cc",
+    "acgme_program_id": "1402500926",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/dde4dcd2-68f5-e642-f3c0-74e54cfc142a",
+    "name": "McLaren Health Care/Macomb/MSU Program",
+    "city": "Mount Clemens",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/dde4dcd2-68f5-e642-f3c0-74e54cfc142a",
+    "acgme_program_id": "1402500925",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/d10d8719-7643-fff3-90e9-c2d9762c899f",
+    "name": "McLaren Health Care/Oakland/MSU Program",
+    "city": "Pontiac",
+    "state": "MI",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/d10d8719-7643-fff3-90e9-c2d9762c899f",
+    "acgme_program_id": "1402500917",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/9ad7cb10-d30d-29ba-794f-b559072fe033",
+    "name": "Osteopathic Medical Education Consortium of Oklahoma, Inc. (OMECO) Program",
+    "city": "Tahlequah",
+    "state": "OK",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/9ad7cb10-d30d-29ba-794f-b559072fe033",
+    "acgme_program_id": "1403900355",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/189e4d5b-5967-35ad-23f7-3c36cc356eee",
+    "name": "Philadelphia College of Osteopathic Medicine Program",
+    "city": "Philadelphia",
+    "state": "PA",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/189e4d5b-5967-35ad-23f7-3c36cc356eee",
+    "acgme_program_id": "1404100902",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/34c69dfd-a7cc-45dc-5cfe-c4834ec99472",
+    "name": "Swedish Hospital Program",
+    "city": "Chicago",
+    "state": "IL",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/34c69dfd-a7cc-45dc-5cfe-c4834ec99472",
+    "acgme_program_id": "1401600544",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/f01e029a-3e3f-bf9b-b72f-9b0322755ff2",
+    "name": "TMC Health Medical Education Program, Inc. (THMEP) Program",
+    "city": "Tucson",
+    "state": "AZ",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/f01e029a-3e3f-bf9b-b72f-9b0322755ff2",
+    "acgme_program_id": "1400300003",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/8e3c022b-f3d5-5bbf-1811-f749b6f377d7",
+    "name": "UCSF Health – St. Mary’s Hospital Program",
+    "city": "San Francisco",
+    "state": "CA",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/8e3c022b-f3d5-5bbf-1811-f749b6f377d7",
+    "acgme_program_id": "1400522063",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/042b2176-6980-1dcb-7822-af9a379093de",
+    "name": "University of California (Irvine)/Irvine Medical Center Program",
+    "city": "Irvine",
+    "state": "CA",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/042b2176-6980-1dcb-7822-af9a379093de",
+    "acgme_program_id": "1400500023",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/e88894d8-ba52-f020-7ed9-49a53a510af6",
+    "name": "University of Rochester Medical Center Program",
+    "city": "Rochester",
+    "state": "NY",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/e88894d8-ba52-f020-7ed9-49a53a510af6",
+    "acgme_program_id": "1403511313",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  },
+  {
+    "source_key": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/d3afe1b2-ef2d-3b37-8e3d-93d66eba5a22",
+    "name": "Wellington Regional Medical Center Program",
+    "city": "Wellington",
+    "state": "FL",
+    "program_url": "https://www.residencyexplorer.org/Program/GetByIdWithMedicalSpecialty/d3afe1b2-ef2d-3b37-8e3d-93d66eba5a22",
+    "acgme_program_id": "1401100004",
+    "evidence": "https://systems.aamc.org/eras/erasstats/par/display.cfm?spec_cd=140",
+    "verified_at": "2026-10-02",
+    "notes": "Official ACGME code matched to name/location; historical name retained in source catalog."
+  }
+]

@@ -1464,7 +1464,7 @@
   function updateNav(skipLoad = false) {
     const titles = {
       waves:["Interview Waves","Actividad reportada y signals con privacidad."],
-      "program-sources":["IM Program Sources","Información de programas aportada por el propietario."],
+      "program-sources":["Guía de programas IM","Tasas de entrevista, signals y requisitos de 702 programas de Medicina Interna."],
       radar:["New Program Radar","Programas detectados y cambios materiales."],
       "notification-center":["Notificaciones","Alertas privadas y estado de lectura."],
       "notification-settings":["Preferencias","Canales, filtros y horarios de tus alertas."],

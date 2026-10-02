@@ -16,7 +16,7 @@
     <title>Cuba Match Explorer</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=4.3" />
+    <link rel="stylesheet" href="styles.css?v=4.3-r3" />
   </head>
   <body>
     <div class="nav-overlay" id="navOverlay"></div>
@@ -40,7 +40,7 @@
             <span>⌕</span>Program Explorer
           </button>
           <button class="nav-btn" data-view="waves"><span>▤</span> Interview Waves</button>
-          <button class="nav-btn" data-view="program-sources"><span>↗</span> IM Program Sources</button>
+          <button class="nav-btn" data-view="program-sources"><span>↗</span> Guía de programas IM</button>
           <button class="nav-btn" data-view="radar"><span>◌</span> New Program Radar</button>
           <button class="nav-btn" data-view="notification-center" data-auth-notifications hidden><span>♧</span> Notifications <span id="notificationUnread" class="nav-badge" hidden></span></button>
           <button class="nav-btn" data-view="notification-settings" data-auth-notifications hidden><span>⚙</span> Alert preferences</button>
@@ -187,7 +187,7 @@
         </section>
 
         <section class="view" id="waves"><article class="panel"><h2>Interview Wave Tracker</h2><p>Observaciones comunitarias por período. La ausencia de reportes no prueba que el programa haya terminado de enviar invitaciones.</p><form id="waveFilters" class="season-form-grid"><label>Especialidad<input id="waveSpecialty" value="Internal Medicine" list="specialtyList"></label><label>Ciclo<select id="waveCycle"><option value="2027">2027 · en curso</option><option value="2026">2026 · histórico</option><option value="2028">2028 · en curso</option><option value="all">Todos · ciclos separados</option></select></label><label>Estado<input id="waveState" maxlength="2" placeholder="FL"></label><label>Programa<input id="waveProgram" placeholder="Nombre del programa"></label><button type="submit" class="btn primary">Consultar</button></form><p class="workspace-note">Semanas desde lunes, sin cambios por zona horaria. Fechas de recepción de invitación aportadas en Mis datos. Si no hay semanas suficientes, se muestran meses protegidos. No se usa el calendario privado.</p></article><div id="waveResults" aria-live="polite"></div><div id="wavePager" class="row-actions"></div></section>
-        <section class="view" id="program-sources"><article class="panel"><h2>IM Program Sources</h2><p>702 entradas de Residency Explorer y 119 complementos de Match A Resident. Las entradas de la misma residencia conservan su procedencia separada.</p><form id="sourceFilters" class="row-actions"><label>Buscar programa<input id="sourceSearch" placeholder="Programa, ciudad, estado o ACGME"></label><button class="btn primary" type="submit">Buscar</button></form><p class="workspace-note">Enlace individual a Residency Explorer cuando fue aportado. Se complementaron con webs institucionales verificadas los cuatro programas MAR sin enlace individual de Residency Explorer. Los demás sitios institucionales no se han verificado; se conserva el enlace a la fuente. Un enlace de fuente no se presenta como la web oficial de la residencia.</p></article><div id="sourceResults" aria-live="polite"></div><div id="sourcePager" class="row-actions"></div></section>
+        <section class="view" id="program-sources"><article class="panel"><h2>Guía de programas IM</h2><p>702 programas de Medicina Interna con identidad ACGME y enlace institucional, incluyendo 119 fichas ampliadas. Consulta tasas de entrevista por signal, requisitos y características. Los datos de cada programa se muestran juntos.</p><form id="sourceFilters" class="row-actions"><label>Buscar programa<input id="sourceSearch" placeholder="Programa, ciudad, estado o ACGME"></label><button class="btn primary" type="submit">Buscar</button></form><p class="workspace-note">Los enlaces identificados como «Web de la institución» llevan al hospital o centro docente cuando no se ha verificado una página específica de la residencia. Las tasas son observaciones de grupos, no probabilidades personales.</p></article><div id="sourceResults" aria-live="polite"></div><div id="sourcePager" class="row-actions"></div></section>
         <section class="view" id="program"><div id="programProfileContent" aria-live="polite"></div></section>
         <section class="view" id="compare"><div id="compareContent" aria-live="polite"></div></section>
 
@@ -1010,12 +1010,12 @@
         </footer>
       </main>
     </div>
-    <script src="cloud-config.js?v=4.3"></script>
-    <script src="calendar-utils.js?v=4.3"></script>
-    <script src="season.js?v=4.3"></script>
-    <script src="workspace.js?v=4.3"></script>
-    <script src="intelligence.js?v=4.3"></script>
-    <script src="notifications.js?v=4.3"></script>
-    <script src="app.js?v=4.3"></script>
+    <script src="cloud-config.js?v=4.3-r3"></script>
+    <script src="calendar-utils.js?v=4.3-r3"></script>
+    <script src="season.js?v=4.3-r3"></script>
+    <script src="workspace.js?v=4.3-r3"></script>
+    <script src="intelligence.js?v=4.3-r3"></script>
+    <script src="notifications.js?v=4.3-r3"></script>
+    <script src="app.js?v=4.3-r3"></script>
   </body>
 </html>

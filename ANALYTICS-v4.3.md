@@ -19,3 +19,9 @@ Official fallback links verified October 2, 2026: Trident (ACGME 1404500407), NH
 No materialization or additional refresh job is needed at current scale. The 30-program overview measured 45.834 ms server execution during validation. Profiles/Compare make three independent batched calls concurrently. Saved-program summaries use batches of up to 50; the existing private season metadata loader remains unchanged.
 
 MAR enrichment preserves 1,676 program-only core competency, supplemental and highlight fields. Individual survey/comments and personal connections remain excluded.
+
+## Integrated guide, October 2, 2026
+
+All 821 program-only records are linked to 702 official program UUIDs via ACGME codes. `program_source_directory_v43` returns one card per UUID (30 per page, with a 31st-row lookahead); `program_resources_v43` remains bounded to 1–50 IDs. Public responses expose neutral resource kinds and institutional links, without provider names, provider URLs or source keys. The internal catalog retains provenance and original aliases. Profile/Compare keep the same three parallel requests. Directory execution measured 12.254 ms after enrichment.
+
+The imported program percentages use their supplied 2026 context, independent of community cycle filters. Zero is an observed value; `!`, missing values and non-finite numbers mean unavailable. Strategy text calculates differences in percentage points between documented program rates. It does not infer causality, personal odds, a recommended allocation, or confidence intervals without denominators. Application trends are separate sample shares, not interview rates. Program websites are evidence-linked through official AAMC/NRMP directories or the institution itself; audit JSON records automated response limitations.

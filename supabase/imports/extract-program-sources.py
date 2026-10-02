@@ -26,6 +26,22 @@ for row in list(w['Detalles'].iter_rows(values_only=True))[5:]:
   extra[re.sub(r'\D','',str(row[1]))][str(row[3])+' · '+str(row[4])]=str(row[5])
 for entry in out:
  if entry['source']=='Match A Resident': entry['fields'].update(extra[entry['acgme_program_id']])
+# Program-only application trends; these are reference-sample shares, not interview probabilities.
+for row in r[5:]:
+ if not row[1]: continue
+ entry=next(x for x in out if x['source_key']=='MAR:'+re.sub(r'\D','',str(row[1])))
+ for i,label in [(26,'Tendencia de aplicaciones · temporada previa (muestra de referencia)'),(27,'Tendencia de aplicaciones · temporada actual (muestra de referencia)')]:
+  if row[i] is not None:entry['fields'][label]=row[i]
+for row in list(w['Detalles'].iter_rows(values_only=True))[5:]:
+ if row[3]=='ENLACES' and row[4]=='Watch Program Overview Video' and str(row[5]).startswith('https://'):
+  entry=next(x for x in out if x['source_key']=='MAR:'+re.sub(r'\D','',str(row[1])))
+  entry['fields']['Vídeo de presentación del programa']=row[5]
+# Apply the audited 19 mappings by immutable source key; no generated program UUIDs.
+resolved=ROOT/'program-guide-v43'/'identity-resolutions.json'
+if resolved.exists():
+ mapping={x['source_key']:x['acgme_program_id'] for x in json.loads(resolved.read_text())}
+ for entry in out:
+  if entry['source_key'] in mapping:entry['acgme_program_id']=mapping[entry['source_key']]
 def encode(v):
  if isinstance(v,(datetime.date,datetime.datetime)): return v.isoformat()
  raise TypeError(type(v).__name__)

@@ -31,3 +31,15 @@ All three migrations applied successfully. Existing migrations were not rerun or
 See ANALYTICS-v4.3.md and VALIDATION-v4.3.md for formulas, tests and acceptance limits. Production acceptance is recorded after deployment; a commit alone is not deployment verification.
 
 MAR enrichment preserves 1,676 program-only core competency, supplemental and highlight fields. Individual survey/comments and personal connections remain excluded.
+
+## v4.3-r3 · Complete IM program guide
+
+- Resolved all 19 remaining source aliases using official ACGME identities. Overland Park uses current participating ID 1402800917; legacy 1401900141 stays separate. Name changes retain original import aliases.
+- 821 sanitized records now form 702 unique program cards; 119 complements appear alongside the same program's rates.
+- Added 702 institutional links, with explicit institution-level labels when the linked page is broader than a residency page. Known 404/obsolete links found in the audit were replaced. Some institutions block automated requests; the audit records this without claiming all links returned HTTP 200.
+- Prominent Gold/Silver/no-signal interview percentages, percentage-point comparisons and a descriptive signals decision aid. No personal likelihood is imported or calculated. No causal claim, winner or program ranking.
+- Neutral public labels replace provider branding and extraction-origin notices. Backend provenance remains preserved for maintenance.
+- Preserved all program-only clinical requirements, cohort ranges, contact information, highlights and supplemental fields; added program videos and reference-sample application trends. Personal scores, compatibility, personal connections, interview narratives and surveys with undocumented privacy cohorts remain excluded.
+- Applied migration 034. Refreshed service-worker cache to v4.3-r3. No Auth/domain changes.
+
+Migration 035 repairs two program links that redirect to sign-in, one soft-404 relocation, and retains a meaningful program URL query parameter. No applicant data or permissions change.

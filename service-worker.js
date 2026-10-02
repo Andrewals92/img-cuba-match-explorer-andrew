@@ -3,7 +3,7 @@
 // calls, and its cache name never changed, so users could keep running an
 // old app.js after a deploy. It now only handles same-origin static files,
 // always tries the network first, and the cache name is versioned.
-const CACHE = 'cuba-match-explorer-v4.3-r2';
+const CACHE = 'cuba-match-explorer-v4.3-r3';
 const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './intelligence.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg'];
 
 self.addEventListener('install', (e) => {
