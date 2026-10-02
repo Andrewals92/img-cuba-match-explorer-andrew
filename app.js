@@ -303,6 +303,7 @@
   function dropSession() {
     session = null;
     profile = null;
+    matchAI?.reset();
     seenNotifications = null;
     try {
       localStorage.removeItem(SESSION_KEY);
@@ -848,11 +849,11 @@
   function renderDashboard() {
     const o = publicDB.overview || {};
     const items = [
-      ["Applicants", o.applicants || 0],
-      ["Applications", o.applications || 0],
-      ["Programs", o.programs || 0],
-      ["Interviews", o.interviews || 0],
-      ["Matches", o.matches || 0],
+      ["Applicants", o.applicants ?? "—"],
+      ["Applications", o.applications ?? "—"],
+      ["Programs", o.programs ?? "—"],
+      ["Interviews", o.interviews ?? "—"],
+      ["Matches · ciclos completos", o.matches ?? "—"],
     ];
     q("kpiGrid").innerHTML = items
       .map(
@@ -881,7 +882,7 @@
               `<div class="dist-col"><div class="dist-bar" style="height:${Math.max(5, ((x.count || 0) / mb) * 120)}px"></div><small>${esc(x.label)}<br>${x.count || 0}</small></div>`,
           )
           .join("")
-      : '<div class="empty-state">Se mostrará cuando haya datos suficientes.</div>';
+      : '<div class="empty-state">Datos insuficientes para mostrar grupos protegidos de al menos 5 personas.</div>';
     q("recentActivity").innerHTML = publicDB.recent.length
       ? publicDB.recent
           .slice(0, 12)
@@ -1076,94 +1077,15 @@
   const fmt = (v, suffix = "") =>
     v === null || v === undefined || v === "" ? "—" : `${Number.isInteger(Number(v)) ? v : Number(v).toFixed(1)}${suffix}`;
   function renderCohort(res, a) {
-    const box = q("similarSummary"),
-      mem = q("similarMembers"),
-      prog = q("similarPrograms");
-    box.className = "";
-    if (!res) {
-      box.innerHTML = '<div class="empty-state">No se pudo calcular la cohorte.</div>';
-      mem.innerHTML = prog.innerHTML = "";
-      return;
-    }
-    const rangeTxt = [
-      a.p_step2 !== null ? `Step 2 ${a.p_step2} ± ${a.p_step2_range}` : null,
-      a.p_yog !== null ? `YOG ± ${a.p_yog_range}` : null,
-      a.p_lors !== null ? `LoRs ± ${a.p_lors_range}` : null,
-      a.p_usce !== null ? `USCE ± ${a.p_usce_range} meses` : null,
-      a.p_visa_required !== null ? (a.p_visa_required ? "requiere visa" : "sin visa") : null,
-      a.p_specialty,
-      a.p_cycle ? `solo Match ${a.p_cycle}` : "todos los ciclos",
-    ]
-      .filter(Boolean)
-      .join(" · ");
-    if (res.protected) {
-      box.innerHTML = `<div class="metric-row cohort-metrics"><div class="metric"><strong>${res.in_range}</strong><span>Aplicantes en tu rango</span></div></div><div class="notice"><strong>Datos protegidos</strong><p>Hay ${res.cohort_size} perfil(es) comparable(s) para <b>${esc(rangeTxt)}</b>. Para proteger la privacidad, los detalles se muestran cuando hay al menos ${res.min_size || COHORT_MIN}. Prueba con un rango de Step 2 más amplio, otro ciclo o “Todos”.</p></div>`;
-      mem.innerHTML = `<div class="empty-state">Se necesitan al menos ${res.min_size || COHORT_MIN} perfiles para mostrar cohortes.</div>`;
-      prog.innerHTML = '<div class="empty-state">Sin datos suficientes.</div>';
-      return;
-    }
-    const n = res.cohort_size || 0;
-    const done = res.completed ?? n;
-    const pctMatch = done ? Math.round((res.matched / done) * 100) : 0;
-    const cycleTxt = Object.entries(res.by_cycle || {})
-      .sort((x, y) => x[0].localeCompare(y[0]))
-      .map(([cy, k]) => `${k} del Match ${cy}${matchCycleCompleted(cy) ? "" : " (en curso)"}`)
-      .join(" · ");
-    box.innerHTML = `<div class="metric-row cohort-metrics">
-        <div class="metric"><strong>${res.in_range}</strong><span>Aplicantes en tu rango</span></div>
-        <div class="metric"><strong>${n}</strong><span>Cohorte comparable</span></div>
-        <div class="metric"><strong>${done ? `${res.matched}/${done}` : "—"}</strong><span>Hicieron Match${done ? ` (${pctMatch}%)` : ""}</span></div>
-        <div class="metric"><strong>${fmt(res.median_interviews)}</strong><span>Mediana de entrevistas</span></div>
-        <div class="metric"><strong>${fmt(res.median_applied)}</strong><span>Mediana programas aplicados</span></div>
-        <div class="metric"><strong>${fmt(res.median_step2)}</strong><span>Mediana Step 2</span></div>
-      </div>
-      <p class="cohort-note">${cycleTxt ? `Cohorte: <b>${esc(cycleTxt)}</b>. ` : ""}${
-        res.in_progress ? `El % de Match se calcula solo con ciclos terminados; los aplicantes en curso aparecen como «En curso». ` : ""
-      }Rango: <b>${esc(rangeTxt)}</b>.${
-        res.widened
-          ? ` Solo ${res.in_range} aplicante(s) caen exactamente en ese rango, así que se muestran los <b>${n} perfiles más cercanos</b>.`
-          : ""
-      } Son patrones observados en la comunidad, no probabilidades de Match.</p>`;
-    mem.innerHTML = `<table class="data-table cohort-table"><thead><tr><th>Perfil</th><th>Ciclo</th><th>Step 2</th><th>YOG</th><th>US LoRs</th><th>USCE</th><th>Visa</th><th>Programas aplicados</th><th>Entrevistas</th><th>Match</th><th></th></tr></thead><tbody>${res.members
-      .map(
-        (m, i) => `<tr>
-          <td><b>${esc(m.label)}</b><br><span class="muted">${esc(m.specialty || "")}</span></td>
-          <td>${fmt(m.cycle)}</td>
-          <td>${fmt(m.step2)}</td><td>${fmt(m.yog)}</td><td>${fmt(m.us_lors)}</td><td>${fmt(m.usce)}</td>
-          <td>${m.visa_required ? tag("Requiere", "warn") : tag("No")}</td>
-          <td>${fmt(m.programs_applied)}</td>
-          <td><b>${fmt(m.interviews)}</b></td>
-          <td>${m.matched ? `${tag("Match", "good")}<br><span class="muted">${workspace.programLink({program:m.match_program,state:m.match_state,specialty:m.specialty})}${m.match_state ? " · " + esc(m.match_state) : ""}</span>` : m.status === "in_progress" ? tag("En curso", "warn") : tag("No match")}</td>
-          <td><button class="text-btn small-link" data-cohort-toggle="${i}">${m.interview_programs.length ? "Ver programas" : ""}</button></td>
-        </tr>
-        <tr class="cohort-detail" id="cohortDetail${i}" hidden><td colspan="11">
-          <div class="cohort-programs">${m.interview_programs
-            .map(
-              (p) =>
-                `<span class="chip ${p.matched ? "matched" : ""}">${workspace.programLink(p)}${p.state ? ` <small>${esc(p.state)}</small>` : ""}${p.specialty && p.specialty !== m.specialty ? ` <small>${esc(p.specialty)}</small>` : ""}${p.signal && p.signal !== "None" ? ` <small class="sig">${esc(p.signal)}</small>` : ""}${p.matched ? " ★" : ""}</span>`,
-            )
-            .join("")}${
-            (m.applied_programs || []).length
-              ? `<div class="muted" style="margin-top:8px">Aplicó sin entrevista: ${m.applied_programs.map(esc).join(", ")}</div>`
-              : ""
-          }</div></td></tr>`,
-      )
-      .join("")}</tbody></table>`;
-    const allProgs = res.programs || [];
-    const showAll = prog.dataset.showAll === "1";
-    prog.innerHTML = table(
-      [
-        ["Programa", "program", (r) => workspace.programLink(r)],
-        ["Estado", "state"],
-        ["Especialidad", "specialty"],
-        ["Perfiles de la cohorte con entrevista", "interviews", (r) => `${r.interviews} de ${n}`],
-        ["Matches", "matches", (r) => (r.matches ? tag(String(r.matches), "good") : "0")],
-      ],
-      showAll ? allProgs : allProgs.slice(0, 20),
-    ) +
-      (allProgs.length > 20
-        ? `<button class="btn ghost small" style="margin-top:12px" data-cohort-progs>${showAll ? "Ver solo los 20 principales" : `Ver los ${allProgs.length} programas`}</button>`
-        : "");
+    const box=q('similarSummary'),mem=q('similarMembers'),prog=q('similarPrograms');
+    if(!res){box.innerHTML='<p class="empty-state">No se pudo calcular la cohorte.</p>';mem.innerHTML=prog.innerHTML='';return;}
+    box.className='';box.innerHTML=matchAI.cohorts(res);
+    mem.innerHTML='<p class="workspace-note">La comparación usa resúmenes agregados. Los perfiles individuales y los históricos importados permanecen privados; las muestras menores de 5 personas se suprimen.</p>';
+    const rows=res.programs||[];
+    prog.innerHTML=rows.length?table([
+      ['Programa','program',r=>workspace.programLink({...r,programId:r.id})],['Estado','state'],['Especialidad','specialty'],
+      ['Personas con reportes','contributors'],['Entrevistas','interviews',r=>r.interviews==null?'Datos insuficientes':esc(r.interviews)],
+      ['Matches · ciclos completos','matches',r=>r.matches==null?'Datos insuficientes':esc(r.matches)]],rows):'<p class="empty-state">No hay programas con una muestra suficiente para estos filtros.</p>';
   }
   // Views are addressed as #/name (plain #name would make the browser jump
   // to the section element with that id).
@@ -1463,6 +1385,7 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
+      "match-intelligence":["Match Intelligence","Tu contexto, evidencia protegida y decisiones explicables."],
       waves:["Interview Waves","Actividad reportada y signals con privacidad."],
       "program-sources":["Guía de programas IM","Tasas de entrevista, signals y requisitos de 702 programas de Medicina Interna."],
       radar:["New Program Radar","Programas detectados y cambios materiales."],
@@ -1505,6 +1428,7 @@
       history.replaceState(null, "", "#/" + currentView);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (skipLoad) return;
+    if(currentView==="match-intelligence") matchAI.load();
     if(currentView==="waves") intelligence.load();
     if(currentView==="program-sources") intelligence.loadSources();
     if(currentView==="radar") notifications.radar();
@@ -1514,7 +1438,7 @@
     if (currentView === "interviews" || currentView === "watchlist") season.render();
     if (currentView === "applicants") findSimilar();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); }
+    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); matchAI.operations(); }
   }
   function resetCycleForm() {
     q("cycleForm").reset();
@@ -2090,6 +2014,18 @@
 
   const notifications=window.CMENotifications({q,esc,api:request,rpc,getUserId:()=>session?.user?.id,isAdmin,toast,getSeason:()=>season});
 
+  async function assistantRequest(body) {
+    await ensureSession();
+    if(!session?.access_token)throw new Error('Inicia sesión para usar el asistente.');
+    const send=()=>fetch('/api/match-assistant',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify(body),signal:AbortSignal.timeout(55000)});
+    let response=await send();
+    if(response.status===401&&session?.refresh_token&&await ensureSession(true))response=await send();
+    const data=await response.json();
+    if(!response.ok)throw new Error(response.status===429?'Se alcanzó el límite de consultas de IA. Inténtalo más tarde; las herramientas de datos siguen disponibles.':response.status===401?'Tu sesión venció. Inicia sesión de nuevo.':response.status===403?'Ese contexto no está autorizado para tu cuenta.':'La consulta no se pudo completar. Prueba nuevamente.');
+    return data;
+  }
+  const matchAI=window.CMEMatchIntelligence({q,esc,rpc,getUserId:()=>session?.user?.id,getMyData:()=>myDB,getSeason:()=>season,assistantRequest,isAdmin,cohortArgs,updateCompare:()=>workspace.tray()});
+
   let refreshRun = 0;
   async function refresh() {
     const run = ++refreshRun;
@@ -2121,11 +2057,13 @@
     renderMatches();
     renderMyData();
     renderAccount();
+    matchAI.reset();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
+    if(currentView==="match-intelligence") matchAI.load();
     if(currentView==="waves") intelligence.load();
     if(currentView==="program-sources") intelligence.loadSources();
     if (currentView === "intelligence") loadIntelligence();
-    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); }
+    if (currentView === "admin") { renderAdmin(); workspace.health(); notifications.operations(); matchAI.operations(); }
   }
   q("nav").addEventListener("click", (e) => {
     const b = e.target.closest(".nav-btn");
@@ -2256,7 +2194,7 @@
           "good",
         );
     } catch (err) {
-      setAuthStatus(err.message, "bad");
+      setAuthStatus(translateError(err.message), "bad");
     } finally {
       btns.forEach((b) => (b.disabled = false));
     }

@@ -51,7 +51,8 @@ do $$
 declare denied boolean:=false; n integer;
 begin
  assert not public.is_admin();
- assert (public.similar_cohort(p_cycle=>2026,p_specialty=>'V4 QA Specialty')->>'cohort_size')::int=4,'own profile or private peer included in cohort';
+ assert (public.similar_cohort(p_cycle=>2026,p_specialty=>'V4 QA Specialty')->>'protected')::boolean,'own profile or private peer included in cohort';
+ assert public.similar_cohort(p_cycle=>2026,p_specialty=>'V4 QA Specialty')->>'cohort_size' is null,'small cohort count leaked';
  select count(*) into n from public.applicant_cycles;
  assert n=1,'normal user sees other profiles';
  select count(*) into n from public.program_reports;

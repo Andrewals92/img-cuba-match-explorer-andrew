@@ -1,0 +1,9 @@
+{
+  "name": "cuba-match-explorer",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Static Cuba Match Explorer with a server-only grounded assistant",
+  "engines": { "node": "22.x" },
+  "dependencies": { "@vercel/oidc": "3.8.10" },
+  "scripts": { "test:ai": "node --test tests/ai-gateway.test.cjs" }
+}

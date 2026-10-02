@@ -1,4 +1,4 @@
-# Cuba Match Explorer v4.3
+# Cuba Match Explorer v5.0
 
 Created and owned by Andrew A Lopez Sanchez, MD, MBA  
 © 2026 Andrew A Lopez Sanchez, MD, MBA. All rights reserved.
@@ -19,7 +19,7 @@ The 2026 import has 36 profiles, 338 detailed invitations and 14 matches. Its 13
 
 ## Run and deploy
 
-Serve this directory over HTTP, for example `python -m http.server 8000`. Public Supabase configuration lives in `cloud-config.js`; never add a service-role key. Vercel uses Framework Other, root `./`, no build/install/output override, and GitHub `main`.
+Serve this directory over HTTP, for example `python -m http.server 8000`. Public Supabase configuration lives in `cloud-config.js`; never add a service-role key. Vercel uses Framework Other, root `./`, no build/output override; installation is `npm ci --omit=dev --ignore-scripts` for the server-only OIDC dependency, and GitHub `main`.
 
 Migrations 002–012 are historical files preserved from the handoff; do not rerun or renumber them. The supplied baseline did not contain a numbered 007 file. Apply new migrations once, in order: `013_program_workspace.sql`, `014_program_identity_maintenance.sql`, then `015_directory_specialty_case.sql`. They are additive and designed to tolerate repeated DDL where practical. Applied migration history in Supabase is authoritative.
 
@@ -63,3 +63,17 @@ Migration 035 repairs two program links that redirect to sign-in, one soft-404 r
 Migration 036 fills missing program-directory states from unambiguous, ACGME-linked program locations. All 702 guide programs now have a state and institutional URL; applicant records remain untouched.
 
 Migration 037 refines 53 program website destinations/labels using official residency pages. Coverage is 688 program-specific pages plus 14 clearly labeled institutional pages (702 total). It changes only website metadata; supplied rates, program identities and private applicant data are unchanged. See `supabase/imports/program-guide-v43/residency-links-037.json` for review evidence and HTTP limitations.
+
+
+## v5.0 Match Intelligence
+
+`#/match-intelligence` is an authenticated decision-support workspace with explainable, aggregate-only cohorts; independent profile/cycle and temporary discovery filters; and a grounded assistant. Program Profile, Compare, Applicant Explorer, My Match, saved programs and wave/signal sections include contextual entry points. No framework migration.
+
+The assistant runs at `/api/match-assistant` in a Vercel Node function. `server/match-ai.cjs` validates Supabase access tokens, routes only approved reads and builds cited evidence. A model selects evidence IDs; displayed facts always come from server-constructed records. It never runs arbitrary SQL or supplies new numbers. Vercel OIDC is the default server credential; `AI_GATEWAY_API_KEY` is an optional server-only fallback. `CME_AI_MODEL` defaults to `openai/gpt-5-mini`, verified with real inference on 2026-10-02 using the existing free-credit allowance. GPT-5.4 mini was rejected by the free tier and is not the default. Model availability can change; failures use the labeled direct-data fallback.
+
+Migrations 038 and 039 were applied after the existing 037 migration. They replace `similar_cohort` individual rows with privacy-safe aggregates, add an owner-scoped discovery RPC, and add minimal operational metadata/feedback with atomic limits. All 002–037 files and historical imported rows remain untouched. Do not rerun old imports.
+
+`npm ci` installs the pinned server dependency; plain HTTP hosting still supports static tools but cannot run the assistant endpoint. Test with `node tests/ai-gateway.test.cjs`; DOM tests use a separate QA installation of jsdom 30.1.1. SQL suites roll back synthetic fixtures. See `RELEASE-v5.0.md`, `AI-DATA-AND-GROUNDING.md`, `AI-EVALUATION.md`, and `ADMIN-AI-OPS.md` for scope and validation limits.
+
+
+Migration 040 additionally protects the community overview and Step 2 histogram with distinct-person thresholds and safe adjacent-bin grouping. No historical row is changed. Tests in `tests/community-summary-privacy.sql` pass; protected totals are displayed as unavailable, never zero, and current cycles do not produce a completed Match outcome.

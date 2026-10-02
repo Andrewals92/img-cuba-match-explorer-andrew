@@ -1192,3 +1192,29 @@ input[readonly] {
 .program-guide-details summary{font-weight:700;cursor:pointer;padding:10px 0;min-height:44px}
 .program-guide-details a:focus-visible,.program-guide-details summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:520px){.program-signal-grid{grid-template-columns:1fr}.program-website .btn{width:100%}.program-guide-card{padding:16px}}
+/* v5.0 intelligence: mobile-first, no shared chat cache or modal overlays. */
+.mi-hero{padding:clamp(22px,4vw,46px);margin:0 0 22px;border:1px solid rgba(75,203,193,.25);border-radius:22px;background:linear-gradient(135deg,#122d3e,#0d1728 75%)}
+.mi-hero h2{font-size:clamp(25px,3.5vw,42px);line-height:1.14;letter-spacing:-.025em;max-width:780px;margin:12px 0 16px}
+.mi-hero p{max-width:680px;color:#b9c9d9;line-height:1.6}
+.mi-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.mi-heading h2,.mi-heading h3{margin:4px 0}.mi-heading>label{min-width:min(260px,100%)}
+.mi-profile-fields,.source-chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.mi-profile-fields>span,.source-chips>span,.source-chip,.source-chips>a,.evidence-label{border:1px solid #294253;border-radius:9px;padding:7px 10px;font-size:.81rem;line-height:1.5;background:#101f30;color:#c4d7e7;overflow-wrap:anywhere;max-width:100%}
+.evidence-label{color:#6ae0ca;border-color:#296654;white-space:normal}
+.mi-profile-fields b{color:#e1edf6}.mi-filter-grid{margin:18px 0;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr))}
+#miFilters details{border-top:1px solid #253849;padding:15px 0}#miFilters summary{cursor:pointer;font-weight:700;line-height:1.6}
+.mi-checks{display:flex;flex-wrap:wrap;gap:12px 20px}.mi-checks label,.ai-consent{display:flex;gap:9px;align-items:flex-start;line-height:1.6}
+.mi-checks input[type=checkbox],.ai-consent input[type=checkbox]{width:18px;height:18px;flex:0 0 18px;margin-top:4px}
+.mi-dashboard-entry{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 22px}.discovery-reasons{padding-left:20px;color:#c6d4df;line-height:1.6}
+#miDiscovery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px;margin-bottom:16px}
+#miDiscovery .program-card{min-width:0}#miDiscovery .row-actions{flex-wrap:wrap}#miDiscovery h3{overflow-wrap:anywhere}
+.ai-panel{margin-top:28px;border-color:#285552}.ai-context{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:16px;border-radius:12px;background:#122839;margin:16px 0;gap:12px}
+.ai-context p{margin:6px 0;color:#bbcad6}.ai-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}
+#aiComposer textarea{display:block;box-sizing:border-box;resize:vertical;width:100%;min-height:110px;max-height:280px;font:inherit;color:inherit;background:#0b1726;border:1px solid #375366;border-radius:12px;padding:14px;scroll-margin-bottom:100px}
+#aiComposer>label:first-child{display:block;margin-bottom:10px;font-weight:700}.ai-consent{font-size:.85rem;margin-top:16px;color:#c4d0dc}
+.ai-answer{padding:22px 0;border-top:1px solid #2a3b4d;min-width:0;overflow-wrap:anywhere}.ai-answer h3{font-size:1.1rem;line-height:1.5}
+.ai-facts{padding-left:20px;line-height:1.65}.ai-facts>li{margin-bottom:15px}.ai-facts p{margin:4px 0}.ai-cautions{padding:12px 16px;border-left:3px solid #e3b565;background:rgba(227,181,101,.055);border-radius:0 10px 10px 0;margin:16px 0}.ai-cautions p{font-size:.88rem;line-height:1.6}
+.ai-feedback{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:18px}.feedback-status{width:100%;font-size:.84rem;color:#8bdaca}
+#miPager{flex-wrap:wrap}#miPager p{flex-basis:100%}.ai-answer .row-actions{flex-wrap:wrap}.ai-answer .row-actions>a{white-space:normal;text-align:left}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #72dacb;outline-offset:3px}
+@media(max-width:600px){.mi-hero{border-radius:16px}.mi-heading{align-items:flex-start}.mi-heading>label{width:100%}.ai-panel{padding:18px}.mi-checks{display:grid;grid-template-columns:1fr}.mi-filter-grid{grid-template-columns:1fr 1fr}.mi-filter-grid label{min-width:0}.ai-suggestions .btn{width:100%;white-space:normal}.ai-feedback>span:first-child{width:100%}.ai-facts{padding-left:17px}.source-chip{font-size:.76rem}#miCohort .kpi strong{font-size:1.2rem;overflow-wrap:anywhere}.ai-answer .btn{max-width:100%;white-space:normal}}
