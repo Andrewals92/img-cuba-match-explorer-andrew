@@ -5,7 +5,7 @@ Created and owned by Andrew A Lopez Sanchez, MD, MBA
 
 ## Release status
 
-Release candidate; production acceptance is pending. The currently verified production source is v4.3 commit `21b031ba71a6f93b13a660491af797611c585269`. Do not label v5.0 complete until the production deployment and live provider tests are recorded here.
+Published to https://cubamatchexplorer.org/ on 2026-10-02. Application commit `f7a8b4dc48586cf2c591fe7034f2f53c02c6da7d`; deployment `dpl_FpY5NBj8aNn3SNujqWnsenX8K96V` verified Ready / Production. Live GPT-5 mini inference passed in the authenticated Preview. Final authenticated acceptance on the production origin is pending; do not mark the full execution complete until that check is recorded.
 
 ## Changes
 
@@ -25,8 +25,8 @@ Release candidate; production acceptance is pending. The currently verified prod
 
 ## Remaining acceptance
 
-- Preview/production browser checks and real AI Gateway inference.
-- Authenticated owner/admin interaction and production 200/Ready status.
+- Final signed-in AI request on the production origin. Preview signed-in research, free routing, comparison, feedback and Admin operations passed.
+- Direct production console-log inspection is currently blocked by browser credential protection; public production navigation and responsive rendering passed.
 - Actual Android-device acceptance and signup-confirmation inbox receipt are not represented by desktop mobile-width testing. Existing owner-confirmed recovery is preserved, not newly exercised by sending unsolicited email.
 - Provider data processing is explained at first use; no claim of provider zero retention. No paid credits or automatic reload were purchased/enabled.
 
@@ -40,3 +40,15 @@ The additional transactional `community-summary-privacy.sql` suite passed, inclu
 Preview reached Ready. Browser checks passed: actual program profile and guide rates, Compare with five programs and cross-specialty warning, persistent selection, anonymous assistant gate, 360/390px layouts with no body overflow. Owner/admin login is now verified; the account has no cycle profile and correctly sees the create-profile CTA. Feedback save/withdraw and aggregate AI Operations were verified. Cache r3 assets loaded after refresh.
 
 Live provider diagnosis found HTTP 403 for GPT-5.4 mini: the model is not eligible for this team's free-credit tier. No tokens or costs were reported for those requests. GPT-5 mini is explicitly eligible in Vercel's current public provider catalog, and is now the default. Real research, free-question routing and five-program comparison succeeded with GPT-5 mini. Sources, exact rates, missing denominators, protected activity and cross-specialty/no-winner cautions were verified. Every selected program identity is retained by the server even if omitted by model selection. Only fixed diagnostic codes are returned; raw provider bodies and credentials never leave the server. No paid credit or automatic reload was enabled.
+
+## Production checks
+
+- Vercel Ready / Production and GitHub main deployment success.
+- Production HTTP 200. Downloaded index.html, app.js, match-intelligence.js and service-worker.js are byte-identical to the committed source.
+- API: valid request without a session returns 401; GET returns 405; private/no-store response headers. Malformed request returns 400.
+- cubamatchexplorer.com redirects to cubamatchexplorer.org. No Auth Site URL, redirects or SMTP change.
+- Visible v5.0 dashboard and anonymous Match Intelligence gate. Public program deep link resolves with exact 32/19/5 guide rates and protected community values.
+- Production embedded at 360/390px: client/scroll widths 345/345 and 375/375. Two-program Compare works with body width 375/375 and intentional table scrolling. Selection survives Profile → Explorer → Compare.
+- Final database check: 36 imported profiles, 338 invitations, 14 matches, zero duplicate historical payloads. All 33 original program-source JSON batches match v4.3 byte for byte.
+
+No new recovery or signup-confirmation email was sent. The production URL is unchanged, and the existing owner-confirmed recovery path and origin-based redirect code are preserved. Actual Android hardware and a fresh confirmation-email inbox round trip remain separate acceptance limitations.

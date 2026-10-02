@@ -28,7 +28,7 @@
 
 ## Live acceptance gate
 
-Preview live acceptance on 2026-10-02: signed-in owner/admin; no-profile CTA; research of ACGME 1401600544 with exact Gold 32%, Silver 19%, no signal 5%, source links and suppressed community values; five-program comparison with explicit cross-specialty/no-winner cautions; free-question routing and absent-profile handling; feedback save/withdraw; aggregate AI Operations. GPT-5 mini returned real tokens and successful status. GPT-5.4 mini failed with HTTP 403 free-tier restrictions, and the core site/data fallback continued working. Production smoke acceptance remains pending.
+Preview live acceptance on 2026-10-02: signed-in owner/admin; no-profile CTA; research of ACGME 1401600544 with exact Gold 32%, Silver 19%, no signal 5%, source links and suppressed community values; five-program comparison with explicit cross-specialty/no-winner cautions; free-question routing and absent-profile handling; feedback save/withdraw; aggregate AI Operations. GPT-5 mini returned real tokens and successful status. GPT-5.4 mini failed with HTTP 403 free-tier restrictions, and the core site/data fallback continued working. Production public HTTP, versioned assets, anonymous gate, public profile and 360/390px layouts passed. Production-origin signed-in inference remains pending because browser credential protection blocks session inspection.
 
 Acceptance requires every numeric assertion to match a tool result; every fact to carry a source; sparse data and incomplete cycles to remain explicit; no other user's records or hidden protected counts; no personal probability, invented requirement, causal signal claim or overall program winner. Record any provider/configuration block as a limitation, not a pass.
 
