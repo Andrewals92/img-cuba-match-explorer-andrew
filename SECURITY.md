@@ -19,3 +19,11 @@ Advisor guidance:
 - https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys
 
 See VALIDATION-v4.0.md for executed checks and remaining verification limits. Do not describe untested email delivery or browser account flows as verified.
+
+## v4.1 private productivity records
+
+interview_events and user_program_watchlist grant CRUD to authenticated only, guarded by owner USING and WITH CHECK policies with `(select auth.uid())`. There is no admin bypass. Composite cycle ownership FK, optional report ownership validation and immutable owner checks reject spoofed linking. A private, non-executable DEFINER trigger validates directory identities and IANA zones with empty search_path; it returns no applicant data. The existing delete_my_data function now includes these records with explicit own-UID predicates and empty search_path. Existing public aggregate RPCs do not join new private tables.
+
+Private data is held in memory only and cleared between sessions; the worker caches static assets and never Supabase API responses. The UI does not print records/errors to developer logs. Meeting URLs accept HTTP(S) only, anchors use noopener/noreferrer. Notes, impressions and rank positions never enter ICS or Google URLs. Meeting URLs require an explicit export checkbox; users choose whether to share them with their calendar provider.
+
+Advisor review after v4.1 DDL: the new composite FK index notice was fixed with 017. New indexes may initially appear unused on empty tables; do not remove ownership/duplicate/FK indexes merely for low initial traffic. Existing baseline advisor issues remain as documented above. Review guidance: https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys and https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection .

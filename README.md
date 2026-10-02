@@ -30,3 +30,7 @@ Migrations 002–012 are historical files preserved from the handoff; do not rer
 Run `node tests/personal-summary.test.cjs`. `tests/privacy-rls.sql` exercises database privacy and permissions inside a transaction which rolls back synthetic fixtures. Run it only through an authorized database connection. It never changes the historical import.
 
 See `RELEASE-v4.0.md`, `SECURITY.md`, `PRIVACY.md` and `VALIDATION-v4.0.md` for release behavior and verification status. Raw imported spreadsheets and row-level import SQL are deliberately excluded from the public source and production bundle.
+
+## v4.1 Interview season
+
+See RELEASE-v4.1.md and VALIDATION-v4.1.md. Additive migrations are 016, 017, 018 and 019; run only new migrations on an existing v4.0 installation. calendar-utils.js converts IANA wall time to fixed UTC instants and exports calendars; season.js manages owner-only private interviews and global watchlists. No frontend dependencies or framework migration were added. Unit checks: `node tests/calendar.test.cjs` (run from the repository root; the test resolves source relative to itself) and `node tests/personal-summary.test.cjs`. SQL acceptance fixtures require a database transaction and always roll back; they must never be converted into persistent seed data.

@@ -1,0 +1,10 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const context={window:{},Intl,TextEncoder,URLSearchParams,Date};vm.createContext(context);vm.runInContext(fs.readFileSync(require('path').join(__dirname,'../calendar-utils.js'),'utf8'),context);const c=context.window.CMECalendar;
+assert.equal(c.toUTC('2026-10-14T10:00','America/New_York'),'2026-10-14T14:00:00.000Z');
+assert.equal(c.toUTC('2026-12-14T10:00','America/New_York'),'2026-12-14T15:00:00.000Z');
+assert.throws(()=>c.toUTC('2027-03-14T02:30','America/New_York'),/no existe/);
+assert.throws(()=>c.toUTC('2026-11-01T01:30','America/New_York'),/dos veces/);
+assert.equal(c.toUTC('2026-11-01T01:30','America/New_York','earlier'),'2026-11-01T05:30:00.000Z');
+assert.equal(c.toUTC('2026-11-01T01:30','America/New_York','later'),'2026-11-01T06:30:00.000Z');
+const e={id:'test-id',program_name_snapshot:'Clínica, España; '+ 'ñ'.repeat(80),start_at:'2026-12-31T23:30:00Z',end_at:'2027-01-01T00:30:00Z',timezone:'America/New_York',event_type:'interview',status:'scheduled',format:'Virtual',meeting_url:'https://example.invalid/private',private_notes:'SECRET',private_impression:{ranking_thoughts:'SECRET'}};
+const data=c.ics([e,{...e,id:'social',event_type:'social'},{...e,id:'cancel',status:'cancelled'}]);assert.equal((data.match(/BEGIN:VEVENT/g)||[]).length,3);assert(data.includes('DTEND:20270101T003000Z'));assert(data.includes('STATUS:CANCELLED'));assert(!data.includes('SECRET')&&!data.includes('private'));assert(c.ics([e],true).includes('URL:https://example.invalid/private'));for(const line of data.split('\r\n'))assert(Buffer.byteLength(line)<=75);
+const url=new URL(c.google(e));assert.equal(url.searchParams.get('dates'),'20261231T233000Z/20270101T003000Z');assert.equal(url.searchParams.get('ctz'),'America/New_York');assert(!url.href.includes('SECRET')&&!url.href.includes('private'));assert.equal(c.wall(e.start_at,e.timezone),'2026-12-31T18:30');console.log('PASS DST gaps/ambiguity, fixed instants, year boundary, multiple event types, cancellation, ICS UTF-8 folding, privacy and Google dates');

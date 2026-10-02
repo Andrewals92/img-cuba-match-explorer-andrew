@@ -16,7 +16,7 @@
     <title>Cuba Match Explorer</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=4.0" />
+    <link rel="stylesheet" href="styles.css?v=4.1" />
   </head>
   <body>
     <div class="nav-overlay" id="navOverlay"></div>
@@ -51,6 +51,7 @@
           <button class="nav-btn" data-view="interviews">
             <span>✉</span>Interview Tracker
           </button>
+          <button class="nav-btn" data-view="watchlist"><span>☆</span> My Programs</button>
           <button class="nav-btn" data-view="matches">
             <span>★</span>Match Map
           </button>
@@ -105,6 +106,7 @@
 
         <section class="view active-view" id="dashboard">
           <article class="panel my-match" id="myMatchContent" aria-live="polite">Cargando My Match…</article>
+          <div id="seasonDashboard"></div>
           <h2 class="section-title">Community snapshot</h2>
           <div class="hero">
             <div>
@@ -294,6 +296,8 @@
         </section>
 
         <section class="view" id="interviews">
+          <div id="seasonContent"></div>
+          <details class="panel"><summary>Actividad comunitaria protegida</summary>
           <article class="panel filters-panel">
             <div class="filters-row">
               <input
@@ -303,7 +307,9 @@
             </div>
           </article>
           <div id="interviewTimeline" class="timeline"></div>
+          </details>
         </section>
+        <section class="view" id="watchlist"><div id="watchlistContent"></div></section>
 
         <section class="view" id="matches">
           <article class="panel">
@@ -979,7 +985,7 @@
         <div id="compareTray" class="compare-tray" aria-label="Programas seleccionados"></div>
         <footer class="ownership-footer">
           <div>
-            <strong>Cuba Match Explorer · v4.0</strong
+            <strong>Cuba Match Explorer · v4.1</strong
             ><span>Created and owned by Andrew A Lopez Sanchez, MD, MBA</span>
           </div>
           <div>
@@ -994,8 +1000,10 @@
         </footer>
       </main>
     </div>
-    <script src="cloud-config.js?v=4.0"></script>
-    <script src="workspace.js?v=4.0"></script>
-    <script src="app.js?v=4.0"></script>
+    <script src="cloud-config.js?v=4.1"></script>
+    <script src="calendar-utils.js?v=4.1"></script>
+    <script src="season.js?v=4.1"></script>
+    <script src="workspace.js?v=4.1"></script>
+    <script src="app.js?v=4.1"></script>
   </body>
 </html>

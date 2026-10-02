@@ -11,3 +11,9 @@ Personal totals and details remain on the authenticated own-data path. Only comp
 The private identity registry stores reporting labels, specialty and state, with generated UUIDs. It stores no applicant IDs. Labels are not asserted to be official programs. New manual labels are registered only from consented profiles. Removing consent excludes their report data from aggregates; non-personal program metadata can remain in the directory.
 
 Threshold suppression reduces disclosure risk; it is not differential privacy. Existing public analytics and anonymized comparable-cohort APIs remain under their prior policies. Do not interpret absence of activity as evidence about an individual.
+
+## Private interview season workspace (v4.1)
+
+Interview schedules, locations, meeting URLs, thank-you records, private notes, impressions, personal ranked/position information and watchlists are private to their owner. Administrators do not receive extra read access to these new tables. They are never part of community profile, comparison or cohort statistics. Saving an interview does not publish or overwrite a community report. Watchlist saves persist across cycles; activity is derived from your selected own cycle. Your explicit delete-my-data action includes these private records.
+
+Calendar export shares event name, specialty, date/time, timezone and entered location. It omits notes, impressions and rank positions. Meeting URLs are included only when you explicitly select that export option. Opening Google Calendar sends the included event fields to Google; downloaded ICS files can be imported into Apple/Outlook or other calendar providers. Protect exported calendar files as personal information.

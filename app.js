@@ -1274,7 +1274,7 @@
     );
     q("myReports").innerHTML = table(
       [
-        ["Program", "program", (r) => workspace.programLink(r)],
+        ["Program", "program", (r) => workspace.programLink(r) + (r.interview ? `<br><button class="btn ghost small" data-season-report="${esc(r.id)}">Add to Interview Tracker</button>` : "")],
         ["Cycle", "cycle"],
         ["Signal", "signal"],
         [
@@ -1477,8 +1477,9 @@
       ],
       interviews: [
         "Interview Tracker",
-        "Actividad protegida por umbral de privacidad.",
+        "Tu calendario, entrevistas y notas privadas.",
       ],
+      watchlist: ["My Programs", "Programas guardados y actividad de tu ciclo."],
       matches: ["Match Map", "Distribución comunitaria de matches."],
       data: ["Mis datos", "Tus perfiles y reportes persistentes."],
       account: ["Cuenta", "Autenticación y privacidad."],
@@ -1501,6 +1502,7 @@
     if (skipLoad) return;
     if (currentView === "program" || currentView === "compare") workspace.loadView();
     if (currentView === "programs") workspace.renderPrograms();
+    if (currentView === "interviews" || currentView === "watchlist") season.render();
     if (currentView === "applicants") findSimilar();
     if (currentView === "intelligence") loadIntelligence();
     if (currentView === "admin") { renderAdmin(); workspace.health(); }
@@ -2082,7 +2084,10 @@
     q("watchArea").style.display = session ? "block" : "none";
   }
 
-  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin });
+  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin, getSeason: () => season });
+
+  const season = window.CMESeason({q,esc,api:(path,opts={})=>request(path,{...opts,body:opts.body?JSON.parse(opts.body):null}),rpc,getUserId:()=>session?.user?.id,getMyData:()=>myDB,toast,programLink:r=>workspace.programLink(r)});
+  document.addEventListener('cme-season-loaded',()=>{if(currentView==='program'||currentView==='compare')workspace.loadView();else if(currentView==='programs')workspace.loadDirectory();});
 
   let refreshRun = 0;
   async function refresh() {
@@ -2107,6 +2112,7 @@
     fillSpecialties();
     renderDashboard();
     workspace.renderPersonal();
+    season.load();
     renderPrograms();
     renderInterviews();
     renderMatches();
