@@ -1408,6 +1408,7 @@
       program: ["Program Profile", "Directorio y datos comunitarios protegidos."],
       compare: ["Program Compare", "Compara datos documentados de 2 a 5 programas."],
       dashboard: ["Dashboard", "Datos comunitarios protegidos y persistentes."],
+      about: ["Sobre mí", "Mi trayectoria y el propósito de Cuba Match Explorer."],
       programs: ["Program Explorer", "Actividad agregada por programa."],
       intelligence: [
         "Program Intelligence",
