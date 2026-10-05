@@ -1219,11 +1219,26 @@ input[readonly] {
 button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #72dacb;outline-offset:3px}
 @media(max-width:600px){.mi-hero{border-radius:16px}.mi-heading{align-items:flex-start}.mi-heading>label{width:100%}.ai-panel{padding:18px}.mi-checks{display:grid;grid-template-columns:1fr}.mi-filter-grid{grid-template-columns:1fr 1fr}.mi-filter-grid label{min-width:0}.ai-suggestions .btn{width:100%;white-space:normal}.ai-feedback>span:first-child{width:100%}.ai-facts{padding-left:17px}.source-chip{font-size:.76rem}#miCohort .kpi strong{font-size:1.2rem;overflow-wrap:anywhere}.ai-answer .btn{max-width:100%;white-space:normal}}
 
-/* Public applicant cohorts: compact overview, expandable per-program detail. */
+/* Public applicant cohorts: full-width details and mobile applicant cards. */
 .cohort-table { min-width: 880px; }
+.cohort-table > tbody > tr > td, .cohort-table > tbody > tr > th { vertical-align:top; }
 .cohort-table small { display:block; color:var(--muted); font-weight:normal; margin-top:.35rem; font-size:.875rem; }
-.cohort-applicant-details { min-width: 215px; }
-.cohort-applicant-details summary { cursor:pointer; color:var(--accent); padding:.45rem 0; }
-.cohort-applicant-details[open] { min-width: 530px; max-width: 720px; }
+.cohort-detail-row[hidden] { display:none!important; }
+.cohort-detail-row > td { padding:1.25rem; background:#091727; }
+.cohort-applicant-details h4 { margin:.25rem 0 1rem; font-size:1rem; }
+.cohort-applicant-details .workspace-details { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .cohort-applicant-details p { white-space:normal; }
-#similarMembers > .table-wrap { max-height: none; }
+.cohort-applicant-details .table-wrap table { min-width:650px; }
+#similarMembers > .table-wrap { max-height:none; }
+@media(max-width:700px) {
+ .cohort-table, .cohort-table > tbody { display:block; min-width:0; width:100%; }
+ .cohort-table > thead { display:none; }
+ .cohort-table > tbody > tr:not(.cohort-detail-row) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem; border-top:1px solid var(--border); padding:1rem 0; }
+ .cohort-table > tbody > tr > th, .cohort-table > tbody > tr > td { display:block; padding:.35rem; border:0; min-width:0; }
+ .cohort-table > tbody > tr > th, .cohort-open-cell { grid-column:1/-1; text-align:left; }
+ .cohort-table > tbody > tr > td[data-label]::before { content:attr(data-label); display:block; color:var(--muted); font-size:.875rem; margin-bottom:.3rem; }
+ .cohort-detail-row:not([hidden]) { display:block; }
+ .cohort-applicant-details .workspace-details { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .cohort-applicant-details .table-wrap { width:100%; overflow-x:auto; }
+ .cohort-open-cell .btn { width:100%; }
+}

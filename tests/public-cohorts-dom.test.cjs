@@ -6,10 +6,11 @@ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../match-intelligence.js
 const ui=sandbox.window.CMEMatchIntelligence({q,esc,getUserId:()=>null});
 const c={members:[{label:'Aplicante <script>bad</script>',cycle:2026,specialty:'IM',programs_applied:0,interviews:0,applications_scope:'declared',interviews_scope:'declared',status:'no_match',signals:{Gold:1,Silver:0,Signal:0,None:0},programs:[{id:'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',program:'Programa <img src=x>',applied:true,interview:false,signal:'Gold',matched:false}]}]};
 q('out').innerHTML=ui.members(c);
-assert.equal(q('out').querySelectorAll('.cohort-table > tbody > tr').length,1);
+assert.equal(q('out').querySelectorAll('.cohort-table > tbody > tr:not(.cohort-detail-row)').length,1);
 assert(q('out').textContent.includes('No · No Match'));assert(q('out').textContent.includes('Gold: 1'));assert(q('out').textContent.includes('Total declarado'));
 assert(!q('out').querySelector('script,img'));assert(q('out').querySelector('a').href.endsWith('#/program/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'));
-assert.equal(q('out').querySelectorAll('details table tbody tr').length,1);
+assert.equal(q('out').querySelectorAll('.cohort-detail-row table tbody tr').length,1);
+assert(q('out').querySelector('.cohort-detail-row').hidden);q('out').querySelector('[data-public-profile-toggle]').click();assert(!q('out').querySelector('.cohort-detail-row').hidden);q('out').querySelector('[data-public-profile-toggle]').click();assert(q('out').querySelector('.cohort-detail-row').hidden);
 c.members[0].status='not_reported';c.members[0].interviews=null;
 q('out').innerHTML=ui.members(c);assert(q('out').textContent.includes('No informado'));assert(!q('out').textContent.includes('No · No Match'));
 assert(ui.members({members:[]}).includes('No hay aplicantes'));
