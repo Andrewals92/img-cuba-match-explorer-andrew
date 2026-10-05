@@ -14,7 +14,40 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
+          "value": "camera=(), microphone=(), geolocation=(), display-capture=()"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/:path*",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self'"
         }
       ]
     }
@@ -23,6 +56,36 @@
   "functions": {
     "api/match-assistant.js": {
       "maxDuration": 60
+    },
+    "api/gateway.js": {
+      "maxDuration": 30
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/a-4-a/c.js",
+      "destination": "https://api.vercel.com/bot-protection/v1/challenge"
+    },
+    {
+      "source": "/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/:path*",
+      "destination": "https://api.vercel.com/bot-protection/v1/proxy/:path*"
+    }
+  ],
+  "buildCommand": "node scripts/build.cjs",
+  "outputDirectory": "public-build",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(?:[gG][pP][tT][bB][oO][tT]|[cC][hH][aA][tT][gG][pP][tT]-[uU][sS][eE][rR]|[oO][aA][iI]-[sS][eE][aA][rR][cC][hH][bB][oO][tT]|[cC][lL][aA][uU][dD][eE][bB][oO][tT]|[cC][lL][aA][uU][dD][eE]-[uU][sS][eE][rR]|[cC][lL][aA][uU][dD][eE]-[sS][eE][aA][rR][cC][hH][bB][oO][tT]|[aA][nN][tT][hH][rR][oO][pP][iI][cC]-[aA][iI]|[pP][eE][rR][pP][lL][eE][xX][iI][tT][yY][bB][oO][tT]|[pP][eE][rR][pP][lL][eE][xX][iI][tT][yY]-[uU][sS][eE][rR]|[gG][oO][oO][gG][lL][eE]-[eE][xX][tT][eE][nN][dD][eE][dD]|[cC][cC][bB][oO][tT]|[cC][oO][hH][eE][rR][eE]-[aA][iI]|[bB][yY][tT][eE][sS][pP][iI][dD][eE][rR]|[aA][mM][aA][zZ][oO][nN][bB][oO][tT]|[aA][pP][pP][lL][eE][bB][oO][tT]-[eE][xX][tT][eE][nN][dD][eE][dD]|[mM][eE][tT][aA]-[eE][xX][tT][eE][rR][nN][aA][lL][aA][gG][eE][nN][tT]|[dD][uU][cC][kK][aA][sS][sS][iI][sS][tT][bB][oO][tT]|[yY][oO][uU][bB][oO][tT]|[dD][iI][fF][fF][bB][oO][tT]|[hH][eE][aA][dD][lL][eE][sS][sS][cC][hH][rR][oO][mM][eE]|[pP][hH][aA][nN][tT][oO][mM][jJ][sS]).*"
+        }
+      ],
+      "mitigate": {
+        "action": "deny"
+      }
+    }
+  ]
 }

@@ -3,8 +3,8 @@
 // calls, and its cache name never changed, so users could keep running an
 // old app.js after a deploy. It now only handles same-origin static files,
 // always tries the network first, and the cache name is versioned.
-const CACHE = 'cuba-match-explorer-v5.1-r5';
-const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './intelligence.js', './match-intelligence.js', './cloud-config.js', './manifest.webmanifest', './app-icon.svg', './assets/cuba-match-explorer-logo.jpg', './assets/andrew-lopez-sanchez.jpg'];
+const CACHE = 'cuba-match-explorer-v5.2-r1';
+const ASSETS = ['./', './index.html', './styles.css', './app.js', './workspace.js', './season.js', './calendar-utils.js', './notifications.js', './intelligence.js', './match-intelligence.js', './cloud-config.js', './bot-protection.js', './content-protection.js', './manifest.webmanifest', './app-icon.svg', './assets/cuba-match-explorer-logo.jpg', './assets/andrew-lopez-sanchez.jpg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -22,7 +22,7 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin || url.pathname.startsWith('/api/')) return; // never cache API/AI responses
+  if (url.origin !== self.location.origin || (url.pathname.startsWith('/api/') || url.pathname.startsWith('/149e9513-01fa-4fb0-aad4-566afd725d1b/'))) return; // never cache API/AI responses
   e.respondWith(
     fetch(req)
       .then((res) => {

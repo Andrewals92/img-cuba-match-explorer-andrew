@@ -1297,3 +1297,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
   .about-purpose { grid-template-columns: 1fr; gap: 26px; padding: 24px; }
   .about-logo-panel { width: 170px; }
 }
+
+/* Copy deterrents: deliberately not presented as screenshot/recording prevention. */
+.app-shell { -webkit-user-select: none; user-select: none; }
+input,textarea,select,[contenteditable="true"] { -webkit-user-select: text; user-select: text; }
+img { -webkit-user-drag: none; }
+#contentWatermark { position: fixed; inset: 90px 0 0 250px; z-index: 19; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); pointer-events: none; overflow: hidden; opacity: .07; }
+#contentWatermark span { align-self: center; justify-self: center; transform: rotate(-24deg); white-space: nowrap; font-size: clamp(12px, 1.3vw, 19px); font-weight: 700; color: #fff; }
+.about-page #contentWatermark { display: none; }
+#contentProtectionNotice { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 150; max-width: calc(100% - 32px); width: 470px; padding: 16px 20px; border-radius: 12px; background: #132840; color: #edf5ff; border: 1px solid #6381a3; box-shadow: var(--shadow); font-size: 13px; }
+.content-use-notice { color: #9bb0c7; font-size: 11px; line-height: 1.7; margin: 25px 4px 12px; }
+body.content-hidden .app-shell { visibility: hidden; }
+@media(max-width:820px) { #contentWatermark { left: 0; } }
+@media print {
+ body > * { display: none !important; }
+ body::after { content: 'Cuba Match Explorer — contenido para consulta en el sitio. Impresión restringida.'; display: block; padding: 40px; color: #000; background: #fff; font-size: 18px; }
+}

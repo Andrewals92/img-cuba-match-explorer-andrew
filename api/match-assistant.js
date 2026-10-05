@@ -1,5 +1,6 @@
 'use strict';
 const {createAssistant}=require('../server/match-ai.cjs');
+const webSecurity=require('../server/web-security.cjs');
 const {getVercelOidcToken}=require('@vercel/oidc');
 const assistant=createAssistant({getProviderToken:async()=>process.env.AI_GATEWAY_API_KEY||getVercelOidcToken()});
 module.exports=async function handler(req,res){
@@ -12,6 +13,10 @@ module.exports=async function handler(req,res){
  if(origin&&!allowed.includes(origin))return res.status(403).json({error:'origin_not_allowed'});
  if(Number(req.headers['content-length']||0)>10000||Buffer.byteLength(JSON.stringify(req.body||{}))>10000)return res.status(413).json({error:'input_too_large'});
  try{const token=/^Bearer ([^\s]+)$/.exec(req.headers.authorization||'')?.[1];
-  const result=await assistant.run(req.body,token);if(result.status===429)res.setHeader('Retry-After',String(result.body.retry_after||60));return res.status(result.status).json(result.body);
- }catch(e){const status=[400,401,403].includes(e.status)?e.status:503;return res.status(status).json({error:status===401?'authentication_required':status===403?'not_authorized':status===400?'invalid_request':'temporarily_unavailable'});}
+  webSecurity.validateRequest(req);
+  await webSecurity.verifyHuman(req);
+  const webHeaders=webSecurity.gatewayHeaders(req);
+  await webSecurity.reserve(webHeaders,'assistant');
+  const result=await assistant.run(req.body,token,webHeaders);if(result.status===429)res.setHeader('Retry-After',String(result.body.retry_after||60));return res.status(result.status).json(result.body);
+ }catch(e){const status=[400,401,403,429].includes(e.status)?e.status:503;return res.status(status).json({error:status===401?'authentication_required':status===403?'not_authorized':status===400?'invalid_request':'temporarily_unavailable'});}
 };

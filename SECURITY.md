@@ -60,3 +60,31 @@ Post-DDL security/performance advisors were reviewed: one new private deny-all m
 
 
 Migration 040 additionally protects the community overview and Step 2 histogram with distinct-person thresholds and safe adjacent-bin grouping. No historical row is changed. Tests in `tests/community-summary-privacy.sql` pass; protected totals are displayed as unavailable, never zero, and current cycles do not produce a completed Match outcome.
+
+## v5.2 — scraping and account-abuse controls
+
+- All application data and Auth requests use the same-origin `/api/gateway`.
+- BotID Basic is required on gateway and built-in assistant requests. All bot classifications, including verified bots, are rejected. Verification errors fail closed; no development bypass in deployed handlers. No paid Deep Analysis mode is enabled.
+- An explicit edge rule denies known AI crawler/user-fetch signatures and common headless-browser signatures. Signatures alone are spoofable. Managed Vercel AI Bots/Bot Protection could not be configured through the connected API (404); this deployment does not claim those managed rules are enabled.
+- The Data API pre-request guard requires a server-only proof for anonymous and authenticated requests. User JWTs are forwarded unchanged; existing RLS and ownership rules remain authoritative. Trusted service-role maintenance remains permitted. The proof is stored only in a sensitive Vercel variable; Postgres stores its SHA-256 digest. No service-role credential is introduced.
+- Gateway routes, methods and headers are allowlisted. Public directory queries remain capped at 1,000 rows and RPC pagination/ID limits remain in place. Historical public profiles and small cohorts remain visible through normal website queries.
+- Atomic Postgres quota reservations apply per HMAC-hashed IP and verified user ID, with separate data, session, authentication and assistant buckets. Requests rejected by upstream Auth still consume their reserved quota. IP addresses, credentials and query bodies are not stored in the quota table. Quotas expire and are purged hourly after two hours.
+- This release grants only schema USAGE and EXECUTE on the two new narrow `cme_private` request helpers. All private-table privileges remain revoked; no private API schema is exposed. Prior text saying there is no schema USAGE is superseded for those helpers.
+- Static publishing uses an explicit file allowlist. Database imports, migration scripts, server code, documentation and tests are not deployed as downloadable assets.
+- CSP, frame isolation, no-snippet/no-index directives, no-store API responses and browser-session token storage reduce exposure. The service worker does not cache API or BotID challenge requests.
+- Copy/context-menu/drag and print restrictions plus per-tab watermarks are **deterrents**, not access controls. Form fields remain editable; users can export their own tracker data. Public links remain shareable.
+
+### Limits and outstanding settings
+
+A website cannot prevent OS screenshots, screen recording, external cameras, browser extensions or an authorized viewer copying rendered data. `display-capture=()` only prevents this page from initiating the browser Screen Capture API; it does not stop another application recording the display. Hiding content when the document becomes hidden does not prevent foreground recordings. There is no honest guarantee of detecting every AI-controlled browser or preventing users giving their password to an assistant.
+
+The GitHub repository was confirmed public and contains program import files in its history. Making the repository private requires GitHub account administration in an authenticated session; the connected GitHub tools do not provide a visibility mutation. Merely removing files from the website does not remove public GitHub copies, forks or previously downloaded content. No public Git history is rewritten by this release.
+
+### Deployment order and rollback
+
+1. Apply 042; create a random server secret, store only its SHA-256 in the disabled gateway config, and set the matching sensitive Vercel variable.
+2. Deploy the gateway, BotID client, static allowlist and frontend. Verify allowed web requests and reject unsigned automated requests.
+3. Activate the Data API pre-request guard only after the deployed gateway is operational. No user data is deleted or rewritten.
+4. If the gateway fails, restore the prior frontend only after authorized operators evaluate the gate. Do not silently disable the guard or introduce a public bypass. The previous `authenticator` settings had no `pgrst.db_pre_request`.
+
+Tests: `npm run test:security`, `npm run test:ai`, `tests/web-gateway.sql` (transactional rollback), public-cohort DOM checks, and production HTTP/UI checks. Record production outcomes in the release notes; unit checks are not proof that every browser is correctly classified.

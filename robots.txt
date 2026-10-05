@@ -1,0 +1,4 @@
+# Automated indexing, AI crawling and bulk extraction are not permitted.
+# This directive is advisory; server-side controls protect data access.
+User-agent: *
+Disallow: /

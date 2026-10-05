@@ -4,8 +4,7 @@
     qa = (s) => Array.from(document.querySelectorAll(s));
   const CONFIG = window.IMG_CUBA_CLOUD || {};
   const CLOUD = {
-    url: String(CONFIG.url || "").replace(/\/$/, ""),
-    anonKey: String(CONFIG.anonKey || ""),
+    gateway: CONFIG.gateway || "/api/gateway",
   };
   const AUTH_REDIRECT = location.origin + location.pathname;
   const SESSION_KEY = "img_cuba_session_v2",
@@ -186,6 +185,12 @@
   }
   function readJSON(k) {
     try {
+      if (k === SESSION_KEY) {
+        const value = sessionStorage.getItem(k) || localStorage.getItem(k);
+        if (value) sessionStorage.setItem(k, value);
+        localStorage.removeItem(k);
+        return JSON.parse(value || "null");
+      }
       return JSON.parse(localStorage.getItem(k) || "null");
     } catch {
       return null;
@@ -193,26 +198,20 @@
   }
   function writeJSON(k, v) {
     try {
-      localStorage.setItem(k, JSON.stringify(v));
+      (k === SESSION_KEY ? sessionStorage : localStorage).setItem(k, JSON.stringify(v));
     } catch {}
   }
   function cloudReady() {
-    return !!(CLOUD.url && CLOUD.anonKey);
+    return !!CONFIG.gateway;
   }
-  // FIX: the new "sb_publishable_..." keys are not JWTs. Sending them as
-  // "Authorization: Bearer" can be rejected, so the header is only sent when a
-  // real user access token (JWT) exists. The apikey header alone is enough for
-  // anonymous/public requests.
+  // User tokens retain their original Supabase permissions through the gateway.
   function headers(publicOnly = false, extra = {}) {
     const h = {
-      apikey: CLOUD.anonKey,
       "Content-Type": "application/json",
       ...extra,
     };
     if (!publicOnly && session?.access_token)
       h.Authorization = `Bearer ${session.access_token}`;
-    else if (CLOUD.anonKey.startsWith("eyJ"))
-      h.Authorization = `Bearer ${CLOUD.anonKey}`; // legacy JWT anon key
     return h;
   }
   function translateError(m) {
@@ -227,6 +226,10 @@
       [/duplicate key.*program_watch/i, "Ya tienes una alerta para esa especialidad/estado."],
       [/duplicate key.*applicant_cycles|applicant_cycles_user_id_match_cycle_specialty_key/i, "Ya tienes un perfil para ese ciclo y especialidad. Edítalo en lugar de crear otro."],
       [/could not find the function|PGRST202/i, "Falta una función en la base de datos. El administrador debe ejecutar las migraciones 004 y 005 de supabase/migrations."],
+      [/browser_verification_required/i, "No se pudo verificar este navegador. Abre el sitio directamente y recarga la página; no uses herramientas automatizadas."],
+      [/security_unavailable/i, "La verificación de seguridad no está disponible. Reintenta en unos momentos."],
+      [/rate_limit_exceeded/i, "Has realizado demasiadas consultas. Espera antes de volver a intentarlo."],
+      [/origin_not_allowed/i, "Abre cubamatchexplorer.org directamente en tu navegador."],
       [/failed to fetch|networkerror|load failed/i, "No se pudo conectar con el servidor. Revisa tu conexión."],
     ];
     for (const [re, msg] of map) if (re.test(s)) return msg;
@@ -250,6 +253,15 @@
     w.appendChild(d);
     setTimeout(() => d.remove(), 4200);
   }
+  async function cloudFetch(path, options = {}) {
+    const h = options.headers || {};
+    return fetch(CLOUD.gateway, {
+      method: "POST", credentials: "same-origin", cache: "no-store",
+      headers: { "Content-Type": "application/json", ...(h.Authorization ? { Authorization: h.Authorization } : {}) },
+      body: JSON.stringify({path, method: options.method || "GET", body: options.body ? JSON.parse(options.body) : null, prefer: h.Prefer || null}),
+      signal: AbortSignal.timeout(30000),
+    });
+  }
   async function request(
     path,
     { method = "GET", body = null, publicOnly = false, prefer = null } = {},
@@ -259,7 +271,7 @@
     const send = async () => {
       const h = headers(publicOnly);
       if (prefer) h["Prefer"] = prefer;
-      const r = await fetch(CLOUD.url + path, {
+      const r = await cloudFetch(path, {
         method,
         headers: h,
         body: body === null ? null : JSON.stringify(body),
@@ -307,12 +319,13 @@
     seenNotifications = null;
     try {
       localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
     } catch {}
   }
   async function authRequest(path, body) {
-    const r = await fetch(CLOUD.url + "/auth/v1" + path, {
+    const r = await cloudFetch("/auth/v1" + path, {
       method: "POST",
-      headers: { apikey: CLOUD.anonKey, "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     const d = await r.json().catch(() => ({}));
@@ -386,7 +399,7 @@
   }
   async function updatePassword(password) {
     await ensureSession();
-    const r = await fetch(CLOUD.url + "/auth/v1/user", {
+    const r = await cloudFetch("/auth/v1/user", {
       method: "PUT",
       headers: headers(),
       body: JSON.stringify({ password }),
@@ -401,7 +414,7 @@
   async function signout() {
     if (session?.access_token)
       try {
-        await fetch(CLOUD.url + "/auth/v1/logout", {
+        await cloudFetch("/auth/v1/logout", {
           method: "POST",
           headers: headers(),
         });
@@ -409,10 +422,9 @@
     dropSession();
   }
   async function authUser(accessToken) {
-    const r = await fetch(CLOUD.url + "/auth/v1/user", {
+    const r = await cloudFetch("/auth/v1/user", {
       headers: {
-        apikey: CLOUD.anonKey,
-        Authorization: "Bearer " + accessToken,
+          Authorization: "Bearer " + accessToken,
       },
     });
     const d = await r.json().catch(() => ({}));

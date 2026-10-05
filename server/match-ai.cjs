@@ -119,9 +119,9 @@ const SELECT_SCHEMA={name:'grounded_evidence',strict:true,schema:{type:'object',
 function createAssistant({fetchImpl=fetch,getProviderToken,model=process.env.CME_AI_MODEL||'openai/gpt-5-mini',now=()=>Date.now()}={}){
  async function jsonRequest(url,options,timeout=10000){const res=await fetchImpl(url,{...options,signal:AbortSignal.timeout(timeout)});if(!res.ok)throw new SafeError(res.status===401?'authentication':res.status===403?'authorization':res.status===429||res.status===402?'provider_limit':'tool_failure',res.status===401?401:res.status===403?403:503);return res.json();}
  async function authenticate(token){if(typeof token!=='string'||token.length>6000||!token)throw new SafeError('authentication',401);const user=await jsonRequest(URL_ROOT+'/auth/v1/user',{headers:{apikey:PUBLIC_KEY,Authorization:'Bearer '+token}});if(!UUID.test(user?.id||'')||user.is_anonymous)throw new SafeError('authentication',401);return user.id;}
- async function run(input,token){
+ async function run(input,token,webHeaders={}){
   const x=validateInput(input),userId=await authenticate(token),start=now();
-  const headers={apikey:PUBLIC_KEY,Authorization:'Bearer '+token,'Content-Type':'application/json'};
+  const headers={...webHeaders,apikey:PUBLIC_KEY,Authorization:'Bearer '+token,'Content-Type':'application/json'};
   let toolCalls=0,inputTokens=0,outputTokens=0;
   const rpc=(name,args)=>jsonRequest(URL_ROOT+'/rest/v1/rpc/'+name,{method:'POST',headers,body:JSON.stringify(args)});
   const read=(table,query)=>jsonRequest(URL_ROOT+'/rest/v1/'+table+'?'+query,{headers});
