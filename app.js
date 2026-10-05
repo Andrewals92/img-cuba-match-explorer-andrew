@@ -1286,7 +1286,7 @@
           "/rest/v1/applicant_cycles?select=id,user_id,source,anon_id,match_cycle,specialty,yog,step2_ck,created_at&order=created_at.desc&limit=1000",
         ),
         request(
-          "/rest/v1/program_reports?select=id,user_id,source,program_name_snapshot,match_cycle,specialty,interview,ranked,matched,verification_status,created_at&order=created_at.desc&limit=2000",
+          "/rest/v1/program_reports?select=id,user_id,source,program_name_snapshot,match_cycle,specialty,interview,ranked,matched,verification_status,created_at&order=created_at.desc&limit=1000",
         ),
       ]);
       const [summary, users, cycles, reports] = settled.map((x) =>

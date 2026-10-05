@@ -28,5 +28,10 @@ do $$begin
  begin perform cme_private.enforce_web_gateway();raise exception 'credentials without gateway proof allowed';exception when insufficient_privilege then null;end;
 end $$;
 reset role;
+set local role service_role;
+select set_config('request.jwt.claims','{"role":"service_role"}',true);
+select set_config('request.headers','{}',true);
+select cme_private.enforce_web_gateway();
+reset role;
 rollback;
-select 'PASS: anon and authenticated direct access denied; trusted gateway allowed; rate limits enforced; private configuration inaccessible; rollback complete' as result;
+select 'PASS: anon and authenticated direct access denied; trusted gateway and service maintenance allowed; rate limits enforced; private configuration inaccessible; rollback complete' as result;
