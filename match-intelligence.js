@@ -27,7 +27,7 @@
     <p><strong>Signals registradas:</strong> ${['Gold','Silver','Signal','None'].map(k=>`${signalLabel(k)}: ${known(m.signals?.[k])}`).join(' · ')}.</p>
     <p class="workspace-note">${m.historical?'El histórico contiene principalmente programas con entrevista. Puede faltar el resto de las aplicaciones y de las signals asignadas.':'Se muestran todos los programas registrados para este ciclo.'} Los totales declarados se muestran por separado y no se suman a los detalles.</p>
     ${m.totals_conflict||m.outcome_conflict?'<p class="workspace-warning">Hay diferencias entre los totales o el resultado declarado y los reportes detallados. Se conservan ambas fuentes para revisión.</p>':''}
-    <dl class="workspace-details">${[['Step 1',m.step1],['Intentos Step 1',m.step1_attempts],['Step 3',m.step3],['ECFMG',yesno(m.ecfmg)],['Requiere visa',yesno(m.visa_required)],['Publicaciones',m.publications],['Proyectos de investigación',m.research_projects],['Residencia previa',yesno(m.previous_residency)]].map(([k,v])=>`<div><dt>${k}</dt><dd>${known(v)}</dd></div>`).join('')}</dl>
+    <details class="cohort-academic"><summary>Ver datos académicos adicionales</summary>    <dl class="workspace-details">${[['Step 1',m.step1],['Intentos Step 1',m.step1_attempts],['Step 3',m.step3],['ECFMG',yesno(m.ecfmg)],['Requiere visa',yesno(m.visa_required)],['Publicaciones',m.publications],['Proyectos de investigación',m.research_projects],['Residencia previa',yesno(m.previous_residency)]].map(([k,v])=>`<div><dt>${k}</dt><dd>${known(v)}</dd></div>`).join('')}</dl></details>
     <p>Programas con aplicación registrada: ${known(m.detailed_applications)}. Programas con entrevista registrada: ${known(m.detailed_interviews)}.</p>
     ${(m.programs||[]).length?`<div class="table-wrap"><table><thead><tr>${['Programa','Estado','Aplicó','Entrevista','Signal asignada','Match en el programa'].map(x=>`<th scope="col">${x}</th>`).join('')}</tr></thead><tbody>${m.programs.map(p=>`<tr><td>${programName(p)}</td><td>${known(p.state)}</td><td>${yesno(p.applied)}</td><td>${yesno(p.interview)}</td><td><span class="pill">${esc(signalLabel(p.signal))}</span></td><td>${p.matched?'Sí · Match':'Sin Match registrado'}</td></tr>`).join('')}</tbody></table></div>`:empty('No se registraron nombres de programas para este perfil.')}
    </div></td></tr>`).join('')}</tbody></table></div>`;
@@ -35,7 +35,7 @@
   document.addEventListener('click', e=>{
    const b=e.target.closest('[data-public-profile-toggle]');if(!b)return;
    const row=b.closest('tr').nextElementSibling;if(!row?.classList.contains('cohort-detail-row'))return;
-   row.hidden=!row.hidden;b.setAttribute('aria-expanded',String(!row.hidden));
+   b.dataset.closedLabel ||= b.textContent;row.hidden=!row.hidden;b.setAttribute('aria-expanded',String(!row.hidden));b.textContent=row.hidden?b.dataset.closedLabel:'Ocultar programas y signals';
   });
   function cohorts(c){
    const cards=[['Perfiles comparables',c.cohort_size],['Personas',c.contributors],['Aplicaciones · totales disponibles',c.total_applications],['Entrevistas · totales disponibles',c.total_interviews],['Match · ciclos completos',c.matched],['No Match declarado',c.no_match],['Resultado no informado',c.outcome_not_reported],['Ciclos en curso',c.in_progress]];
