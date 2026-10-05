@@ -1,3 +1,5 @@
+> Current cohort behavior: v5.1 / migration 041 supersedes the aggregate-only and minimum-five cohort descriptions below. Publicly shared profiles and documented programs/signals are available pseudonymously for any cohort size. Private fields and opt-out rows remain excluded. See RELEASE-v5.1.md.
+
 # Cuba Match Explorer v5.0
 
 Created and owned by Andrew A Lopez Sanchez, MD, MBA  

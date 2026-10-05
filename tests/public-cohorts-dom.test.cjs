@@ -1,0 +1,16 @@
+const {JSDOM}=require('jsdom'),fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict'),path=require('path');
+const d=new JSDOM('<main id="out"></main>',{url:'https://cubamatchexplorer.org'}),q=id=>d.window.document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sandbox={window:{},document:d.window.document};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../match-intelligence.js'),'utf8'),sandbox);
+const ui=sandbox.window.CMEMatchIntelligence({q,esc,getUserId:()=>null});
+const c={members:[{label:'Aplicante <script>bad</script>',cycle:2026,specialty:'IM',programs_applied:0,interviews:0,applications_scope:'declared',interviews_scope:'declared',status:'no_match',signals:{Gold:1,Silver:0,Signal:0,None:0},programs:[{id:'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',program:'Programa <img src=x>',applied:true,interview:false,signal:'Gold',matched:false}]}]};
+q('out').innerHTML=ui.members(c);
+assert.equal(q('out').querySelectorAll('.cohort-table > tbody > tr').length,1);
+assert(q('out').textContent.includes('No · No Match'));assert(q('out').textContent.includes('Gold: 1'));assert(q('out').textContent.includes('Total declarado'));
+assert(!q('out').querySelector('script,img'));assert(q('out').querySelector('a').href.endsWith('#/program/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'));
+assert.equal(q('out').querySelectorAll('details table tbody tr').length,1);
+c.members[0].status='not_reported';c.members[0].interviews=null;
+q('out').innerHTML=ui.members(c);assert(q('out').textContent.includes('No informado'));assert(!q('out').textContent.includes('No · No Match'));
+assert(ui.members({members:[]}).includes('No hay aplicantes'));
+d.window.close();console.log('PASS public applicant DOM: single profile, totals, explicit vs missing outcome, linked signal detail and HTML escaping');

@@ -1,0 +1,9 @@
+# Public comparable applicants · v5.1
+
+Applicant Explorer now returns and displays every matching, publicly shared applicant-cycle, including the 36 historical profiles. There is no minimum cohort threshold or silent widening, and a button clears filters to show all public profiles. Match Intelligence uses the same data and expandable applicant list.
+
+Each applicant has a stable pseudonymous label, academic context, available application/interview totals, reported Match outcome, and every documented program with its application, interview and signal fields. Declared totals (including zero) take precedence; detail-only counts are labeled and discrepancies are visible. Historical source rows list invitations, not exhaustive application or signal allocations. The 338 historical reports, including 14 Match reports, are unchanged. Missing outcomes are not converted to No Match; a new optional `match_outcome` field and form support explicit matched/no_match reports.
+
+Migration 041 updates the existing allowlisted cohort RPC path and adds that outcome column. RLS and raw-table grants remain unchanged. Consent=false rows and the caller's own profiles are excluded. Contact fields, user IDs, raw anonymous IDs, immigration text, notes, calendars, meeting URLs, private rankings and watchlists are never returned. The private helper remains inaccessible; anonymous public access to the existing narrow RPC is intentional. Existing program-wide wave/rate disclosure rules are outside this cohort change.
+
+Validation: transactional `tests/ai-privacy.sql` and `tests/public-cohorts.sql`; public cohort DOM, Match Intelligence DOM, personal totals and AI gateway tests. SQL fixtures roll back. Browser QA checks real anonymous RPC data, small cohorts, expandable program/signal rows, program navigation and mobile layout. API data is never service-worker cached; static asset version is 5.1-r1.

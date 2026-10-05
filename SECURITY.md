@@ -1,3 +1,5 @@
+> Current cohort behavior: v5.1 / migration 041 supersedes the aggregate-only and minimum-five cohort descriptions below. Publicly shared profiles and documented programs/signals are available pseudonymously for any cohort size. Private fields and opt-out rows remain excluded. See RELEASE-v5.1.md.
+
 # Security — v4.0
 
 No service-role credential belongs in the browser, GitHub or bundle. The committed Supabase publishable key is public by design. Auth uses the existing production-origin redirects, session refresh and password-recovery handling.

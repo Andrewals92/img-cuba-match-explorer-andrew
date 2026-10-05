@@ -1,3 +1,5 @@
+> Current cohort behavior: v5.1 / migration 041 supersedes the aggregate-only and minimum-five cohort descriptions below. Publicly shared profiles and documented programs/signals are available pseudonymously for any cohort size. Private fields and opt-out rows remain excluded. See RELEASE-v5.1.md.
+
 # Privacy — v4.0
 
 Existing applicant-cycle and program-report tables retain RLS. Imported applicants have no ordinary user owner and remain unreadable through raw-table queries to anonymous/normal accounts. Existing Applicant Explorer's threshold-protected anonymized cohort behavior remains; Program Profiles and Compare never return applicant rows.

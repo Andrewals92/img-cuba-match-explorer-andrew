@@ -1218,3 +1218,12 @@ input[readonly] {
 #miPager{flex-wrap:wrap}#miPager p{flex-basis:100%}.ai-answer .row-actions{flex-wrap:wrap}.ai-answer .row-actions>a{white-space:normal;text-align:left}
 button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #72dacb;outline-offset:3px}
 @media(max-width:600px){.mi-hero{border-radius:16px}.mi-heading{align-items:flex-start}.mi-heading>label{width:100%}.ai-panel{padding:18px}.mi-checks{display:grid;grid-template-columns:1fr}.mi-filter-grid{grid-template-columns:1fr 1fr}.mi-filter-grid label{min-width:0}.ai-suggestions .btn{width:100%;white-space:normal}.ai-feedback>span:first-child{width:100%}.ai-facts{padding-left:17px}.source-chip{font-size:.76rem}#miCohort .kpi strong{font-size:1.2rem;overflow-wrap:anywhere}.ai-answer .btn{max-width:100%;white-space:normal}}
+
+/* Public applicant cohorts: compact overview, expandable per-program detail. */
+.cohort-table { min-width: 880px; }
+.cohort-table small { display:block; color:var(--muted); font-weight:normal; margin-top:.35rem; font-size:.875rem; }
+.cohort-applicant-details { min-width: 215px; }
+.cohort-applicant-details summary { cursor:pointer; color:var(--accent); padding:.45rem 0; }
+.cohort-applicant-details[open] { min-width: 530px; max-width: 720px; }
+.cohort-applicant-details p { white-space:normal; }
+#similarMembers > .table-wrap { max-height: none; }

@@ -549,7 +549,7 @@
       .join("");
     const all = '<option value="all">Todas las especialidades</option>';
     setOptions("programSpecialty", all + opts, "all");
-    setOptions("simSpecialty", opts, "Internal Medicine");
+    setOptions("simSpecialty", '<option value="">Todas las especialidades</option>'+opts, "Internal Medicine");
     setOptions("interviewSpecialty", all + opts, "all");
     const dl = q("specialtyList");
     if (dl) dl.innerHTML = opts;
@@ -579,6 +579,7 @@
       previousResidency: c.previous_residency_outside_us ?? c.previousResidency,
       geoPreference: c.geographic_preference ?? c.geoPreference,
       consentPublic: c.consent_public ?? c.consentPublic,
+      matchOutcome: c.match_outcome ?? c.matchOutcome ?? null,
       programsApplied: c.programs_applied ?? c.programsApplied ?? null,
       interviewInvites: c.interview_invites ?? c.interviewInvites ?? null,
       notes: c.notes,
@@ -934,9 +935,9 @@
   // Applicant Explorer: comparable cohort
   // Returns how many applicants fall in the chosen range, one anonymous row
   // per comparable applicant (programs applied, interviews, match) and the
-  // programs where that cohort interviewed. Details need >= 5 profiles.
+  // programs and signals recorded by every publicly shared matching profile.
   // ---------------------------------------------------------------------
-  const COHORT_MIN = 5;
+  const COHORT_MIN = 1;
   // Match Day is in mid/late March of the Match year (same rule as the DB).
   function matchCycleCompleted(cycle) {
     return new Date() >= new Date(Number(cycle), 2, 21);
@@ -977,7 +978,7 @@
         const dist =
           d(c.step2, a.p_step2) / 5 + d(c.usce, a.p_usce) / 2 + d(c.lors, a.p_lors) * 1.5 + d(c.yog, a.p_yog) / 3 +
           (a.p_visa_required !== null && !!c.visa !== a.p_visa_required ? 4 : 0);
-        const within = (v, t, r) => t === null || v === null || v === undefined || Math.abs(v - t) <= r;
+        const within = (v, t, r) => t === null || (v !== null && v !== undefined && Math.abs(v - t) <= r);
         const inRange =
           (a.p_step2 === null || Math.abs(c.step2 - a.p_step2) <= a.p_step2_range) &&
           within(c.yog, a.p_yog, a.p_yog_range) &&
@@ -988,8 +989,8 @@
       })
       .sort((x, y) => x.dist - y.dist);
     const inRange = pool.filter((p) => p.inRange).length;
-    const widened = inRange < COHORT_MIN;
-    const chosen = (widened ? pool.slice(0, 10) : pool.filter((p) => p.inRange).slice(0, 50)).map((p) => p.c);
+    const widened = false;
+    const chosen = pool.filter((p) => p.inRange).map((p) => p.c);
     if (chosen.length < COHORT_MIN)
       return { in_range: inRange, cohort_size: chosen.length, widened, protected: true, min_size: COHORT_MIN, members: [], programs: [] };
     const members = chosen.map((c, i) => {
@@ -998,15 +999,21 @@
       return {
         label: "Perfil " + (i + 1),
         cycle: c.cycle,
-        status: m ? "matched" : matchCycleCompleted(c.cycle) ? "no_match" : "in_progress",
+        status: m || c.matchOutcome === "matched" ? "matched" : !matchCycleCompleted(c.cycle) ? "in_progress" : c.matchOutcome === "no_match" ? "no_match" : "not_reported",
         specialty: c.specialty,
         step2: c.step2,
         yog: c.yog,
         us_lors: c.lors,
         usce: c.usce,
         visa_required: !!c.visa,
-        programs_applied: Math.max(c.programsApplied || 0, rs.filter((r) => r.applied).length) || null,
-        interviews: Math.max(c.interviewInvites || 0, rs.filter((r) => r.interview).length),
+        programs_applied: c.programsApplied ?? (rs.filter((r) => r.applied).length || null),
+        interviews: c.interviewInvites ?? (rs.filter((r) => r.interview).length || null),
+        applications_scope: c.programsApplied != null ? "declared" : "documented_only",
+        interviews_scope: c.interviewInvites != null ? "declared" : "documented_only",
+        detailed_applications: rs.filter(r=>r.applied).length, detailed_interviews: rs.filter(r=>r.interview).length,
+        programs: rs.map(r=>({program:r.program,state:r.state,specialty:r.specialty,applied:r.applied,interview:r.interview,signal:r.signal,matched:r.matched})),
+        signals: Object.fromEntries(["Gold","Silver","Signal","None"].map(k=>[k,rs.filter(r=>r.signal===k).length])),
+        match_programs: rs.filter(r=>r.matched).map(r=>({program:r.program,state:r.state})),
         matched: !!m,
         match_program: m?.program || null,
         match_state: m?.state || null,
@@ -1035,6 +1042,11 @@
     return {
       in_range: inRange,
       cohort_size: chosen.length,
+      eligible_profiles: pool.length, contributors: chosen.length,
+      application_profiles: members.filter(m=>m.programs_applied!=null).length, interview_profiles: members.filter(m=>m.interviews!=null).length,
+      total_applications: members.some(m=>m.programs_applied!=null)?members.reduce((n,m)=>n+(m.programs_applied??0),0):null,
+      total_interviews: members.some(m=>m.interviews!=null)?members.reduce((n,m)=>n+(m.interviews??0),0):null,
+      no_match: members.filter(m=>m.status==="no_match").length, outcome_not_reported: members.filter(m=>m.status==="not_reported").length,
       widened,
       protected: false,
       min_size: COHORT_MIN,
@@ -1052,8 +1064,9 @@
       programs,
     };
   }
-  let lastCohort = null;
+  let lastCohort = null, cohortRun = 0;
   async function findSimilar() {
+    const run = ++cohortRun;
     const a = cohortArgs();
     q("similarSummary").innerHTML = '<div class="empty-state">Buscando perfiles comparables…</div>';
     let res = null;
@@ -1069,6 +1082,7 @@
         );
       }
     } else res = demoCohort(a);
+    if (run !== cohortRun) return;
     if (Array.isArray(res)) res = res[0] || null;
     if (res && !Array.isArray(res.members)) res.members = [];
     lastCohort = res;
@@ -1080,12 +1094,12 @@
     const box=q('similarSummary'),mem=q('similarMembers'),prog=q('similarPrograms');
     if(!res){box.innerHTML='<p class="empty-state">No se pudo calcular la cohorte.</p>';mem.innerHTML=prog.innerHTML='';return;}
     box.className='';box.innerHTML=matchAI.cohorts(res);
-    mem.innerHTML='<p class="workspace-note">La comparación usa resúmenes agregados. Los perfiles individuales y los históricos importados permanecen privados; las muestras menores de 5 personas se suprimen.</p>';
+    mem.innerHTML=matchAI.members(res);
     const rows=res.programs||[];
     prog.innerHTML=rows.length?table([
       ['Programa','program',r=>workspace.programLink({...r,programId:r.id})],['Estado','state'],['Especialidad','specialty'],
-      ['Personas con reportes','contributors'],['Entrevistas','interviews',r=>r.interviews==null?'Datos insuficientes':esc(r.interviews)],
-      ['Matches · ciclos completos','matches',r=>r.matches==null?'Datos insuficientes':esc(r.matches)]],rows):'<p class="empty-state">No hay programas con una muestra suficiente para estos filtros.</p>';
+      ['Personas con reportes','contributors'],['Aplicaciones registradas','applied'],['Entrevistas','interviews',r=>r.interviews==null?'Datos insuficientes':esc(r.interviews)],
+      ['Matches · ciclos completos','matches',r=>r.matches==null?'Datos insuficientes':esc(r.matches)]],rows):'<p class="empty-state">No hay programas registrados para estos filtros.</p>';
   }
   // Views are addressed as #/name (plain #name would make the browser jump
   // to the section element with that id).
@@ -1385,7 +1399,7 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
-      "match-intelligence":["Match Intelligence","Tu contexto, evidencia protegida y decisiones explicables."],
+      "match-intelligence":["Match Intelligence","Tu contexto, perfiles comparables y decisiones explicables."],
       waves:["Interview Waves","Actividad reportada y signals con privacidad."],
       "program-sources":["Guía de programas IM","Tasas de entrevista, signals y requisitos de 702 programas de Medicina Interna."],
       radar:["New Program Radar","Programas detectados y cambios materiales."],
@@ -1401,7 +1415,7 @@
       ],
       applicants: [
         "Applicant Explorer",
-        "Compara tu perfil con cohortes anonimizadas.",
+        "Consulta aplicantes comparables, sus programas y signals.",
       ],
       interviews: [
         "Interview Tracker",
@@ -1503,6 +1517,7 @@
       previousResidency: f.previousResidency === "yes",
       geoPreference: f.geoPreference,
       consentPublic: f.consentPublic === "yes",
+      matchOutcome: f.matchOutcome || null,
       programsApplied: numOrNull(f.programsApplied),
       interviewInvites: numOrNull(f.interviewInvites),
       notes: f.notes,
@@ -1535,6 +1550,7 @@
           previous_residency_outside_us: local.previousResidency,
           geographic_preference: local.geoPreference || null,
           consent_public: local.consentPublic,
+          match_outcome: local.matchOutcome,
           programs_applied: local.programsApplied,
           interview_invites: local.interviewInvites,
           notes: local.notes || null,
@@ -1707,6 +1723,7 @@
       previousResidency: "previousResidency",
       geoPreference: "geoPreference",
       consentPublic: "consentPublic",
+      matchOutcome: "matchOutcome",
       programsApplied: "programsApplied",
       interviewInvites: "interviewInvites",
       notes: "notes",
@@ -2120,6 +2137,11 @@
   ["interviewSearch", "interviewSpecialty"].forEach((id) =>
     q(id).addEventListener("input", renderInterviews),
   );
+  q("showAllApplicantsBtn").addEventListener("click", () => {
+    for (const id of ["simStep2","simUsce","simLors","simYog"]) q(id).value="";
+    q("simVisa").value="any"; q("simCycle").value="all"; q("simSpecialty").value="";
+    findSimilar();
+  });
   q("findSimilarBtn").addEventListener("click", findSimilar);
   q("useMyProfileBtn").addEventListener("click", () => {
     const c = [...myDB.cycles].sort((x, y) => (y.cycle || 0) - (x.cycle || 0))[0];
@@ -2128,7 +2150,7 @@
     set("simStep2", c.step2);
     set("simYog", c.yog);
     set("simLors", c.lors);
-    set("simUsce", c.usce || "");
+    set("simUsce", c.usce ?? "");
     q("simVisa").value = c.visa ? "yes" : "no";
     if ([...q("simSpecialty").options].some((o) => o.value === c.specialty)) q("simSpecialty").value = c.specialty;
     q("simCycle").value = "all";

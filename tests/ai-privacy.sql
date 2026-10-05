@@ -20,25 +20,25 @@ begin
  perform set_config('v50.cycle',owner_cycle::text,true);perform set_config('v50.program',p::text,true);
  r:=public.match_intelligence_v50(owner_cycle,'{"state":"FL","include_sparse":false}');
  assert (r#>>'{cohort,cohort_size}')::integer=6,'own profile counted';
- assert r#>'{cohort,members}'='[]'::jsonb,'raw profiles leaked';
+ assert jsonb_array_length(r#>'{cohort,members}')=6,'public profiles missing';
  assert (r#>>'{cohort,matched}')::integer=3,'completed Match aggregate incorrect';
  assert (r#>>'{cohort,no_match_reported}')::integer=3;
- assert r#>>'{cohort,no_match}' is null,'unreported outcomes treated as confirmed no match';
+ assert (r#>>'{cohort,no_match}')::integer=0,'unreported outcomes treated as confirmed no match';
  assert (r#>>'{cohort,match_rate}')::numeric=50;
  assert jsonb_array_length(r->'programs')=1,'discovery did not use stable program identity';
  assert r#>>'{programs,0,id}'=p::text;
  assert r#>>'{profile,id}'=owner_cycle::text;
  r:=public.similar_cohort(p_specialty=>'V50 QA',p_step2=>290,p_step2_range=>5);
- assert (r->>'protected')::boolean and r->>'cohort_size' is null,'small count or silent widening';
+ assert not (r->>'protected')::boolean and (r->>'cohort_size')::integer=0,'silent widening or suppression';
  assert r->'programs'='[]'::jsonb;
- -- A minority of one matched contributor must not be reconstructible from totals.
+ -- A single reported Match remains visible in a public cohort.
  for rec in select user_id from public.program_reports where specialty='V50 QA' and matched and user_id<>peer loop
   perform set_config('request.jwt.claim.sub',rec.user_id::text,true);
   update public.program_reports set matched=false where specialty='V50 QA' and user_id=rec.user_id;
  end loop;
  perform set_config('request.jwt.claim.sub',owner_id::text,true);
  r:=public.similar_cohort(p_specialty=>'V50 QA');
- assert r->>'matched' is null and r->>'no_match_reported' is null and r->>'match_rate' is null,'small complement exposed';
+ assert (r->>'matched')::integer=1 and (r->>'outcome_not_reported')::integer=5,'small outcomes suppressed';
  -- Future cycles contribute activity but never no-match outcomes.
  for rec in select user_id,anon_id from public.applicant_cycles where specialty='V50 QA' and match_cycle=2026 loop
   perform set_config('request.jwt.claim.sub',rec.user_id::text,true);
@@ -47,7 +47,7 @@ begin
  perform set_config('request.jwt.claim.sub',owner_id::text,true);
  r:=public.similar_cohort(p_cycle=>2028,p_specialty=>'V50 QA');
  assert (r->>'in_progress')::integer=6 and (r->>'completed')::integer=0;
- assert r->>'matched' is null and r->>'match_rate' is null and r->>'no_match' is null;
+ assert (r->>'matched')::integer=0 and r->>'match_rate' is null and (r->>'no_match')::integer=0;
  perform set_config('request.jwt.claim.sub',owner_id::text,true);
  r:=public.ai_begin_request_v50('research');assert (r->>'allowed')::boolean;ans:=(r->>'answer_id')::uuid;
  perform set_config('v50.answer',ans::text,true);
@@ -77,7 +77,7 @@ do $$declare r jsonb;begin
  assert not has_function_privilege('anon','public.ai_begin_request_v50(text)','EXECUTE');
  assert not has_function_privilege('anon','public.ai_feedback_v50(uuid,text)','EXECUTE');
  assert not has_function_privilege('anon','public.admin_ai_operations_v50()','EXECUTE');
- r:=public.similar_cohort(p_specialty=>'V50 QA');assert r->'members'='[]'::jsonb;
+ r:=public.similar_cohort(p_specialty=>'V50 QA');assert jsonb_array_length(r->'members')=14;
  assert not (r::text ~ 'V50-[0-9a-f]'),'historical identity exposed';
 end $$;
 reset role;
@@ -90,4 +90,4 @@ do $$declare h text;begin
  assert not exists(select 1 from public.program_reports r where source='import:CubaMatch_2026' group by to_jsonb(r)-'id'-'created_at'-'updated_at' having count(*)>1);
 end $$;
 rollback;
-select 'PASS v5: own profile exclusion, aggregate-only cohorts, complementary suppression, no silent widening, incomplete cycles, stable discovery, owner-only feedback, atomic rate limit, anon/admin denial, immutable 36/338/14 and duplicate guard' result;
+select 'PASS v5: own profile exclusion, public cohorts, unsuppressed small outcomes, no silent widening, incomplete cycles, stable discovery, owner-only feedback, atomic rate limit, anon/admin denial, immutable 36/338/14 and duplicate guard' result;
