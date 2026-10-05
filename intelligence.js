@@ -1,7 +1,7 @@
 /* v4.3 descriptive analytics; backend enforces suppression. No private data stored. */
 (() => {
  'use strict';
- window.CMEIntelligence=({q,esc,rpc,getSeason,getMyData,getUserId})=>{
+ window.CMEIntelligence=({q,esc,rpc,getSeason,getMyData,getUserId,getPresence})=>{
   let run=0,offset=0,sourceOffset=0,savedRun=0;
   const empty=s=>`<p class="empty-state" role="status">${esc(s)}</p>`;
   const note='<p class="workspace-note">Datos aportados por la comunidad. Las tasas describen a quienes reportaron y no representan a todos los solicitantes. No prueban que una señal haya causado una entrevista.</p>';
@@ -44,8 +44,8 @@
   let sourceRun=0;
   async function loadSources(){
    const n=++sourceRun;q('sourceResults').innerHTML=empty('Cargando programas…');q('sourcePager').innerHTML='';
-   try{const d=await rpc('program_source_directory_v43',{p_query:q('sourceSearch').value.trim(),p_offset:sourceOffset});if(n!==sourceRun)return;
-    q('sourceResults').innerHTML=(d.programs||[]).map(s=>`<article class="panel program-guide-card"><h3>${s.program_id?link({id:s.program_id,name:s.name}):esc(s.name)}</h3><p>${esc([s.city,s.state].filter(Boolean).join(', '))} · ACGME: ${esc(s.acgme_program_id||'Identidad sin resolver')}</p>${s.program_id?`<a class="btn ghost" href="#/program/${encodeURIComponent(s.program_id)}">Ver perfil y comparar</a>`:''}${resources(s.resources||[s])}</article>`).join('')||empty('No se encontraron programas.');
+   try{const d=await rpc('program_source_directory_v43',{p_query:q('sourceSearch').value.trim(),p_offset:sourceOffset});const professional=await rpc('presence_profiles_v53',{p_ids:(d.programs||[]).map(p=>p.program_id).filter(Boolean)}).catch(()=>[]);if(n!==sourceRun)return;
+    q('sourceResults').innerHTML=(d.programs||[]).map(s=>`<article class="panel program-guide-card"><h3>${s.program_id?link({id:s.program_id,name:s.name}):esc(s.name)}</h3><p>${esc([s.city,s.state].filter(Boolean).join(', '))} · ACGME: ${esc(s.acgme_program_id||'Identidad sin resolver')}</p>${s.program_id?`<a class="btn ghost" href="#/program/${encodeURIComponent(s.program_id)}">Ver perfil y comparar</a>`:''}${getPresence().badge(professional.find(p=>p.id===s.program_id)?.presence)}${resources(s.resources||[s])}</article>`).join('')||empty('No se encontraron programas.');
     q('sourcePager').innerHTML=`<button class="btn ghost" data-source-page="-1" ${sourceOffset===0?'disabled':''}>Anterior</button><span>Página ${sourceOffset/30+1}</span><button class="btn ghost" data-source-page="1" ${!d.has_more?'disabled':''}>Siguiente</button>`;
    }catch{if(n===sourceRun)q('sourceResults').innerHTML=empty('No se pudo cargar la guía de programas.')+'<button class="btn ghost" data-source-retry>Reintentar</button>';}
   }

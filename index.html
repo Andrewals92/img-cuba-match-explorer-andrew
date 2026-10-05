@@ -17,7 +17,7 @@
     <title>Cuba Match Explorer</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=5.2-r2" />
+    <link rel="stylesheet" href="styles.css?v=5.3-r1" />
   </head>
   <body>
     <div class="nav-overlay" id="navOverlay"></div>
@@ -44,6 +44,7 @@
           <button class="nav-btn" data-view="programs">
             <span>⌕</span>Program Explorer
           </button>
+          <button class="nav-btn" data-view="presence"><span>◎</span> Formación en Cuba</button>
           <button class="nav-btn" data-view="waves"><span>▤</span> Interview Waves</button>
           <button class="nav-btn" data-view="program-sources"><span>↗</span> Guía de programas IM</button>
           <button class="nav-btn" data-view="radar"><span>◌</span> New Program Radar</button>
@@ -116,7 +117,7 @@
 
         <section class="view" id="match-intelligence">
           <div class="mi-hero"><span class="eyebrow">Cuba Match Intelligence · v5.1</span><h2>Entiende la evidencia.<br>Decide con tu propio criterio.</h2><p>Cohortes transparentes, programas con contexto y un asistente que muestra sus fuentes.</p><div class="source-chips"><span>Sin predicciones de Match</span><span>Privacidad por diseño</span><span>Datos y límites visibles</span></div></div>
-          <div id="miWorkspace"></div>
+          <p class="workspace-note">Explora también las <a href="#/presence">trayectorias de formación en Cuba</a> y compáralas con entrevistas, signals y compatibilidad en las fichas de cada programa.</p><div id="miWorkspace"></div>
           <article class="panel ai-panel" id="aiPanel" hidden>
             <div class="mi-heading"><div><span class="eyebrow">Pregunta sobre tus próximos pasos</span><h2>Ask Cuba Match Explorer</h2></div><a class="btn ghost small" id="aiBack" href="#/dashboard">← Volver al contexto</a></div>
             <div id="aiContext" class="ai-context"></div>
@@ -127,7 +128,7 @@
 
         <section class="view active-view" id="dashboard">
           <article class="panel my-match" id="myMatchContent" aria-live="polite">Cargando My Match…</article>
-          <div class="mi-dashboard-entry"><a class="btn primary" href="#/match-intelligence">Abrir Match Intelligence</a><button class="btn ghost" data-ai-open="dashboard">Explicar mi ciclo</button></div><div id="seasonDashboard"></div><div id="matchIntelligence"></div>
+          <div class="mi-dashboard-entry"><a class="btn primary" href="#/match-intelligence">Abrir Match Intelligence</a><button class="btn ghost" data-ai-open="dashboard">Explicar mi ciclo</button></div><a class="btn ghost" href="#/presence">Formación en Cuba · mapa de evidencia</a><div id="seasonDashboard"></div><div id="matchIntelligence"></div>
           <h2 class="section-title">Community snapshot</h2>
           <div class="hero">
             <div>
@@ -221,6 +222,13 @@
           </article>
         </section>
 
+        <section class="view" id="presence">
+          <article class="panel presence-hero"><span class="eyebrow">Búsqueda avanzada · evidencia institucional</span><h2>Trayectorias que conectan programas</h2><p>Encuentra programas con médicos que cursaron Medicina en Cuba. Explora residentes, docentes, dirección y egresados, con nombres, escuelas y fuentes verificables.</p><div class="row-actions"><button class="btn ghost" data-presence-florida>Explorar Florida</button><button class="btn ghost" data-presence-latino>Presencia latina · datos agregados</button></div><p class="workspace-note">Formación en Cuba no implica nacionalidad cubana. La presencia latina se presenta únicamente como información institucional agregada. La investigación del catálogo sigue en curso.</p></article>
+          <article class="panel"><h3>Buscar programas con formación médica en Cuba</h3><form id="presenceFilters" class="season-form-grid"></form></article>
+          <div id="presenceAnalytics" aria-live="polite"></div><div id="presenceResults" aria-live="polite"></div><div id="presencePager" class="workspace-pager"></div>
+          <article class="panel presence-method"><h3>Cómo leer esta evidencia</h3><p>Las fuentes identifican estudios profesionales y vínculos con programas. No se deduce etnia ni nacionalidad por nombre, foto o escuela. La ausencia de evidencia publicada no significa que nunca hayan existido esos vínculos.</p><p>Conservamos los históricos documentados. Si no puede confirmarse la vigencia, el registro queda «por confirmar». Cada revisión guarda la fecha de consulta y la próxima revisión prevista; los conteos reflejan los casos documentados y no un censo completo.</p><p>Combina los resultados con Compare, My Programs y las fichas de entrevistas, signals y compatibilidad de cada programa.</p></article>
+        </section>
+
         <section class="view" id="programs">
           <article class="panel filters-panel">
             <div class="filters-row">
@@ -236,6 +244,7 @@
               </select>
             </div>
           </article>
+          <div class="row-actions presence-directory-filter"><label>Evidencia profesional<select id="programPresence"><option value="all">Sin filtro de presencia</option><option value="documented">Formación en Cuba · cualquier período</option><option value="current">Formación en Cuba · actual</option><option value="historical">Formación en Cuba · histórica</option><option value="aggregate_evidence">Presencia latina · dato agregado</option></select></label><a class="btn ghost" href="#/presence">Escuelas, roles, Florida y más filtros</a></div>
           <p class="workspace-note">Abre un perfil para consultar datos protegidos. Los nombres comunitarios de 2026 se conservan separados del catálogo oficial hasta verificar su identidad.</p><div id="programCards" class="card-grid" aria-live="polite"></div><div id="programPager" class="workspace-pager"></div>
         </section>
 
@@ -1048,7 +1057,7 @@
         <p class="content-use-notice">Consulta personal · Extracción automatizada y redistribución no autorizadas. No compartas tus credenciales con asistentes externos.</p>
         <footer class="ownership-footer">
           <div>
-            <strong>Cuba Match Explorer · v5.2</strong
+            <strong>Cuba Match Explorer · v5.3</strong
             ><span>Created and owned by Andrew A Lopez Sanchez, MD, MBA</span>
             <a class="footer-about-link" href="#/about">Sobre mí · Trayectoria y propósito</a>
           </div>
@@ -1064,15 +1073,16 @@
         </footer>
       </main>
     </div>
-    <script src="bot-protection.js?v=5.2-r2"></script>
-    <script src="content-protection.js?v=5.2-r2"></script>
-    <script src="cloud-config.js?v=5.2-r2"></script>
-    <script src="calendar-utils.js?v=5.2-r2"></script>
-    <script src="season.js?v=5.2-r2"></script>
-    <script src="workspace.js?v=5.2-r2"></script>
-    <script src="intelligence.js?v=5.2-r2"></script>
-    <script src="notifications.js?v=5.2-r2"></script>
-    <script src="match-intelligence.js?v=5.2-r2"></script>
-    <script src="app.js?v=5.2-r2"></script>
+    <script src="bot-protection.js?v=5.3-r1"></script>
+    <script src="content-protection.js?v=5.3-r1"></script>
+    <script src="cloud-config.js?v=5.3-r1"></script>
+    <script src="calendar-utils.js?v=5.3-r1"></script>
+    <script src="season.js?v=5.3-r1"></script>
+    <script src="presence.js?v=5.3-r1"></script>
+    <script src="workspace.js?v=5.3-r1"></script>
+    <script src="intelligence.js?v=5.3-r1"></script>
+    <script src="notifications.js?v=5.3-r1"></script>
+    <script src="match-intelligence.js?v=5.3-r1"></script>
+    <script src="app.js?v=5.3-r1"></script>
   </body>
 </html>

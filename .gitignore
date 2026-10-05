@@ -9,3 +9,6 @@ node_modules/
 *.pem
 
 public-build/
+
+# Curated professional datasets stay in private database/storage, not the public source repository.
+supabase/imports/professional-presence-v53/*.json

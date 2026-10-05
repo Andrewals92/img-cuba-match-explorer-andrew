@@ -1313,3 +1313,21 @@ body.content-hidden .app-shell { visibility: hidden; }
  body > * { display: none !important; }
  body::after { content: 'Cuba Match Explorer — contenido para consulta en el sitio. Impresión restringida.'; display: block; padding: 40px; color: #000; background: #fff; font-size: 18px; }
 }
+
+/* v5.3 Professional education evidence */
+.presence-hero{background:radial-gradient(ellipse at 100% 0,rgba(17,185,166,.15),transparent 62%),var(--panel,#0b2235);border-color:rgba(48,208,184,.3)}
+.presence-hero h2{font-size:clamp(1.65rem,3vw,2.5rem);max-width:780px;line-height:1.12;margin:12px 0 18px}
+.presence-hero>p{max-width:880px;line-height:1.7}.presence-hero .row-actions{margin:20px 0}
+.presence-extra,.presence-submit{grid-column:1/-1}.presence-extra summary, .presence-method summary,.presence-person summary{cursor:pointer;font-weight:650;padding:10px 0;color:#b8d8ee}
+.presence-extra .season-form-grid{margin-top:12px}.presence-summary{margin:16px 0;line-height:1.65}.presence-summary p{margin:10px 0 3px}.presence-summary small{color:#99b1c6}
+.presence-badge{display:inline-flex;align-items:center;border-radius:7px;padding:5px 9px;background:rgba(8,205,167,.12);border:1px solid rgba(8,205,167,.3);color:#8debd6;font-size:.78rem;font-weight:650;margin:0 5px 5px 0;max-width:100%}
+.presence-badge.subtle{background:rgba(143,177,206,.08);border-color:rgba(143,177,206,.23);color:#c2d7e8}.presence-badge.aggregate{background:rgba(136,133,226,.13);border-color:rgba(136,133,226,.35);color:#cac5ff}
+.presence-group{margin-top:26px;padding-top:20px;border-top:1px solid rgba(148,180,205,.16)}.presence-group>h4{font-size:1.12rem;margin:0 0 16px}
+.presence-people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.presence-person{border:1px solid rgba(148,180,205,.19);border-radius:14px;padding:20px;background:rgba(2,15,29,.24);min-width:0}
+.presence-person-head{display:flex;flex-wrap:wrap;gap:10px;align-items:start;justify-content:space-between}.presence-person h4{margin:0;font-size:1.02rem;line-height:1.4}.presence-person p{line-height:1.6}.presence-person .workspace-note{margin:8px 0}
+.presence-sources{padding-left:18px;font-size:.86rem;line-height:1.6;overflow-wrap:anywhere}.presence-sources p{margin:7px 0}.presence-sources li+li{margin-top:16px}.presence-sources small{color:#96afc3}
+.presence-linkedin{margin-top:14px;font-size:.84rem;line-height:1.6}.presence-linkedin small{display:block;color:#96afc3;margin-top:5px}
+.presence-aggregate{display:flex;gap:22px;align-items:flex-start;padding:18px;border:1px solid rgba(136,133,226,.3);border-radius:14px}.presence-aggregate>strong{font-size:2.4rem;color:#c3bdff}.presence-aggregate p{margin:0 0 10px;line-height:1.6}
+.presence-method{margin:22px 0;line-height:1.7}.presence-distributions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.presence-breakdown{list-style:none;padding:0}.presence-breakdown li{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid rgba(148,180,205,.16);font-size:.86rem;line-height:1.5}.presence-breakdown b{color:#8debd6}.presence-top li{padding:7px;line-height:1.6}.presence-top b{margin-left:10px}
+.presence-coverage{border-top:1px solid rgba(148,180,205,.18);padding-top:18px;margin-top:22px;color:#acc0d2;line-height:1.6}.presence-directory-filter{margin:0 0 20px;align-items:end}.presence-directory-filter label{display:grid;gap:8px;min-width:280px}.presence-program{display:flex;flex-direction:column}.presence-program>.row-actions{margin-top:auto;padding-top:18px}.presence-detail>h3{margin-bottom:18px}
+@media(max-width:800px){.presence-people,.presence-distributions{grid-template-columns:1fr}.presence-aggregate{flex-direction:column;gap:12px}.presence-directory-filter label{min-width:0;width:100%}.presence-person{padding:16px}}

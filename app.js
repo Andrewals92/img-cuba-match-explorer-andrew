@@ -1411,6 +1411,7 @@
   }
   function updateNav(skipLoad = false) {
     const titles = {
+      presence:["Formación en Cuba", "Trayectorias profesionales y evidencia institucional verificable."],
       "match-intelligence":["Match Intelligence","Tu contexto, perfiles comparables y decisiones explicables."],
       waves:["Interview Waves","Actividad reportada y signals con privacidad."],
       "program-sources":["Guía de programas IM","Tasas de entrevista, signals y requisitos de 702 programas de Medicina Interna."],
@@ -1456,6 +1457,7 @@
       history.replaceState(null, "", "#/" + currentView);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (skipLoad) return;
+    if(currentView==="presence") presence.load();
     if(currentView==="match-intelligence") matchAI.load();
     if(currentView==="waves") intelligence.load();
     if(currentView==="program-sources") intelligence.loadSources();
@@ -2037,10 +2039,13 @@
     q("watchArea").style.display = session ? "block" : "none";
   }
 
-  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin, getSeason: () => season, getIntelligence: () => intelligence });
+  const workspace = window.CMEWorkspace({ q, esc, rpc, cloudReady, getMyData: () => myDB, getUserId: () => session?.user?.id, toast, isAdmin, getSeason: () => season, getIntelligence: () => intelligence, getPresence: () => presence });
+
+  const presence = window.CMEPresence({q,esc,rpc,getSeason:()=>season,getWorkspace:()=>workspace});
+  q("programPresence").addEventListener("change",()=>workspace.loadDirectory(true));
 
   const season = window.CMESeason({q,esc,api:(path,opts={})=>request(path,{...opts,body:opts.body?JSON.parse(opts.body):null}),rpc,getUserId:()=>session?.user?.id,getMyData:()=>myDB,toast,programLink:r=>workspace.programLink(r)});
-  const intelligence=window.CMEIntelligence({q,esc,rpc,getSeason:()=>season,getMyData:()=>myDB,getUserId:()=>session?.user?.id});
+  const intelligence=window.CMEIntelligence({q,esc,rpc,getSeason:()=>season,getMyData:()=>myDB,getUserId:()=>session?.user?.id,getPresence:()=>presence});
   document.addEventListener('cme-season-loaded',()=>{intelligence.saved();if(currentView==='program'||currentView==='compare')workspace.loadView();else if(currentView==='programs')workspace.loadDirectory();});
 
   const notifications=window.CMENotifications({q,esc,api:request,rpc,getUserId:()=>session?.user?.id,isAdmin,toast,getSeason:()=>season});
@@ -2090,6 +2095,7 @@
     renderAccount();
     matchAI.reset();
     if (currentView === "program" || currentView === "compare") workspace.loadView();
+    if(currentView==="presence") presence.load();
     if(currentView==="match-intelligence") matchAI.load();
     if(currentView==="waves") intelligence.load();
     if(currentView==="program-sources") intelligence.loadSources();
@@ -2127,7 +2133,7 @@
   });
   window.addEventListener("hashchange", () => {
     const v = hashView();
-    if (v && (v !== currentView || v === "program" || v === "compare") && q(v)?.classList.contains("view")) {
+    if (v && (v !== currentView || v === "program" || v === "compare" || v === "presence") && q(v)?.classList.contains("view")) {
       currentView = v;
       updateNav();
     }
