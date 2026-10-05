@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Cuba Match Explorer</string>
+    <string name="asset_statements" translatable="false">[{\"relation\":[\"delegate_permission/common.handle_all_urls\"],\"target\":{\"namespace\":\"web\",\"site\":\"https://cubamatchexplorer.org\"}}]</string>
+    <color name="cme_background">#07111f</color>
+    <color name="icon_background">#000000</color>
+</resources>

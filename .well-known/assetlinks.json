@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.imgcubajourney.matchexplorer",
+      "sha256_cert_fingerprints": [
+        "F0:EF:32:B4:6B:50:AA:09:AF:06:32:88:1C:AC:F0:96:19:6C:AC:F1:C6:5B:04:49:16:14:F7:FB:EF:79:99:AA"
+      ]
+    }
+  }
+]

@@ -1,0 +1,22 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.imgcubajourney.matchexplorer'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'com.imgcubajourney.matchexplorer'
+        minSdk 26
+        targetSdk 36
+        versionCode 5302
+        versionName '5.3.2'
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.6.2'
+}
