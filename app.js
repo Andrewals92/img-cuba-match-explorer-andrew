@@ -1435,6 +1435,7 @@
       v.classList.toggle("active-view", v.id === currentView),
     );
     if (!titles[currentView]) currentView = "dashboard";
+    document.body.classList.toggle("about-page", currentView === "about");
     q("pageTitle").textContent = titles[currentView][0];
     q("pageSubtitle").textContent = titles[currentView][1];
     q("sidebar").classList.remove("open");

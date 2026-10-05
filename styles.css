@@ -1243,6 +1243,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 }
 
 /* The creator's story uses the supplied logo and portrait without alteration. */
+.about-page #modeBanner, .about-page #compareTray, .about-page .topbar-actions { display: none; }
 .about-view { max-width: 1280px; margin: 0 auto; }
 .about-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); align-items: stretch; overflow: hidden; border: 1px solid var(--border); border-radius: 24px; background: radial-gradient(ellipse at top left, #163454, #0c1a2c 70%); }
 .about-intro { padding: clamp(26px, 3.5vw, 52px); align-self: center; }
