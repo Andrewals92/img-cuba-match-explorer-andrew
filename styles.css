@@ -70,6 +70,7 @@ button {
   text-decoration: none;
 }
 .brand-logo {
+  background: #fff;
   width: 76px;
   height: auto;
   flex: 0 0 76px;
@@ -1242,7 +1243,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
  .cohort-open-cell .btn { width:100%; }
 }
 
-/* The creator's story uses the supplied logo and portrait without alteration. */
+/* Creator branding: white logo background; supplied portrait unchanged. */
 .about-page #modeBanner, .about-page #compareTray, .about-page .topbar-actions { display: none; }
 .about-view { max-width: 1280px; margin: 0 auto; }
 .about-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); align-items: stretch; overflow: hidden; border: 1px solid var(--border); border-radius: 24px; background: radial-gradient(ellipse at top left, #163454, #0c1a2c 70%); }
@@ -1274,7 +1275,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,t
 .about-contributions .panel { margin: 0; padding: 26px; box-shadow: none; }
 .about-contributions h3 { margin: 10px 0 0; font-size: 20px; }
 .about-purpose { display: grid; grid-template-columns: 210px minmax(0, 1fr); align-items: center; gap: 34px; padding: 30px; border: 1px solid var(--border); border-radius: 20px; background: linear-gradient(120deg, #0d2038, #0c192a); margin-bottom: 30px; }
-.about-logo-panel { background: #000; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+.about-logo-panel { background: #fff; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
 .about-logo-panel img { display: block; width: 100%; height: auto; }
 .about-purpose h3 { font-size: clamp(23px, 2.6vw, 32px); line-height: 1.2; letter-spacing: -.035em; margin: 10px 0 12px; }
 .about-purpose .about-purpose-note { color: #d6e5f5; }
@@ -1331,3 +1332,4 @@ body.content-hidden .app-shell { visibility: hidden; }
 .presence-method{margin:22px 0;line-height:1.7}.presence-distributions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.presence-breakdown{list-style:none;padding:0}.presence-breakdown li{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid rgba(148,180,205,.16);font-size:.86rem;line-height:1.5}.presence-breakdown b{color:#8debd6}.presence-top li{padding:7px;line-height:1.6}.presence-top b{margin-left:10px}
 .presence-coverage{border-top:1px solid rgba(148,180,205,.18);padding-top:18px;margin-top:22px;color:#acc0d2;line-height:1.6}.presence-directory-filter{margin:0 0 20px;align-items:end}.presence-directory-filter label{display:grid;gap:8px;min-width:280px}.presence-program{display:flex;flex-direction:column}.presence-program>.row-actions{margin-top:auto;padding-top:18px}.presence-detail>h3{margin-bottom:18px}
 @media(max-width:800px){.presence-people,.presence-distributions{grid-template-columns:1fr}.presence-aggregate{flex-direction:column;gap:12px}.presence-directory-filter label{min-width:0;width:100%}.presence-person{padding:16px}}
+
