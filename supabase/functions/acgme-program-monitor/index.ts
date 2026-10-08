@@ -1,54 +1,76 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import {ACGME_URL,AAMC_URL,parseAcgmeSpecialties,parseAcgmePrograms,parseAamcIndex,parseAamcPrograms,selectTargets} from './catalog-parser.mjs';
 const PROJECT_URL=Deno.env.get('SUPABASE_URL')!;
-const SECRET_KEYS=JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS')||'{}');
-const SECRET_KEY=SECRET_KEYS['default'];
-const SEARCH_URL='https://apps.acgme.org/ads/Public/Programs/Search';
-const ORIGIN='https://apps.acgme.org';
-const UA='CubaMatchExplorer/1.0 (+https://xqjjiveuvnioachgxqez.supabase.co/functions/v1/cuba-match-explorer)';
-
-function decode(s:string){return s.replace(/&nbsp;/gi,' ').replace(/&amp;/gi,'&').replace(/&quot;/gi,'"').replace(/&#39;|&#x27;/gi,"'").replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&#x2F;/gi,'/').replace(/\s+/g,' ').trim()}
-function strip(s:string){return decode(s.replace(/<br\s*\/?\s*>/gi,' ').replace(/<[^>]+>/g,' '))}
-function norm(s:string){return strip(s).toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ').trim()}
-function abs(href:string){try{return new URL(href,ORIGIN).toString()}catch{return SEARCH_URL}}
-function getToken(html:string){return html.match(/name=["']__RequestVerificationToken["'][^>]*value=["']([^"']+)/i)?.[1]||''}
-function getCookies(headers:Headers){const h:any=headers;const a=typeof h.getSetCookie==='function'?h.getSetCookie():[];return a.map((x:string)=>x.split(';')[0]).join('; ')}
-async function db(path:string,init:RequestInit={}){if(!SECRET_KEY)throw new Error('Supabase secret key unavailable');const r=await fetch(PROJECT_URL+'/rest/v1/'+path,{...init,headers:{apikey:SECRET_KEY,'Content-Type':'application/json',...(init.headers||{})}});const t=await r.text();if(!r.ok)throw new Error(`DB ${r.status}: ${t.slice(0,700)}`);return t?JSON.parse(t):null}
-async function upsert(table:string,rows:any[],conflict:string){for(let i=0;i<rows.length;i+=100){await db(`${table}?on_conflict=${encodeURIComponent(conflict)}`,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(rows.slice(i,i+100))})}}
-function parseSpecialties(html:string){const block=html.match(/<select\b[^>]*id=["']specialtyFilter["'][^>]*>[\s\S]*?<\/select>/i)?.[0]||'';const out:any[]=[];for(const m of block.matchAll(/<option\b([^>]*)>([\s\S]*?)<\/option>/gi)){const attrs=m[1],id=attrs.match(/value=["']?([^"' >]*)/i)?.[1]||'',name=strip(m[2]);if(/^\d+$/.test(id)&&name&&/class=["'][^"']*optionGroup/i.test(attrs))out.push({acgme_specialty_id:id,name,active:true})}return out}
-function parsePrograms(html:string,fallback:string){const out:any[]=[];for(const m of html.matchAll(/<tr\b([^>]*)>([\s\S]*?)<\/tr>/gi)){const attrs=m[1],row=m[2],cells=[...row.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>strip(x[1]));const idx=cells.findIndex(c=>/^\d{10}$/.test(c.replace(/\D/g,'')));if(idx<0)continue;const code=cells[idx].replace(/\D/g,''),specialty=cells[idx+1]||fallback,name=cells[idx+2]||'',city=cells[idx+3]||null;if(!name)continue;const internalId=attrs.match(/data-item-key=["']([^"']+)/i)?.[1]||null;const detail=row.match(/href=["']([^"']*\/ads\/Public\/Programs\/Detail\?orgCode=[^"']+)["']/i)?.[1]||`/ads/Public/Programs/Detail?orgCode=${code}`;const hist=row.match(/href=["']([^"']*AccreditationHistoryReport\?programId=[^"']+)["']/i)?.[1]||null;out.push({acgme_program_id:code,name,specialty,city,state:null,institution:null,source:'ACGME Public',active:true,_internalId:internalId,_detail:abs(detail),_history:hist?abs(hist):null})}return out}
-async function session(){const r=await fetch(SEARCH_URL,{headers:{'User-Agent':UA,Accept:'text/html,application/xhtml+xml'}});if(!r.ok)throw new Error(`ACGME GET ${r.status}`);const html=await r.text(),token=getToken(html),cookie=getCookies(r.headers);if(!token)throw new Error('ACGME verification token not found');return{html,token,cookie,specialties:parseSpecialties(html)}}
-async function fetchSpecialty(s:any,sess:any){const p=new URLSearchParams();p.set('__RequestVerificationToken',sess.token);p.set('accreditationTypeId','2');p.set('specialtyId',s.acgme_specialty_id);p.set('specialtyCategoryTypeId','');p.set('stateId','');p.set('numCode','');p.set('city','');p.set('g-recaptcha-response','');const r=await fetch(SEARCH_URL,{method:'POST',headers:{'User-Agent':UA,Accept:'text/html,application/xhtml+xml','Content-Type':'application/x-www-form-urlencoded','Cookie':sess.cookie,'Referer':SEARCH_URL},body:p.toString()});if(!r.ok)throw new Error(`ACGME POST ${r.status}`);const rows=parsePrograms(await r.text(),s.name);if(!rows.length)throw new Error('No program rows returned');return rows}
-async function enrich(p:any){try{const r=await fetch(p._detail,{headers:{'User-Agent':UA,Accept:'text/html'}});if(!r.ok)return{};const text=strip(await r.text());const z=text.match(/\b([A-Z]{2})\s+\d{5}(?:-\d{4})?\b/);const status=text.match(/Accreditation Status\s*[:\-]?\s*([^|]{2,90}?)(?:Effective|Program Director|Address|$)/i)?.[1]?.trim()||null;const dr=text.match(/(?:Accreditation )?Effective Date\s*[:\-]?\s*(\d{1,2}\/\d{1,2}\/\d{4}|\d{4}-\d{2}-\d{2})/i)?.[1]||null;let effective_date=null;if(dr){const d=new Date(dr);if(!isNaN(d.getTime()))effective_date=d.toISOString().slice(0,10)}return{state:z?.[1]||null,accreditation_status:status,effective_date}}catch{return{}}}
-
-Deno.serve(async(req:Request)=>{const u=new URL(req.url);if(u.pathname.endsWith('/health'))return Response.json({ok:true,service:'ACGME incremental monitor',version:4});let body:any={};try{body=await req.json()}catch{}
+const SECRET_KEY=JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS')||'{}').default||Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+const UA='CubaMatchExplorer/2.0 (+https://cubamatchexplorer.org)';
+async function db(path:string,init:RequestInit={}){
+ const r=await fetch(PROJECT_URL+'/rest/v1/'+path,{...init,signal:AbortSignal.timeout(45000),headers:{apikey:SECRET_KEY,'Content-Type':'application/json',...(init.headers||{})}});
+ const text=await r.text();if(!r.ok)throw Error(`Database ${r.status}: ${text.slice(0,400)}`);return text?JSON.parse(text):null;
+}
+async function upsert(table:string,rows:any[],conflict:string){for(let i=0;i<rows.length;i+=100)await db(table+'?on_conflict='+conflict,{method:'POST',headers:{Prefer:'resolution=merge-duplicates'},body:JSON.stringify(rows.slice(i,i+100))});}
+async function html(url:string,init:RequestInit={}){
+ const r=await fetch(url,{...init,signal:AbortSignal.timeout(20000),headers:{'User-Agent':UA,Accept:'text/html,application/xhtml+xml',...(init.headers||{})}});
+ if(!r.ok)throw Error(`Official source returned HTTP ${r.status}`);const bytes=await r.arrayBuffer();if(bytes.byteLength>12000000)throw Error('Official response exceeds limit');
+ const preview=new TextDecoder().decode(bytes.slice(0,12000));const charset=(r.headers.get('content-type')||'').match(/charset=([\w-]+)/i)?.[1]||preview.match(/charset=([\w-]+)/i)?.[1]||'utf-8';
+ const text=new TextDecoder(charset).decode(bytes);return {text,headers:r.headers};
+}
+async function discover(source:string){
+ const now=new Date().toISOString();await db('catalog_sources?source=eq.'+source,{method:'PATCH',body:JSON.stringify({last_attempt_at:now})});
+ const page=await html(source==='acgme'?ACGME_URL:AAMC_URL);
+ if(source==='aamc'){const parsed=parseAamcIndex(page.text);return {...parsed,session:null};}
+ const token=page.text.match(/name=["']__RequestVerificationToken["'][^>]*value=["']([^"']+)/i)?.[1];
+ if(!token)throw Error('ACGME verification token missing');
+ const cookies=page.headers.getSetCookie().map(x=>x.split(';')[0]).join('; ');
+ return {season:0,specialties:parseAcgmeSpecialties(page.text).map((s:any)=>({...s,source_url:ACGME_URL})),session:{token,cookies}};
+}
+async function fetchPrograms(source:string,s:any,session:any){
+ if(source==='aamc')return parseAamcPrograms((await html(s.source_url)).text,s,s.season);
+ const params=new URLSearchParams({__RequestVerificationToken:session.token,accreditationTypeId:'2',specialtyId:s.specialty_id,specialtyCategoryTypeId:'',stateId:'',numCode:'',city:'','g-recaptcha-response':''});
+ const page=await html(ACGME_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded',Cookie:session.cookies,Referer:ACGME_URL},body:params.toString()});
+ return parseAcgmePrograms(page.text,s.name);
+}
+Deno.serve(async(req:Request)=>{
+ if(req.method==='GET'&&new URL(req.url).pathname.endsWith('/health'))return Response.json({ok:true,service:'ACGME + AAMC ERAS catalogue monitor',version:9});
+ if(req.method!=='POST'||!req.headers.get('x-monitor-token'))return Response.json({error:'Unauthorized'},{status:401});
+ let lease:string|null=null,runId:string|null=null;
  try{
-  const watchedPrograms=await db('rpc/notification_monitor_targets',{method:'POST',body:'{}'})||[];
-  for(const p of watchedPrograms){try{const e=await enrich({_detail:p.source_url});if(e.accreditation_status)await db('rpc/notification_record_program_status',{method:'POST',body:JSON.stringify({p_id:p.id,p_status:e.accreditation_status,p_date:e.effective_date||null})});}catch{}}
-  const sess=await session();if(!sess.specialties.length)throw new Error('No ACGME specialties discovered');
-  await upsert('acgme_specialties',sess.specialties,'acgme_specialty_id');
-  const states=await db('acgme_specialties?select=acgme_specialty_id,name,baseline_complete,last_synced_at,last_program_count,last_error&active=eq.true')||[];
-  const watches=await db('program_watch_subscriptions?select=specialty&enabled=eq.true')||[];const watched=new Set(watches.map((x:any)=>norm(x.specialty)));
-  const stateById=new Map(states.map((x:any)=>[x.acgme_specialty_id,x]));
-  const enriched=sess.specialties.map((s:any)=>({...s,...(stateById.get(s.acgme_specialty_id)||{})}));
-  const manual=body?.specialty_id?enriched.filter((x:any)=>x.acgme_specialty_id===String(body.specialty_id)):[];
-  const watchedRows=enriched.filter((x:any)=>watched.has(norm(x.name))).sort((a:any,b:any)=>new Date(a.last_synced_at||0).getTime()-new Date(b.last_synced_at||0).getTime());
-  const oldest=enriched.slice().sort((a:any,b:any)=>{const ai=norm(a.name)==='internal medicine'&&!a.baseline_complete?-1:0,bi=norm(b.name)==='internal medicine'&&!b.baseline_complete?-1:0;if(ai!==bi)return ai-bi;return new Date(a.last_synced_at||0).getTime()-new Date(b.last_synced_at||0).getTime()});
-  const targets:any[]=[];const add=(x:any)=>{if(x&&!targets.some(t=>t.acgme_specialty_id===x.acgme_specialty_id))targets.push(x)};manual.forEach(add);watchedRows.slice(0,2).forEach(add);for(const x of oldest){if(targets.length>=4)break;add(x)}
-  const started=await db('acgme_sync_runs',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({status:'running',details:{mode:'incremental',target_specialties:targets.map(x=>x.name)}})});const runId=started?.[0]?.id;
-  let seen=0,newCount=0;const errors:any[]=[];
-  for(const s of targets){try{
-    const existingRows=await db(`programs?select=acgme_program_id&specialty=eq.${encodeURIComponent(s.name)}`)||[];const existing=new Set(existingRows.map((x:any)=>x.acgme_program_id));const baseline=!s.baseline_complete&&existing.size===0;
-    const programs=await fetchSpecialty(s,sess);seen+=programs.length;
-    await upsert('programs',programs.map(({_internalId,_detail,_history,...p})=>p),'acgme_program_id');
-    const acgmeSources=programs.map((p:any)=>({acgme_program_id:p.acgme_program_id,source:'acgme',external_id:p._internalId||null,source_url:p._detail,data_scope:'ACGME official public program detail',last_verified_at:new Date().toISOString()}));
-    const freidaSources=programs.map((p:any)=>({acgme_program_id:p.acgme_program_id,source:'freida',external_id:null,source_url:`https://freida.ama-assn.org/program/${p.acgme_program_id}`,data_scope:'AMA FREIDA interactive listing; external fields are not mirrored without licensing',last_verified_at:new Date().toISOString()}));
-    const reSources=programs.map((p:any)=>({acgme_program_id:p.acgme_program_id,source:'residency_explorer',external_id:null,source_url:'https://www.residencyexplorer.org/',data_scope:'Official interactive tool; no bulk dataset mirroring',last_verified_at:new Date().toISOString()}));
-    await upsert('program_external_sources',acgmeSources,'source,acgme_program_id');await upsert('program_external_sources',freidaSources,'source,acgme_program_id');await upsert('program_external_sources',reSources,'source,acgme_program_id');
-    if(!baseline){const newly=programs.filter((p:any)=>!existing.has(p.acgme_program_id));if(newly.length){const events:any[]=[];for(const p of newly.slice(0,100)){const e=await enrich(p);events.push({event_key:`acgme-first-seen:${p.acgme_program_id}`,acgme_program_id:p.acgme_program_id,program_name:p.name,specialty:p.specialty,city:p.city,state:e.state||null,accreditation_status:e.accreditation_status||'Newly detected in ACGME public directory',effective_date:e.effective_date||null,source_url:p._detail,last_seen_at:new Date().toISOString()})}await upsert('accreditation_events',events,'event_key');newCount+=events.length}}
-    await db(`acgme_specialties?acgme_specialty_id=eq.${encodeURIComponent(s.acgme_specialty_id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({baseline_complete:true,last_synced_at:new Date().toISOString(),last_program_count:programs.length,last_error:null})});
-   }catch(e){const msg=String((e as Error)?.message||e);errors.push({specialty:s.name,error:msg});await db(`acgme_specialties?acgme_specialty_id=eq.${encodeURIComponent(s.acgme_specialty_id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({last_synced_at:new Date().toISOString(),last_error:msg})})}}
-  if(runId)await db(`acgme_sync_runs?id=eq.${runId}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({status:errors.length===targets.length?'failed':'completed',completed_at:new Date().toISOString(),programs_seen:seen,new_programs:newCount,error_message:errors.length===targets.length?'All specialties failed':null,details:{mode:'incremental',targets:targets.map(x=>x.name),errors}})});
-  return Response.json({ok:errors.length<targets.length,targets:targets.map(x=>x.name),programs_seen:seen,new_programs:newCount,errors});
- }catch(e){return Response.json({ok:false,error:String((e as Error)?.message||e)},{status:500})}
+  lease=await db('rpc/catalog_claim',{method:'POST',body:JSON.stringify({p_token:req.headers.get('x-monitor-token')})});
+  if(!lease)return Response.json({error:'Unauthorized or monitor already running'},{status:409});
+  const body=await req.json().catch(()=>({}));const limit=Math.min(12,Math.max(1,Number(body.limit)||4));
+  const sources=body.source&&['acgme','aamc'].includes(body.source)?[body.source]:['acgme','aamc'];
+  const runs=await db('acgme_sync_runs',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({status:'running',details:{mode:'dual_catalog',sources}})});runId=runs[0].id;
+  const started=Date.now(),results:any[]=[],errors:any[]=[];
+  for(const source of sources){
+   try{
+    const discovered=await discover(source),season=discovered.season;
+    await db('catalog_sources?source=eq.'+source,{method:'PATCH',body:JSON.stringify({season,last_success_at:new Date().toISOString(),last_error:null})});
+    await upsert('catalog_sync_state',discovered.specialties.map((s:any)=>({...s,source,season,active:true})),'source,season,specialty_id');
+    if(source==='acgme')await upsert('acgme_specialties',discovered.specialties.map((s:any)=>({acgme_specialty_id:s.specialty_id,name:s.name,active:true})),'acgme_specialty_id');
+    const states=await db(`catalog_sync_state?source=eq.${source}&season=eq.${season}&active=eq.true&limit=1000`);
+    const ids=new Set(discovered.specialties.map((s:any)=>s.specialty_id));
+    for(const stale of states.filter((s:any)=>!ids.has(s.specialty_id)))await db(`catalog_sync_state?source=eq.${source}&season=eq.${season}&specialty_id=eq.${encodeURIComponent(stale.specialty_id)}`,{method:'PATCH',body:JSON.stringify({active:false})});
+    const eligible=states.filter((s:any)=>ids.has(s.specialty_id));
+    const selected=body.specialty_id?eligible.filter((s:any)=>s.specialty_id===String(body.specialty_id)):selectTargets(eligible,limit);
+    if(body.specialty_id&&!selected.length)throw Error('Unknown specialty in current catalogue');
+    for(const s of selected){
+     if(Date.now()-started>135000)break;
+     const key=`source=eq.${source}&season=eq.${season}&specialty_id=eq.${encodeURIComponent(s.specialty_id)}`;
+     await db('catalog_sync_state?'+key,{method:'PATCH',body:JSON.stringify({last_attempt_at:new Date().toISOString()})});
+     try{
+      const rows=await fetchPrograms(source,s,discovered.session);
+      const result=await db('rpc/catalog_apply_snapshot',{method:'POST',body:JSON.stringify({p_source:source,p_season:season,p_specialty_id:s.specialty_id,p_rows:rows})});
+      results.push({source,specialty:s.name,...result});
+     }catch(e){const error=String((e as Error).message).slice(0,500);errors.push({source,specialty:s.name,error});
+      await db('catalog_sync_state?'+key,{method:'PATCH',body:JSON.stringify({last_error:error})});
+      if(source==='acgme')await db('acgme_specialties?acgme_specialty_id=eq.'+s.specialty_id,{method:'PATCH',body:JSON.stringify({last_attempt_at:new Date().toISOString(),last_error:error})});
+     }
+    }
+   }catch(e){const error=String((e as Error).message).slice(0,500);errors.push({source,error});await db('catalog_sources?source=eq.'+source,{method:'PATCH',body:JSON.stringify({last_error:error})});}
+  }
+  const status=errors.length?(results.length?'partial':'failed'):'completed';
+  const programs_seen=results.reduce((n,x)=>n+x.programs,0),new_programs=results.reduce((n,x)=>n+x.new_programs,0);
+  await db('acgme_sync_runs?id=eq.'+runId,{method:'PATCH',body:JSON.stringify({status,completed_at:new Date().toISOString(),programs_seen,new_programs,error_message:errors.length?`${errors.length} catalogue checks failed`:null,details:{mode:'dual_catalog',results,errors}})});
+  return Response.json({ok:status==='completed',status,programs_seen,new_programs,results,errors},{status:status==='failed'?502:200});
+ }catch(e){if(runId)await db('acgme_sync_runs?id=eq.'+runId,{method:'PATCH',body:JSON.stringify({status:'failed',completed_at:new Date().toISOString(),error_message:String((e as Error).message).slice(0,500)})}).catch(()=>{});return Response.json({ok:false,error:'Catalogue synchronization failed'},{status:500});}
+ finally{if(lease)await db('rpc/catalog_release',{method:'POST',body:JSON.stringify({p_lease:lease})}).catch(()=>{});}
 });

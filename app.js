@@ -1852,12 +1852,12 @@
       try {
         intelDB.specialties =
           (await request(
-            "/rest/v1/acgme_specialties?select=acgme_specialty_id,name,baseline_complete,last_synced_at,last_program_count&active=eq.true&order=name.asc",
+            "/rest/v1/acgme_specialties?select=acgme_specialty_id,name,baseline_complete,last_synced_at,last_program_count,last_error&active=eq.true&order=name.asc",
             { publicOnly: true },
           )) || [];
-        const done = intelDB.specialties.filter((x) => x.baseline_complete).length;
+        const done = intelDB.specialties.filter((x) => x.baseline_complete && !x.last_error && Date.now()-new Date(x.last_synced_at).getTime()<86400000).length;
         q("syncProgress").textContent = intelDB.specialties.length
-          ? `${done}/${intelDB.specialties.length} especialidades sincronizadas`
+          ? `ACGME: ${done}/${intelDB.specialties.length} especialidades verificadas en las últimas 24 h · AAMC/ERAS: ver Program Watch`
           : "Catálogo aún no sincronizado";
       } catch (e) {
         intelDB.specialties = [];
@@ -1876,7 +1876,7 @@
       '<option value="all">Todas las especialidades</option>' + opts,
       "all",
     );
-    setOptions("watchSpecialty", opts, names.includes("Internal Medicine") ? "Internal Medicine" : undefined);
+    setOptions("watchSpecialty", opts, names.find(x => x.toLowerCase() === "internal medicine"));
   }
   function safeUrl(u) {
     return /^https?:\/\//i.test(String(u || "")) ? String(u) : "#";

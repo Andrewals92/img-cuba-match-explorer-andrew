@@ -3,7 +3,7 @@
 // calls, and its cache name never changed, so users could keep running an
 // old app.js after a deploy. It now only handles same-origin static files,
 // always tries the network first, and the cache name is versioned.
-const CACHE = 'cuba-match-explorer-v5.3.3-white-logo';
+const CACHE = 'cuba-match-explorer-v5.4-catalog-radar';
 const ASSETS = ['./', './index.html', './styles.css?v=5.3.3-white', './app.js', './workspace.js', './presence.js', './season.js', './calendar-utils.js', './notifications.js', './intelligence.js', './match-intelligence.js', './cloud-config.js', './bot-protection.js', './content-protection.js', './manifest.webmanifest?v=5.3.3-white', './app-icon.svg?v=5.3.3-white', './assets/icons/cme-logo-192.png?v=5.3.3-white', './assets/icons/cme-logo-512.png?v=5.3.3-white', './assets/icons/cme-logo-maskable-512.png?v=5.3.3-white', './assets/icons/apple-touch-icon.png?v=5.3.3-white', './assets/icons/favicon-32.png?v=5.3.3-white', './assets/cuba-match-explorer-logo.jpg?v=5.3.3-white', './assets/andrew-lopez-sanchez.jpg'];
 
 self.addEventListener('install', (e) => {
@@ -39,4 +39,3 @@ self.addEventListener('fetch', (e) => {
 const pushPath=p=>/^#\/(program\/[a-f0-9-]{36}|radar|interviews|notification-settings|notification-center)$/.test(p)?p:'#/notification-center';
 self.addEventListener('push',e=>{let d={};try{d=e.data?.json()||{};}catch{}e.waitUntil(self.registration.showNotification('Cuba Match Explorer',{body:'Tienes una nueva alerta. Abre la app para ver los detalles.',icon:'assets/icons/cme-logo-192.png?v=5.3.3-white',tag:d.id||'cme-alert',data:{path:pushPath(d.path)}}));});
 self.addEventListener('notificationclick',e=>{e.notification.close();const url=new URL('/'+pushPath(e.notification.data?.path),self.location.origin).href;e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(async cs=>{for(const c of cs){if(new URL(c.url).origin===self.location.origin){await c.navigate(url);return c.focus();}}return self.clients.openWindow(url);}));});
-

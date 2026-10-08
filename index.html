@@ -382,7 +382,7 @@
         </section>
         <section class="view" id="notification-center"><div id="notificationCenter"></div></section>
         <section class="view" id="notification-settings"><div id="notificationPreferences"></div></section>
-        <section class="view" id="radar"><article class="panel"><h2>New Program Radar</h2><p>La detección en el directorio no garantiza plazas disponibles. Confirma los detalles con el programa y ACGME.</p><form id="radarFilter" class="season-form-grid"><label>Especialidad<input name="specialty" placeholder="Todas"></label><label>Estado<input name="state" maxlength="2" placeholder="Nationwide"></label><label>Detectado desde<input type="date" name="since"></label><label>Hasta<input type="date" name="until"></label><button class="btn primary" type="submit">Filtrar</button></form></article><div id="radarContent"></div></section>
+        <section class="view" id="radar"><article class="panel"><h2>New Program Radar · ERAS Program Watch</h2><p>Consulta ACGME y AAMC/ERAS por el mismo ID. La acreditación, la participación en ERAS y las plazas disponibles son datos diferentes.</p><div id="catalogHealth" role="status" aria-live="polite"></div><form id="radarFilter" class="season-form-grid"><label>Mostrar<select name="mode"><option value="catalog">Catálogo ACGME + ERAS</option><option value="changes">Novedades y cambios</option></select></label><label>Programa o ID<input name="query" placeholder="Nombre o Accreditation ID"></label><label>Especialidad<input name="specialty" placeholder="Todas"></label><label>Estado<input name="state" maxlength="2" placeholder="Nationwide"></label><label>Estado ERAS<select name="status"><option value="">Todos</option><option value="__new__" selected>Nuevos en ERAS</option><option>Participating</option><option>Unregistered</option><option>Not Participating</option><option>No Longer Accepting Applications</option><option>Not verified</option><option value="Not listed in current catalogue">No figura en el catálogo ERAS</option></select></label><label>Detectado desde · novedades<input type="date" name="since"></label><label>Hasta · novedades<input type="date" name="until"></label><button class="btn primary" type="submit">Consultar / actualizar</button></form><p class="workspace-note">Las consultas automáticas avanzan por lotes cada 10 minutos. La cobertura y la fecha de cada fuente aparecen abajo. “No verificado” no significa “no participa”. Las novedades comienzan tras completar la primera lectura de cada especialidad.</p></article><div id="radarContent" aria-live="polite"></div><div id="radarPager" class="row-actions"></div></section>
         <section class="view" id="watchlist"><button class="btn ghost" data-ai-open="watchlist">Explicar actividad de mis programas</button><div id="watchlistIntelligence"></div><div id="watchlistContent"></div></section>
 
         <section class="view" id="matches">
@@ -1083,9 +1083,8 @@
     <script src="presence.js?v=5.3-r1"></script>
     <script src="workspace.js?v=5.3-r1"></script>
     <script src="intelligence.js?v=5.3-r1"></script>
-    <script src="notifications.js?v=5.3-r1"></script>
+    <script src="notifications.js?v=5.4-catalog"></script>
     <script src="match-intelligence.js?v=5.3-r1"></script>
-    <script src="app.js?v=5.3-r1"></script>
+    <script src="app.js?v=5.4-catalog"></script>
   </body>
 </html>
-
